@@ -353,6 +353,7 @@ kbd { display: inline-block; min-width: 1.9em; padding: 2px 6px; font: 600 .82re
       <li><b>Tangkisan.</b> Menahan pukulan terlalu lama menjebol tangkisan. Bantingan tidak bisa ditangkis.</li>
       <li><b>Partner.</b> Dua karakter yang tidak dipilih menjadi partner. Panggil di tengah kombo untuk memperpanjangnya.</li>
       <li><b>Jurus pamungkas.</b> Kalau terjangan awalnya kena, adegan sinematik dimulai. Pertama muncul <b>segel</b>: satu tombol acak (Serang, Lompat, Chakra, atau Tangkis). Yang menekannya duluan menang: penyerang menambah kerusakan 20%, yang bertahan menguranginya 20%. Salah tombol berarti gugur. Setelah itu, tekan Serang berulang-ulang untuk adu tenaga.</li>
+      <li><b>Azam, Pawang Naga.</b> Saat pamungkasnya kena, naga hijau raksasa melilit lawan. Naga itu kamu kendalikan: setiap tekan Serang membuatnya menggigit, dan kiri / kanan memutar lilitannya.</li>
       <li><b>Pamungkas Kebangkitan.</b> Jurus pamungkas yang dipakai saat bangkit berganti menjadi versi terkuat: nama baru, ledakan lebih besar, dan kerusakan 35% lebih tinggi.</li>
       <li><b>Mode 1 pemain.</b> Kedua set tombol bisa dipakai. Susunan nyaman: gerak dengan <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>, aksi dengan <kbd>J</kbd><kbd>K</kbd><kbd>L</kbd><kbd>I</kbd><kbd>U</kbd><kbd>O</kbd><kbd>P</kbd>.</li>
     </ul>
@@ -401,9 +402,12 @@ const CHARS = [
     color: '#3a4a7a', dark: '#141c34', wrap: '#ddd8ee', sandal: '#2a2540', skin: '#e9be97', hair: '#eceaf5', hairStyle: 'tall', band: '#1d1a33', scarf: '#f2c230', belt: '#1a1530', fx: '#e6dcff', altColor: '#8a2f3e', altScarf: '#e6e9f0' },
   { id: 'mio', model: 'tirta', name: 'Tirta', element: 'Air', desc: 'Penjaga Teluk. Seimbang. Gelombangnya menembus shuriken dan menyapu lawan.', jutsu: 'Gelombang Pasang', ult: 'Pusaran Samudra', ult2: 'Amukan Palung Laut', speed: 8.0, power: 1,
     color: '#2a7fc0', dark: '#1c3550', wrap: '#dbe7f5', sandal: '#25304a', skin: '#f3cfab', hair: '#202a4a', hairStyle: 'bob', band: '#162038', scarf: '#86cdf2', belt: '#141c33', fx: '#8fdcff', altColor: '#e05a4a', altScarf: '#f2b84c' },
+  // proc: belum punya file .glb, jadi memakai model prosedural
+  { id: 'azam', model: 'azam', proc: true, name: 'Azam', element: 'Naga', desc: 'Pawang Naga dari Rawa Hijau. Ular naganya meliuk di tanah dan menggigit dari jauh. Pamungkasnya memanggil naga raksasa yang ia kendalikan.', jutsu: 'Taring Naga Hijau', ult: 'Panggilan Naga Hijau', ult2: 'Murka Naga Rawa', speed: 8.1, power: 1.05,
+    color: '#2f7a3a', dark: '#1a2e22', wrap: '#e2e8cf', sandal: '#2a3326', skin: '#d9a77c', hair: '#14231a', hairStyle: 'naga', band: '#1f2a1c', scarf: '#d9ac3a', belt: '#3a2a14', fx: '#7cff8a', altColor: '#5a3a8a', altScarf: '#d8dce6' },
 ];
-const JUTSU_RANGE = { sora: [4, 16], akane: [4, 16], rai: [2.5, 11], mio: [3, 14] };
-const CAST_REL = { sora: .2, akane: .32, mio: .3 };
+const JUTSU_RANGE = { sora: [4, 16], akane: [4, 16], rai: [2.5, 11], mio: [3, 14], azam: [3.5, 15] };
+const CAST_REL = { sora: .2, akane: .32, mio: .3, azam: .28 };
 const LEVELS = {
   mudah: { react: .4, block: .12, aggr: .45, sub: .12, mash: 4 },
   normal: { react: .24, block: .36, aggr: .65, sub: .35, mash: 6.5 },
@@ -510,8 +514,11 @@ const sfx = {
     if (el === 'Angin') Sound.noise(.45, 600, 1.5, .32, 'bandpass', 3500);
     else if (el === 'Api') { Sound.noise(.55, 400, .5, .46, 'lowpass', 2000); Sound.tone(90, .5, 'sawtooth', .1, 60); }
     else if (el === 'Petir') { Sound.noise(.3, 3000, .7, .4, 'highpass', 800); Sound.tone(880, .25, 'square', .07, 110); }
+    else if (el === 'Naga') { Sound.noise(.5, 5200, 2, .26, 'highpass', 3000); Sound.tone(70, .5, 'sawtooth', .12, 50); }
     else Sound.noise(.6, 500, .8, .36, 'bandpass', 1500);
   },
+  bite() { Sound.noise(.08, 3500, 1.2, .3, 'bandpass', 1200); Sound.tone(120, .1, 'square', .08, 60); },
+  roar() { Sound.tone(62, 1.1, 'sawtooth', .16, 38); Sound.noise(1, 400, .6, .3, 'lowpass', 120); },
   ult() { [196, 247, 294, 392].forEach((f, i) => Sound.tone(f, 1.2, 'sawtooth', .045, null, i * .05)); Sound.noise(1, 200, .7, .28, 'lowpass', 1800); },
   ko() { Sound.tone(98, 2.2, 'sine', .5); Sound.tone(147, 1.8, 'triangle', .16); Sound.noise(.5, 300, .5, .36, 'lowpass', 80); },
   select() { Sound.tone(520, .06, 'triangle', .12); },
@@ -590,6 +597,7 @@ function glyph2D(g, el, x, y, s, color) {
   g.beginPath();
   if (el === 'Angin') { g.moveTo(-12, -6); g.bezierCurveTo(-4, -14, 10, -12, 8, -4); g.bezierCurveTo(6, 2, -2, 0, 0, -4); g.moveTo(-14, 3); g.bezierCurveTo(-2, -2, 13, 0, 12, 7); g.moveTo(-10, 11); g.bezierCurveTo(-2, 8, 6, 10, 6, 14); g.stroke(); }
   else if (el === 'Api') { g.moveTo(0, -15); g.bezierCurveTo(4, -8, 12, -4, 10, 5); g.bezierCurveTo(9, 12, 3, 14, 0, 14); g.bezierCurveTo(-6, 14, -11, 10, -10, 3); g.bezierCurveTo(-9, -3, -4, -2, -5, -9); g.bezierCurveTo(-1, -6, 1, -9, 0, -15); g.fill(); }
+  else if (el === 'Naga') { g.stroke(new Path2D('M-11 12C-14 4 -4 2 0 4C5 6 11 2 8 -4C6 -8 0 -8 -1 -5')); g.beginPath(); g.arc(1, -9.5, 3.6, 0, 7); g.fill(); }
   else if (el === 'Petir') { g.moveTo(4, -15); g.lineTo(-7, 2); g.lineTo(0, 2); g.lineTo(-4, 15); g.lineTo(8, -3); g.lineTo(1, -3); g.lineTo(6, -15); g.closePath(); g.fill(); }
   else { g.moveTo(0, -14); g.bezierCurveTo(4, -6, 10, 0, 10, 5); g.arc(0, 5, 10, 0, Math.PI); g.bezierCurveTo(-10, 0, -4, -6, 0, -14); g.fill(); }
   g.restore();
@@ -601,6 +609,7 @@ const GLYPH_SVG = {
   Api: '<path d="M0 -15C4 -8 12 -4 10 5C9 12 3 14 0 14C-6 14 -11 10 -10 3C-9 -3 -4 -2 -5 -9C-1 -6 1 -9 0 -15Z" fill="currentColor"/>',
   Petir: '<path d="M4 -15L-7 2L0 2L-4 15L8 -3L1 -3L6 -15Z" fill="currentColor"/>',
   Air: '<path d="M0 -14C4 -6 10 0 10 5A10 10 0 0 1 -10 5C-10 0 -4 -6 0 -14Z" fill="currentColor"/>',
+  Naga: '<path d="M-11 12C-14 4 -4 2 0 4C5 6 11 2 8 -4C6 -8 0 -8 -1 -5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/><circle cx="1" cy="-9.5" r="3.6" fill="currentColor"/>',
 };
 const svgGlyph = el => `<svg viewBox="-16 -16 32 32" aria-hidden="true">${GLYPH_SVG[el]}</svg>`;
 
@@ -626,6 +635,7 @@ const deg = d => d * Math.PI / 180;
 const SPIKES = {
   spiky: { r: .055, h: .2, list: [[0, 72], [45, 58], [-45, 58], [100, 45], [-100, 45], [150, 40], [-150, 40], [180, 55], [180, 78]] },
   tall: { r: .07, h: .3, list: [[10, 80], [50, 66], [-50, 66], [115, 55], [-115, 55], [165, 48], [-165, 48], [180, 72]] },
+  naga: { r: .06, h: .26, list: [[180, 28], [150, 34], [-150, 34], [125, 42], [-125, 42], [180, 50], [160, 60], [-160, 60]] },
 };
 // model lama (prosedural): hanya cadangan kalau file petarung .glb tidak bisa dimuat
 function buildProcModel(def) {
@@ -673,6 +683,7 @@ function buildProcModel(def) {
     const lg = geo('lock', () => new T.BoxGeometry(.05, .2, .11));
     part(head, lg, M.hair, .152, .1, .02, .008); part(head, lg, M.hair, -.152, .1, .02, .008);
   }
+  if (def.hairStyle === 'naga') for (const sx of [-1, 1]) part(head, geo('pHorn', () => new T.ConeGeometry(.032, .17, 8).translate(0, .085, 0)), M.scarf, sx * .1, .31, -.03, .008).rotation.set(-.7, 0, -sx * .45);
   part(head, geo('band', () => new T.CylinderGeometry(.171, .171, .055, 22, 1, true)), M.band, 0, .225, 0, 0);
   part(head, geo('plate', () => new T.BoxGeometry(.12, .056, .02)), plateMat, 0, .225, .172, .006);
   const tails = [joint(head, .03, .225, -.17), joint(head, -.03, .225, -.17)];
@@ -935,6 +946,39 @@ FX.stars = pool(14, () => { const s = new T.Sprite(new T.SpriteMaterial({ map: T
 FX.rings = pool(10, () => { const r = new T.Mesh(geo('fxRing', () => new T.RingGeometry(.86, 1, 48)), new T.MeshBasicMaterial({ transparent: true, opacity: 0, blending: T.AdditiveBlending, side: T.DoubleSide, depthWrite: false })); r.visible = false; scene.add(r); return { o: r, life: 0, max: 1, s0: 1, s1: 4, flat: false }; });
 FX.slashes = pool(10, () => { const m = new T.Mesh(geo('slash', () => new T.TorusGeometry(.75, .04, 4, 22, Math.PI * .9).rotateZ(-Math.PI * .45)), new T.MeshBasicMaterial({ transparent: true, opacity: 0, blending: T.AdditiveBlending, side: T.DoubleSide, depthWrite: false })); m.visible = false; scene.add(m); return { o: m, life: 0, max: 1, s0: 1 }; });
 FX.bolts = pool(8, () => { const m = new T.Mesh(new T.BufferGeometry(), new T.MeshBasicMaterial({ transparent: true, opacity: 0, blending: T.AdditiveBlending, depthWrite: false })); m.visible = false; m.frustumCulled = false; scene.add(m); return { o: m, life: 0, max: 1 }; });
+// ---------- naga hijau (jurus & pamungkas Azam) ----------
+// kepala menghadap +Z; rahang bawah bisa dibuka lewat jaw.rotation.x
+const NAGA_COL = { body: '#2f9a4a', dark: '#1d5a30', belly: '#cfe39a', gold: '#e2b23a', eye: '#ffd23a', fang: '#f4f1e6' };
+function nagaMats() { return { body: toon(NAGA_COL.body), dark: toon(NAGA_COL.dark), belly: toon(NAGA_COL.belly), gold: toon(NAGA_COL.gold), fang: toon(NAGA_COL.fang), eye: new T.MeshBasicMaterial({ color: NAGA_COL.eye }) }; }
+function buildNagaHead(M) {
+  const g = new T.Group();
+  const mk = (k, f, m, x, y, z, parent = g) => { const o = new T.Mesh(geo(k, f), m); o.position.set(x, y, z); o.castShadow = true; parent.add(o); return o; };
+  mk('ngSkull', () => new T.SphereGeometry(.3, 16, 12).scale(1, .72, 1.25), M.body, 0, 0, 0);
+  mk('ngSnout', () => new T.SphereGeometry(.22, 14, 10).scale(1, .6, 1.4), M.body, 0, -.02, .34);
+  mk('ngBrow', () => new T.BoxGeometry(.42, .07, .16), M.dark, 0, .15, .16).rotation.x = -.3;
+  const jaw = new T.Group(); jaw.position.set(0, -.1, .02); g.add(jaw);
+  mk('ngJaw', () => new T.SphereGeometry(.2, 14, 8).scale(1, .38, 1.55).translate(0, 0, .27), M.belly, 0, 0, 0, jaw);
+  for (const sx of [-1, 1]) {
+    mk('ngEye', () => new T.SphereGeometry(.055, 10, 8), M.eye, sx * .17, .1, .22);
+    mk('ngFang', () => new T.ConeGeometry(.03, .14, 6).rotateX(Math.PI), M.fang, sx * .09, -.12, .5);
+    mk('ngHorn', () => new T.ConeGeometry(.05, .38, 8).translate(0, .19, 0), M.gold, sx * .14, .16, -.1).rotation.set(-1.0, 0, -sx * .35);
+    mk('ngFin', () => new T.ConeGeometry(.09, .32, 4).scale(.35, 1, 1).translate(0, .16, 0), M.dark, sx * .27, -.02, -.05).rotation.set(-1.3, 0, -sx * 1.1);
+  }
+  // mahkota tiga runcing
+  [-.1, 0, .1].forEach(x => mk(x ? 'ngCrownL' : 'ngCrownH', () => new T.ConeGeometry(.045, x ? .18 : .26, 6).translate(0, x ? .09 : .13, 0), M.gold, x, .2, -.02).rotation.set(-.35, 0, -x * 1.5));
+  return { g, jaw };
+}
+function buildNagaBody(M, n) {
+  const g = new T.Group(), segs = [];
+  for (let i = 0; i < n; i++) {
+    const s = new T.Group(); g.add(s);
+    const b = new T.Mesh(geo('ngSeg', () => new T.SphereGeometry(1, 12, 8)), i % 3 === 1 ? M.dark : M.body); b.castShadow = true; s.add(b);
+    if (i % 2 === 0) s.add(new T.Mesh(geo('ngSpine', () => new T.ConeGeometry(.35, .9, 5).translate(0, 1.15, 0)), M.gold));
+    segs.push(s);
+  }
+  return { g, segs };
+}
+FX.naga = (() => { const M = nagaMats(), g = new T.Group(), head = buildNagaHead(M), body = buildNagaBody(M, 36); g.add(head.g, body.g); g.visible = false; g.userData = { head, body }; scene.add(g); return g; })();
 FX.dragon = (() => { const g = new T.Group(); for (let i = 0; i < 28; i++) g.add(new T.Sprite(new T.SpriteMaterial({ map: TEX.fire, transparent: true, blending: T.AdditiveBlending, depthWrite: false }))); g.visible = false; scene.add(g); return g; })();
 FX.tornado = (() => { const t = TEX.stripes.clone(); t.needsUpdate = true; t.wrapS = t.wrapT = T.RepeatWrapping; t.repeat.set(3, 1); const m = new T.Mesh(new T.CylinderGeometry(2.4, .7, 5.5, 32, 1, true).translate(0, 2.75, 0), new T.MeshBasicMaterial({ map: t, color: 0x9ff5e0, transparent: true, opacity: .8, blending: T.AdditiveBlending, side: T.DoubleSide, depthWrite: false })); m.visible = false; scene.add(m); return m; })();
 FX.vortex = (() => { const t = TEX.stripes.clone(); t.needsUpdate = true; t.wrapS = t.wrapT = T.RepeatWrapping; t.repeat.set(4, 1); const m = new T.Mesh(new T.CylinderGeometry(1.7, 1.9, 4.2, 32, 1, true).translate(0, 2.1, 0), new T.MeshBasicMaterial({ map: t, color: 0x6fc8ff, transparent: true, opacity: .75, blending: T.AdditiveBlending, side: T.DoubleSide, depthWrite: false })); m.visible = false; scene.add(m); return m; })();
@@ -966,7 +1010,7 @@ function showBolt(a, b, life, color, jag = 1.2) { const it = take(FX.bolts); it.
 function clearFX() {
   FX.spark.clear(); FX.glow.clear(); FX.big.clear();
   for (const p of [FX.smoke, FX.stars, FX.rings, FX.slashes, FX.bolts]) for (const it of p) { it.life = 0; it.o.visible = false; }
-  FX.dragon.visible = FX.tornado.visible = FX.vortex.visible = false; fxLight.intensity = 0;
+  FX.dragon.visible = FX.tornado.visible = FX.vortex.visible = FX.naga.visible = false; fxLight.intensity = 0;
 }
 function updatePools(dt) {
   for (const it of FX.smoke) if (it.life > 0) { it.life -= dt; const k = 1 - it.life / it.max; it.o.position.addScaledVector(it.vel, dt); it.vel.multiplyScalar(Math.exp(-3 * dt)); const s = lerp(it.s0, it.s1, easeOut(k)); it.o.scale.set(s, s, 1); it.o.material.opacity = it.a * (1 - k); if (it.life <= 0) it.o.visible = false; }
@@ -998,7 +1042,7 @@ class Fighter {
     this.model = buildModel(def); scene.add(this.model.root); if (this.model.scarf) scene.add(this.model.scarf);
     this.pos = new V3(); this.vel = new V3(); this.pose = makePose();
     this.sups = supDefs.map((d, i) => new Support(d, this, i));
-    this.rawAtk = false; this.prevAtk = false; this.rawPress = {}; this.rawHeld = {};
+    this.rawAtk = false; this.prevAtk = false; this.rawPress = {}; this.rawHeld = {}; this.rawDir = 0;
     this.resetRound();
   }
   resetRound() {
@@ -1113,6 +1157,7 @@ function spawnJutsu(def, origin, yaw, owner, o, scale) {
     for (let i = -1; i <= 1; i++) makeProj('wind', owner, c.clone().addScaledVector(fw, -Math.abs(i) * .25), dir.clone().applyAxisAngle(UP, i * .14), { speed: 24, r: .6, dmg: 34 * scale, kb: i === 0 ? 7 : 2, up: i === 0 ? 5 : 3.5, type: i === 0 ? 'spin' : 'hit', stun: .42, homing: .9, strength: 2, life: 1.1, tilt: i * .5, guardDmg: 10, fx: def.fx });
   } else if (def.id === 'akane') makeProj('fire', owner, c, dir, { speed: 15, r: 1.0, dmg: 115 * scale, kb: 9, up: 7, type: 'spin', heavy: true, homing: .7, strength: 3, life: 2.6, guardDmg: 34 });
   else if (def.id === 'mio') { const d = dir.clone(); d.y = 0; d.normalize(); const p = c.clone(); p.y = 1.0; makeProj('wave', owner, p, d, { speed: 16, r: 1.5, dmg: 100 * scale, kb: 11, up: 6, type: 'spin', heavy: true, homing: .5, strength: 3, life: 1.8, pierce: true, flat: true, guardDmg: 30 }); }
+  else if (def.id === 'azam') { const d = dir.clone(); d.y = 0; d.normalize(); const p = c.clone(); p.y = .55; makeProj('naga', owner, p, d, { speed: 17, r: .8, dmg: 95 * scale, kb: 8, up: 6, type: 'spin', heavy: true, homing: 1.2, strength: 3, life: 1.9, flat: true, guardDmg: 28 }); }
   else makeProj('spear', owner, c, dir, { speed: 40, r: .5, dmg: 70 * scale, kb: 9, up: 5, type: 'spin', heavy: true, homing: 1.5, strength: 2, life: .9, guardDmg: 24 });
 }
 
@@ -1126,10 +1171,28 @@ function projMesh(type, owner, o) {
   if (type === 'wind') { const g = new T.Group(); const m = new T.Mesh(geo('windArc', () => new T.TorusGeometry(.7, .07, 6, 24, Math.PI * .9).rotateZ(-Math.PI * .45)), new T.MeshBasicMaterial({ color: new T.Color(o.fx || '#9ff5e0'), transparent: true, opacity: .85, blending: T.AdditiveBlending, side: T.DoubleSide, depthWrite: false })); g.add(m); const m2 = new T.Mesh(geo('windArc2', () => new T.TorusGeometry(.55, .035, 4, 20, Math.PI * .8).rotateZ(-Math.PI * .4)), new T.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: .9, blending: T.AdditiveBlending, side: T.DoubleSide, depthWrite: false })); m2.position.x = -.1; g.add(m2); return g; }
   if (type === 'fire') { const g = new T.Group(); const s1 = new T.Sprite(new T.SpriteMaterial({ map: TEX.fire, blending: T.AdditiveBlending, transparent: true, depthWrite: false })); s1.scale.setScalar(2.4); g.add(s1); const s2 = new T.Sprite(new T.SpriteMaterial({ map: TEX.glow, color: 0xff7a30, blending: T.AdditiveBlending, transparent: true, opacity: .8, depthWrite: false })); s2.scale.setScalar(4); g.add(s2); return g; }
   if (type === 'wave') { const g = new T.Group(); const m = new T.Mesh(WAVE_GEO, new T.MeshBasicMaterial({ color: 0x4aa8f0, transparent: true, opacity: .78, side: T.DoubleSide, depthWrite: false })); g.add(m); const top = new T.Mesh(WAVE_GEO, new T.MeshBasicMaterial({ color: 0xd8f2ff, transparent: true, opacity: .55, blending: T.AdditiveBlending, side: T.DoubleSide, depthWrite: false })); top.scale.set(.9, .35, 1); top.position.set(0, .8, .5); g.add(top); return g; }
+  if (type === 'naga') { const M = nagaMats(), g = new T.Group(), head = buildNagaHead(M), body = buildNagaBody(M, 9); head.g.scale.setScalar(1.1); g.add(head.g, body.g); g.userData = { head, body }; return g; }
   const g = new T.Group(); const m = new T.Mesh(geo('spear', () => new T.OctahedronGeometry(.25, 0).scale(.7, .7, 3.2)), new T.MeshBasicMaterial({ color: 0xf2eeff, transparent: true, opacity: .95, blending: T.AdditiveBlending, depthWrite: false })); g.add(m); const s = new T.Sprite(new T.SpriteMaterial({ map: TEX.glow, color: new T.Color(fx), blending: T.AdditiveBlending, transparent: true, depthWrite: false })); s.scale.setScalar(2); g.add(s); return g;
 }
+function updateNagaProj(p) {
+  const u = p.mesh.userData, tr = p.trail || (p.trail = []), segs = u.body.segs;
+  tr.unshift(p.pos.clone()); if (tr.length > 40) tr.pop();
+  const yaw = Math.atan2(p.vel.x, p.vel.z), px = Math.cos(yaw), pz = -Math.sin(yaw);
+  const wig = i => Math.sin(p.t * 16 - i * .9) * .32 * Math.min(1, i / 2 + .3);
+  const hd = u.head.g; hd.position.set(px * wig(0) * .5, 0, pz * wig(0) * .5);
+  hd.lookAt(_b.copy(p.pos).add(hd.position).add(_a.set(Math.sin(yaw), 0, Math.cos(yaw))));
+  u.head.jaw.rotation.x = .25 + Math.sin(p.t * 18) * .2;
+  segs.forEach((s, i) => {
+    const q = tr[Math.min(tr.length - 1, 3 + i * 3)];
+    s.position.set(q.x - p.pos.x + px * wig(i + 1), q.y - p.pos.y - .04 * i, q.z - p.pos.z + pz * wig(i + 1));
+    s.scale.setScalar(Math.max(.07, .3 * (1 - i / 11)));
+  });
+  segs.forEach((s, i) => s.lookAt(_b.copy(p.pos).add(i ? segs[i - 1].position : hd.position)));
+  if (Math.random() < .6) FX.glow.add(p.pos.x + rand(-.3, .3), p.pos.y + rand(-.2, .3), p.pos.z + rand(-.3, .3), 0, rand(.5, 1.5), 0, .3, col('#7cff8a'), 0, 2);
+}
 function makeProj(type, owner, pos, dir, o) {
-  const p = Object.assign({ type, owner, pos: pos.clone(), vel: dir.clone().multiplyScalar(o.speed), t: 0, hitSet: [], rot: 0 }, o);
+  // kind = jenis proyektil; type bisa ditimpa o.type (jenis pukulan saat kena)
+  const p = Object.assign({ type, kind: type, owner, pos: pos.clone(), vel: dir.clone().multiplyScalar(o.speed), t: 0, hitSet: [], rot: 0 }, o);
   p.mesh = projMesh(type, owner, o); p.mesh.position.copy(p.pos); scene.add(p.mesh);
   projectiles.push(p);
 }
@@ -1147,6 +1210,7 @@ function updateProjectiles(dt) {
       p.vel.lerp(dsr, Math.min(1, p.homing * dt)); p.vel.setLength(p.speed);
     }
     p.pos.addScaledVector(p.vel, dt); p.mesh.position.copy(p.pos);
+    if (p.kind === 'naga') updateNagaProj(p);
     const yaw = Math.atan2(p.vel.x, p.vel.z);
     if (p.type === 'shur' || p.type === 'cshur') { p.rot += dt * 30; p.mesh.rotation.set(0, p.rot, 0); FX.glow.add(p.pos.x, p.pos.y, p.pos.z, 0, 0, 0, .12, col(p.type === 'shur' ? '#9aa4b8' : p.owner.def.fx), 0, 0); }
     else if (p.type === 'wind') { p.mesh.rotation.set(0, yaw - Math.PI / 2, 0); p.mesh.rotateX(p.tilt || 0); if (Math.random() < .7) FX.glow.add(p.pos.x + rand(-.3, .3), p.pos.y + rand(-.4, .4), p.pos.z + rand(-.3, .3), -p.vel.x * .1, 0, -p.vel.z * .1, .25, col('#9ff5e0'), 0, 2); }
@@ -1245,13 +1309,17 @@ function updateCine(dt) {
   def.chest(_c); _c.y += c.lift;
   if (c.t > .6 && c.t < 2.7) {
     if (c.seal.done) {
+      const sebelum = Math.floor(c.aM);
       if (att.ai) c.aM += att.ai.L.mash * dt * rand(.6, 1.4); else if (att.rawAtk) c.aM++;
+      // naga Azam menggigit setiap kali penyerang menekan Serang
+      if (el === 'Naga' && Math.floor(c.aM) > sebelum && c.biteT <= .06) { c.biteT = .24; c.biteHit = false; }
       if (def.ai) c.dM += def.ai.L.mash * dt * rand(.4, 1.1); else if (def.rawAtk) c.dM++;
     } else updateSeal(c);
     const n = Math.floor((c.t - .6) / .16) + 1;
     if (n > c.ticks) { c.ticks = n; def.flash = .07; shake(5); sfx.hit(); sparks(_d.set(_c.x + rand(-.5, .5), _c.y + rand(-.6, .6), _c.z + rand(-.5, .5)), fx, 10); }
     updateQTE(c);
     if (el === 'Air') { c.lift = Math.min(1.6, c.lift + dt * 1.4); def.pos.y = c.lift; }
+    else if (el === 'Naga' && c.t > SEAL_END) { c.lift = Math.min(1.0, c.lift + dt * .9); def.pos.y = c.lift; }
   }
   cineFX(c, dt);
   if (c.t >= 1.7) $('#ultban').classList.add('out');
@@ -1262,6 +1330,7 @@ function updateCine(dt) {
     fxLight.color.set(0xffffff); fxLight.intensity = c.awk ? 7 : 6;
     // ledakan akhir diperlambat sebentar
     timeScale = .3; c.slowEnd = c.t + (c.awk ? .24 : .18);
+    if (el === 'Naga') sfx.roar();
     const sub = c.seal.win === att ? 'Segel sempurna · kerusakan +20%' : c.seal.win === def ? 'Segel ditahan · kerusakan −20%' : '';
     showCall(c.awk ? 'Bangkit!' : 'Pamungkas!', sub, 1.4, att.def.scarf);
   }
@@ -1284,12 +1353,46 @@ function updateSeal(c) {
     else if (!f.ai) for (const k of SEAL_KEYS) if (f.rawPress[k]) sealTry(c, f, k === s.key);
   }
 }
+// Naga raksasa melilit lawan: keluar dari tanah, melilit makin erat, menggigit tiap kali penyerang menekan Serang,
+// berputar mengikuti arah kiri/kanan penyerang, lalu menukik saat ledakan akhir dan tenggelam lagi.
+function updateNaga(c, dt) {
+  const g = FX.naga, u = g.userData, att = c.att, def = c.def, t = c.t, big = c.awk ? 1.3 : 1;
+  if (t < .45) { g.visible = false; return; }
+  g.visible = true;
+  const cx = def.pos.x, cz = def.pos.z;
+  const e = easeOut(clamp((t - .45) / .8, 0, 1)) * (1 - clamp((t - 2.95) / .35, 0, 1));
+  const R = lerp(2.4, 1.25, clamp((t - SEAL_END) / .6, 0, 1)) * big, H = 3.4 * big;
+  c.steer = att.ai ? Math.sin(t * 1.7) * .5 : att.rawDir;
+  c.nagaA = (c.nagaA ?? c.ang) + dt * (1.6 + (c.awk ? .6 : 0) + c.steer * 3);
+  const segs = u.body.segs, n = segs.length;
+  for (let i = 0; i < n; i++) {
+    const s = 1 - i / (n - 1), a = c.nagaA + s * 2.1 * Math.PI * 2, y = -H * .35 + s * H - (1 - e) * (H + 1);
+    segs[i].position.set(cx + Math.cos(a) * R, y, cz + Math.sin(a) * R);
+    segs[i].scale.setScalar(big * .42 * (.35 + .65 * Math.sqrt(s)));
+    segs[i].visible = y > -1.2;
+  }
+  // kepala: diam mengancam di atas lilitan, menggigit, mengambil ancang-ancang, lalu menukik
+  const neck = segs[0].position, chest = def.chest(_c);
+  const rest = _d.set(neck.x + (cx - neck.x) * .35, neck.y + 1.1 * big, neck.z + (cz - neck.z) * .35);
+  c.biteT = Math.max(0, (c.biteT || 0) - dt);
+  let lunge = c.biteT > 0 ? Math.sin(Math.PI * (1 - c.biteT / .24)) : 0;
+  if (t > 2.5 && t < 2.75) rest.y += 2.4 * big * (t - 2.5) / .25;
+  else if (t >= 2.75) lunge = clamp((t - 2.75) / .12, 0, 1);
+  const hp = _e.copy(rest).lerp(_a.copy(chest).add(_b.subVectors(rest, chest).setLength(.6 * big)), lunge);
+  if (t >= 2.95) hp.y -= (1 - e) * (H + 1);
+  const hd = u.head.g; hd.position.copy(hp); hd.scale.setScalar(1.9 * big); hd.visible = hp.y > -1;
+  hd.lookAt(lunge > .1 ? chest : _a.set(chest.x, chest.y + .4, chest.z));
+  u.head.jaw.rotation.x = .15 + .95 * Math.max(lunge, t > 2.5 && t < 2.75 ? 1 : 0, .25 + .2 * Math.sin(t * 9));
+  if (c.biteT > 0 && lunge > .85 && !c.biteHit) { c.biteHit = true; def.flash = .08; sfx.bite(); sparks(chest, '#7cff8a', 12); shake(4); }
+  for (let i = 0; i < n; i++) segs[i].lookAt(i ? segs[i - 1].position : hp);
+}
 function cineFX(c, dt) {
   const att = c.att, def = c.def, el = att.def.element, t = c.t;
   const on = t > .5 && t < 2.85;
   const k = clamp((t - .5) / .25, 0, 1) * clamp((2.85 - t) / .25, 0, 1);
   const cx = def.pos.x, cz = def.pos.z, cy = def.pos.y;
   FX.tornado.visible = on && el === 'Angin'; FX.dragon.visible = on && el === 'Api'; FX.vortex.visible = on && el === 'Air';
+  if (el === 'Naga') updateNaga(c, dt); else FX.naga.visible = false;
   if (!c.boom) fxLight.intensity = on ? 2.5 * k : 0;
   fxLight.position.set(cx, cy + 1.5, cz);
   if (!on) return;
@@ -1316,6 +1419,9 @@ function cineFX(c, dt) {
       fxLight.color.set(Math.random() < .5 ? 0xffffff : 0x9f86ff); fxLight.intensity = rand(2, 5) * k;
     }
     if (Math.random() < .7) { rndDir(_d).multiplyScalar(rand(6, 12)); FX.spark.add(cx, cy + 1.1, cz, _d.x, _d.y, _d.z, .15, col('#e6dcff'), 0, 3); }
+  } else if (el === 'Naga') {
+    fxLight.color.set(0x7cff8a);
+    if (Math.random() < .6) { const a = Math.random() * 7, r = rand(1, 2.6); FX.glow.add(cx + Math.cos(a) * r, rand(0, 3), cz + Math.sin(a) * r, 0, rand(.5, 2), 0, .35, col('#7cff8a'), 0, 1); }
   } else {
     fxLight.color.set(0x6fc8ff);
     FX.vortex.position.set(cx, 0, cz); FX.vortex.rotation.y -= dt * 6; FX.vortex.material.map.offset.x += dt * .8; FX.vortex.material.opacity = .75 * k; FX.vortex.scale.set(1, .3 + k * .7, 1);
@@ -1332,7 +1438,7 @@ function endCine() {
   att.setState('idle'); att.comboCount = c.ticks + 1; att.comboShow = 1.6;
   floatText(def, '−' + dmg, '#ffe08a'); cheer('sorak', 2.4, true);
   hideQTE(); hideUltBanner();
-  FX.tornado.visible = FX.dragon.visible = FX.vortex.visible = false;
+  FX.tornado.visible = FX.dragon.visible = FX.vortex.visible = FX.naga.visible = false;
   cine = null; cam.snap = true; timeScale = 1;
   if (def.hp <= 0) onKO(def, att);
 }
@@ -1795,7 +1901,7 @@ async function loadArenas() {
 // desain petarung: satu file per karakter, ditambah kostum kedua (-p2) untuk P2 dan partnernya
 async function loadFighters() {
   refreshLoadChip();
-  await Promise.all(CHARS.flatMap(c => [c.model, c.model + '-p2']).map(async key => {
+  await Promise.all(CHARS.filter(c => !c.proc).flatMap(c => [c.model, c.model + '-p2']).map(async key => {
     try { fighterTpl[key] = siapkanCetakan(await loadAsset('assets/petarung/' + key, unduhPetarung)); }
     catch (e) { console.warn('Petarung gagal dimuat', key, e); }
   }));
@@ -1929,11 +2035,11 @@ function updateCamera(dt) {
   const tp = _a, tl = _b;
   if (state.scene === 'select') { tp.set(0, 1.5, 5.6); tl.set(0, 1.05, 0); setCam(tp, tl, 1 - Math.exp(-4 * dt)); }
   else if (cine) {
-    const c = cine, att = c.att, def = c.def, ph = c.t < .6 ? 0 : c.t < 2.75 ? 1 : 2;
+    const c = cine, att = c.att, def = c.def, ph = c.t < .6 ? 0 : c.t < 2.75 ? 1 : 2, nz = att.def.element === 'Naga';
     if (ph !== c.phase) { c.phase = ph; cam.snap = true; }
     if (ph === 0) { const fw = att.fwd(_c), rx = -fw.z, rz = fw.x, d = 2.5 - c.t * .7; tp.set(att.pos.x + fw.x * d + rx * .6, 1.55, att.pos.z + fw.z * d + rz * .6); tl.set(att.pos.x, 1.35, att.pos.z); }
-    else if (ph === 1) { const a = c.ang + (c.t - .6) * 1.3; tp.set(def.pos.x + Math.cos(a) * 5.4, 2.1 + c.lift, def.pos.z + Math.sin(a) * 5.4); tl.set(def.pos.x, 1.1 + c.lift, def.pos.z); }
-    else { const a = c.ang + 2.15 * 1.3; tp.set(def.pos.x + Math.cos(a) * 9, 3.4, def.pos.z + Math.sin(a) * 9); tl.set(def.pos.x, 1.2, def.pos.z); }
+    else if (ph === 1) { const a = c.ang + (c.t - .6) * 1.3, z = nz ? 1.55 : 1; tp.set(def.pos.x + Math.cos(a) * 5.4 * z, 2.1 + c.lift + (nz ? 1.6 : 0), def.pos.z + Math.sin(a) * 5.4 * z); tl.set(def.pos.x, 1.1 + c.lift + (nz ? 1 : 0), def.pos.z); }
+    else { const a = c.ang + 2.15 * 1.3, z = nz ? 1.3 : 1; tp.set(def.pos.x + Math.cos(a) * 9 * z, 3.4 + (nz ? 1.5 : 0), def.pos.z + Math.sin(a) * 9 * z); tl.set(def.pos.x, 1.2 + (nz ? .8 : 0), def.pos.z); }
     setCam(tp, tl, 1 - Math.exp(-12 * dt));
   } else if (match && match.phase === 'over') {
     const w = F[match.winner]; const fw = w.fwd(_c);
@@ -2193,7 +2299,7 @@ function step(rdt) {
         fwd = my; mv.addScaledVector(camRight, mx).addScaledVector(camFwd, my); if (mv.lengthSq() > 1) mv.normalize();
       }
       f.rawAtk = h.atk && !f.prevAtk; f.prevAtk = h.atk;
-      if (!f.ai) for (const k of SEAL_KEYS) { f.rawPress[k] = h[k] && !f.rawHeld[k]; f.rawHeld[k] = h[k]; }
+      if (!f.ai) { for (const k of SEAL_KEYS) { f.rawPress[k] = h[k] && !f.rawHeld[k]; f.rawHeld[k] = h[k]; } f.rawDir = (h.right ? 1 : 0) - (h.left ? 1 : 0); }
       if (locked) f.ctrl.feed(blankInput(), ZERO, 0); else f.ctrl.feed(h, mv, fwd);
     }
     tapped.clear();
