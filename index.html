@@ -1212,19 +1212,19 @@ function updateProjectiles(dt) {
     p.pos.addScaledVector(p.vel, dt); p.mesh.position.copy(p.pos);
     if (p.kind === 'naga') updateNagaProj(p);
     const yaw = Math.atan2(p.vel.x, p.vel.z);
-    if (p.type === 'shur' || p.type === 'cshur') { p.rot += dt * 30; p.mesh.rotation.set(0, p.rot, 0); FX.glow.add(p.pos.x, p.pos.y, p.pos.z, 0, 0, 0, .12, col(p.type === 'shur' ? '#9aa4b8' : p.owner.def.fx), 0, 0); }
-    else if (p.type === 'wind') { p.mesh.rotation.set(0, yaw - Math.PI / 2, 0); p.mesh.rotateX(p.tilt || 0); if (Math.random() < .7) FX.glow.add(p.pos.x + rand(-.3, .3), p.pos.y + rand(-.4, .4), p.pos.z + rand(-.3, .3), -p.vel.x * .1, 0, -p.vel.z * .1, .25, col('#9ff5e0'), 0, 2); }
-    else if (p.type === 'fire') { const s = 1 + Math.sin(p.t * 30) * .06; p.mesh.scale.setScalar(s); for (let i = 0; i < 3; i++) FX.glow.add(p.pos.x + rand(-.5, .5), p.pos.y + rand(-.5, .5), p.pos.z + rand(-.5, .5), -p.vel.x * .2 + rand(-1, 1), rand(0, 2.5), -p.vel.z * .2 + rand(-1, 1), rand(.3, .6), col(Math.random() < .5 ? '#ffb347' : '#ff5a2e'), -1, 1.5); }
-    else if (p.type === 'wave') { p.mesh.rotation.set(0, yaw, 0); const s = 1 + p.t * .25; p.mesh.scale.set(s, s, 1); p.pos.y = 1.0; p.r = 1.5 * s; for (let i = 0; i < 2; i++) FX.glow.add(p.pos.x + rand(-1.5, 1.5) * s, rand(.2, 2), p.pos.z + rand(-1.5, 1.5) * s, p.vel.x * .5 + rand(-1, 1), rand(1, 4), p.vel.z * .5 + rand(-1, 1), .6, col('#cfefff'), 9, 1); }
-    else if (p.type === 'spear') { p.mesh.rotation.set(0, yaw, 0); p.mesh.rotateX(-Math.asin(clamp(p.vel.y / p.speed, -1, 1))); if (Math.random() < .5) showBolt(p.pos, _b.copy(p.pos).addScaledVector(p.vel, -.05), .06, '#e6dcff', .5); }
-    if ((p.type === 'shur' || p.type === 'cshur') && p.pos.y < .05) { p.dead = true; sparks(p.pos, '#d8dde8', 4); continue; }
-    if (p.life <= 0 || Math.hypot(p.pos.x, p.pos.z) > ARENA_R + 8) { p.dead = true; if (p.type === 'fire') { puff(p.pos.x, p.pos.y, p.pos.z, 4, 1, 0x6a5a5a); } continue; }
+    if (p.kind === 'shur' || p.kind === 'cshur') { p.rot += dt * 30; p.mesh.rotation.set(0, p.rot, 0); FX.glow.add(p.pos.x, p.pos.y, p.pos.z, 0, 0, 0, .12, col(p.kind === 'shur' ? '#9aa4b8' : p.owner.def.fx), 0, 0); }
+    else if (p.kind === 'wind') { p.mesh.rotation.set(0, yaw - Math.PI / 2, 0); p.mesh.rotateX(p.tilt || 0); if (Math.random() < .7) FX.glow.add(p.pos.x + rand(-.3, .3), p.pos.y + rand(-.4, .4), p.pos.z + rand(-.3, .3), -p.vel.x * .1, 0, -p.vel.z * .1, .25, col('#9ff5e0'), 0, 2); }
+    else if (p.kind === 'fire') { const s = 1 + Math.sin(p.t * 30) * .06; p.mesh.scale.setScalar(s); for (let i = 0; i < 3; i++) FX.glow.add(p.pos.x + rand(-.5, .5), p.pos.y + rand(-.5, .5), p.pos.z + rand(-.5, .5), -p.vel.x * .2 + rand(-1, 1), rand(0, 2.5), -p.vel.z * .2 + rand(-1, 1), rand(.3, .6), col(Math.random() < .5 ? '#ffb347' : '#ff5a2e'), -1, 1.5); }
+    else if (p.kind === 'wave') { p.mesh.rotation.set(0, yaw, 0); const s = 1 + p.t * .25; p.mesh.scale.set(s, s, 1); p.pos.y = 1.0; p.r = 1.5 * s; for (let i = 0; i < 2; i++) FX.glow.add(p.pos.x + rand(-1.5, 1.5) * s, rand(.2, 2), p.pos.z + rand(-1.5, 1.5) * s, p.vel.x * .5 + rand(-1, 1), rand(1, 4), p.vel.z * .5 + rand(-1, 1), .6, col('#cfefff'), 9, 1); }
+    else if (p.kind === 'spear') { p.mesh.rotation.set(0, yaw, 0); p.mesh.rotateX(-Math.asin(clamp(p.vel.y / p.speed, -1, 1))); if (Math.random() < .5) showBolt(p.pos, _b.copy(p.pos).addScaledVector(p.vel, -.05), .06, '#e6dcff', .5); }
+    if ((p.kind === 'shur' || p.kind === 'cshur') && p.pos.y < .05) { p.dead = true; sparks(p.pos, '#d8dde8', 4); continue; }
+    if (p.life <= 0 || Math.hypot(p.pos.x, p.pos.z) > ARENA_R + 8) { p.dead = true; if (p.kind === 'fire') { puff(p.pos.x, p.pos.y, p.pos.z, 4, 1, 0x6a5a5a); } continue; }
     if (!tgt || isProjImmune(tgt) || !canBeHit(tgt) || p.hitSet.includes(tgt)) continue;
     const dx = p.pos.x - tgt.pos.x, dz = p.pos.z - tgt.pos.z;
     if (dx * dx + dz * dz < (p.r + .45) ** 2 && p.pos.y > tgt.pos.y - p.r && p.pos.y < tgt.pos.y + 1.85 + p.r) {
       applyHit(p.owner, tgt, { dmg: p.dmg, stun: p.stun, kb: p.kb, up: p.up, type: p.type === 'shur' && !tgt.onGround ? 'hit' : p.type, heavy: p.heavy, guardDmg: p.guardDmg, dirV: p.vel }, p.pos.clone());
       if (p.pierce) p.hitSet.push(tgt); else p.dead = true;
-      if (p.type === 'fire') { ringAt(p.pos, '#ffb347', .5, 4, false); puff(p.pos.x, p.pos.y, p.pos.z, 6, 1.2, 0x5a4a4a); for (let i = 0; i < 24; i++) { rndDir(_d).multiplyScalar(rand(3, 9)); FX.glow.add(p.pos.x, p.pos.y, p.pos.z, _d.x, _d.y, _d.z, rand(.3, .6), col('#ff8a3d'), 3, 2); } }
+      if (p.kind === 'fire') { ringAt(p.pos, '#ffb347', .5, 4, false); puff(p.pos.x, p.pos.y, p.pos.z, 6, 1.2, 0x5a4a4a); for (let i = 0; i < 24; i++) { rndDir(_d).multiplyScalar(rand(3, 9)); FX.glow.add(p.pos.x, p.pos.y, p.pos.z, _d.x, _d.y, _d.z, rand(.3, .6), col('#ff8a3d'), 3, 2); } }
     }
   }
   for (let i = 0; i < projectiles.length; i++) for (let j = i + 1; j < projectiles.length; j++) {
