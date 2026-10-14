@@ -80,6 +80,8 @@ function bahan(gaya, env){
     b.wajah = map => new THREE.MeshPhysicalMaterial({ map, transparent:true, depthWrite:false, polygonOffset:true, polygonOffsetFactor:-4, polygonOffsetUnits:-4, roughness:.45, specularIntensity:.35, sheen:.35, sheenRoughness:.5, sheenColor:new THREE.Color(1, .72, .62), envMapIntensity:.45, ...e });
   }
   b.cahaya = new THREE.MeshBasicMaterial({ vertexColors:true, toneMapped:false });
+  // sayap peri: tembus pandang, tanpa bayangan dan tanpa garis tinta
+  b.sayap = new THREE.MeshBasicMaterial({ vertexColors:true, transparent:true, opacity:.7, side:THREE.DoubleSide, depthWrite:false, toneMapped:false });
   return b;
 }
 function bahanGaris(warna, tebal){
@@ -138,9 +140,10 @@ export function buatPetarung(cetakan, opsi = {}){
     if(nama.startsWith('wajah')){ o.material = B.wajah(o.material.map); o.renderOrder = 2; }
     else if(nama === 'cahaya') o.material = B.cahaya;
     else if(B[nama]) o.material = B[nama];
+    if(nama === 'sayap') o.renderOrder = 1;
     bahanDipakai.add(o.material);
     o.frustumCulled = false;
-    o.castShadow = opsi.bayangan !== false && !nama.startsWith('wajah');
+    o.castShadow = opsi.bayangan !== false && !nama.startsWith('wajah') && nama !== 'sayap';
     o.receiveShadow = opsi.bayangan !== false;
     if(o.isSkinnedMesh && ['kain', 'kulit', 'rambut'].includes(nama)) kulitSkin.push(o);
   });

@@ -156,6 +156,12 @@ button { font-family: inherit; }
 .combo.on { opacity: 1; }
 .combo b { font-family: var(--font-display); font-weight: 400; font-size: 5cqi; line-height: 1; color: var(--hp-a); text-shadow: .2cqi .2cqi 0 var(--ember), 0 .3cqi .6cqi var(--void); }
 .combo span { font-weight: 700; font-size: 1.6cqi; letter-spacing: .12em; text-shadow: 0 .2cqi .4cqi var(--void); }
+.seribu { position: absolute; left: 0; right: 0; top: 16%; display: flex; flex-direction: column; align-items: center; gap: .3cqi; opacity: 0; transition: opacity .25s; }
+.seribu.on { opacity: 1; }
+.seribu b { font-family: var(--font-display); font-weight: 400; font-size: 7cqi; line-height: 1; color: #fff3a8; font-variant-numeric: tabular-nums; transform: scale(var(--k, 1)); text-shadow: 0 0 .15cqi #2e2450, 0 0 .3cqi #2e2450, .3cqi .3cqi 0 #6b4fd8, 0 0 1.4cqi rgba(255, 243, 168, .6), 0 .5cqi 1cqi var(--void); }
+.seribu small { font-weight: 700; font-size: 1.3cqi; letter-spacing: .3em; text-transform: uppercase; color: #e8dcff; text-shadow: 0 0 .2cqi #2e2450, 0 .2cqi .4cqi var(--void); }
+.seribu.boom b { color: #fff; animation: seribuLedak .6s ease-out; }
+@keyframes seribuLedak { 0% { transform: scale(1.9); } 40% { transform: scale(.92); } 100% { transform: scale(1); } }
 .call { position: absolute; left: 0; right: 0; top: 33%; display: flex; flex-direction: column; align-items: center; gap: .6cqi; opacity: 0; }
 .call strong { font-family: var(--font-display); font-weight: 400; font-size: 8cqi; line-height: 1; color: var(--cc, var(--moon)); text-shadow: .3cqi .3cqi 0 var(--ember), 0 .5cqi 1cqi var(--void); }
 .call small { font-weight: 700; font-size: 1.8cqi; letter-spacing: .1em; text-shadow: 0 .2cqi .5cqi var(--void); }
@@ -230,6 +236,7 @@ kbd { display: inline-block; min-width: 1.9em; padding: 2px 6px; font: 600 .82re
       </div>
       <div class="combo c0" id="cb0"><b>0</b><span>HIT</span></div>
       <div class="combo c1" id="cb1"><b>0</b><span>HIT</span></div>
+      <div class="seribu" id="seribu"><b id="seribuN">0x</b><small>Seribu cahaya</small></div>
       <div class="call" id="call"><strong id="callText"></strong><small id="callSub"></small></div>
       <div class="ultban" id="ultban"><small id="ultSmall"></small><strong id="ultName"></strong></div>
       <div class="qte" id="qte"><p id="qteText"></p><div class="qbar"><i id="qfill"></i></div></div>
@@ -354,6 +361,7 @@ kbd { display: inline-block; min-width: 1.9em; padding: 2px 6px; font: 600 .82re
       <li><b>Partner.</b> Dua karakter yang tidak dipilih menjadi partner. Panggil di tengah kombo untuk memperpanjangnya.</li>
       <li><b>Jurus pamungkas.</b> Kalau terjangan awalnya kena, adegan sinematik dimulai. Pertama muncul <b>segel</b>: satu tombol acak (Serang, Lompat, Chakra, atau Tangkis). Yang menekannya duluan menang: penyerang menambah kerusakan 20%, yang bertahan menguranginya 20%. Salah tombol berarti gugur. Setelah itu, tekan Serang berulang-ulang untuk adu tenaga.</li>
       <li><b>Azam, Pawang Naga.</b> Saat pamungkasnya kena, naga hijau raksasa melilit lawan. Naga itu kamu kendalikan: setiap tekan Serang membuatnya menggigit, dan kiri / kanan memutar lilitannya.</li>
+      <li><b>Mado, Putri Peri.</b> Setiap panah cahayanya bertuliskan <b>1000x</b> dan mengejar lawan. Saat pamungkasnya kena, penghitung cahaya naik dari 0x sampai 1000x. Tekan Serang berulang-ulang untuk mempercepatnya: setiap tekanan menurunkan panah cahaya dari langit.</li>
       <li><b>Pamungkas Kebangkitan.</b> Jurus pamungkas yang dipakai saat bangkit berganti menjadi versi terkuat: nama baru, ledakan lebih besar, dan kerusakan 35% lebih tinggi.</li>
       <li><b>Mode 1 pemain.</b> Kedua set tombol bisa dipakai. Susunan nyaman: gerak dengan <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>, aksi dengan <kbd>J</kbd><kbd>K</kbd><kbd>L</kbd><kbd>I</kbd><kbd>U</kbd><kbd>O</kbd><kbd>P</kbd>.</li>
     </ul>
@@ -405,9 +413,11 @@ const CHARS = [
   // model chibi dibuat oleh tools/buat-azam.mjs
   { id: 'azam', model: 'azam', name: 'Azam', element: 'Naga', desc: 'Pawang Naga dari Rawa Hijau. Ular naganya meliuk di tanah dan menggigit dari jauh. Pamungkasnya memanggil naga raksasa yang ia kendalikan.', jutsu: 'Taring Naga Hijau', ult: 'Panggilan Naga Hijau', ult2: 'Murka Naga Rawa', speed: 8.1, power: 1.05,
     color: '#2f7a3a', dark: '#1a2e22', wrap: '#e2e8cf', sandal: '#2a3326', skin: '#d9a77c', hair: '#14231a', hairStyle: 'naga', band: '#1f2a1c', scarf: '#d9ac3a', belt: '#3a2a14', fx: '#7cff8a', altColor: '#5a3a8a', altScarf: '#d8dce6' },
+  { id: 'mado', model: 'mado', name: 'Mado', element: 'Cahaya', desc: 'Putri Peri dari Taman Bulan. Panah cahayanya mengejar lawan dan setiap tembakan bertuliskan 1000x. Pamungkasnya menurunkan mahkota cahaya dari langit.', jutsu: 'Panah Seribu Cahaya', ult: 'Mahkota Seribu Cahaya', ult2: 'Fajar Seribu Sayap', speed: 8.3, power: .98,
+    color: '#b9a2f0', dark: '#2e2450', wrap: '#fdf6ff', sandal: '#e8c05a', skin: '#f6d2b8', hair: '#f5c6e0', hairStyle: 'bob', band: '#e8c05a', scarf: '#ffcf5a', belt: '#e8c05a', fx: '#fff3a8', altColor: '#2d2a4a', altScarf: '#d8dce6' },
 ];
-const JUTSU_RANGE = { sora: [4, 16], akane: [4, 16], rai: [2.5, 11], mio: [3, 14], azam: [3.5, 15] };
-const CAST_REL = { sora: .2, akane: .32, mio: .3, azam: .28 };
+const JUTSU_RANGE = { sora: [4, 16], akane: [4, 16], rai: [2.5, 11], mio: [3, 14], azam: [3.5, 15], mado: [4, 16] };
+const CAST_REL = { sora: .2, akane: .32, mio: .3, azam: .28, mado: .22 };
 const LEVELS = {
   mudah: { react: .4, block: .12, aggr: .45, sub: .12, mash: 4 },
   normal: { react: .24, block: .36, aggr: .65, sub: .35, mash: 6.5 },
@@ -515,8 +525,12 @@ const sfx = {
     else if (el === 'Api') { Sound.noise(.55, 400, .5, .46, 'lowpass', 2000); Sound.tone(90, .5, 'sawtooth', .1, 60); }
     else if (el === 'Petir') { Sound.noise(.3, 3000, .7, .4, 'highpass', 800); Sound.tone(880, .25, 'square', .07, 110); }
     else if (el === 'Naga') { Sound.noise(.5, 5200, 2, .26, 'highpass', 3000); Sound.tone(70, .5, 'sawtooth', .12, 50); }
+    else if (el === 'Cahaya') { [1175, 1568, 2093, 2637].forEach((f, i) => Sound.tone(f, .45 - i * .05, 'sine', .06, null, i * .04)); Sound.tone(523, .32, 'triangle', .07, 1046); Sound.noise(.35, 6500, 2, .13, 'highpass', 9500); }
     else Sound.noise(.6, 500, .8, .36, 'bandpass', 1500);
   },
+  // denting kristal Mado: kilau saat ledakan akhir, ting tiap 100x di penghitung pamungkas
+  kilau() { [2637, 3136, 3951, 4699, 5274].forEach((f, i) => Sound.tone(f, .7, 'sine', .045, null, i * .05)); Sound.noise(.8, 8000, 2, .12, 'highpass', 11000); },
+  ting(i) { const f = nada(AKAR_NADA.Cahaya * 2, i); Sound.tone(f, .35, 'sine', .06); Sound.tone(f * 2.01, .2, 'sine', .02); },
   bite() { Sound.noise(.08, 3500, 1.2, .3, 'bandpass', 1200); Sound.tone(120, .1, 'square', .08, 60); },
   roar() { Sound.tone(62, 1.1, 'sawtooth', .16, 38); Sound.noise(1, 400, .6, .3, 'lowpass', 120); },
   ult() { [196, 247, 294, 392].forEach((f, i) => Sound.tone(f, 1.2, 'sawtooth', .045, null, i * .05)); Sound.noise(1, 200, .7, .28, 'lowpass', 1800); },
@@ -529,7 +543,7 @@ const sfx = {
 // Komposisi orisinal dengan tangga nada pentatonik "in" (0, 1, 5, 7, 8 semitone): taiko, kayu tepuk,
 // petikan kecapi, seruling bambu, dan gong, semuanya disintesis Web Audio.
 const NADA_IN = [0, 1, 5, 7, 8];
-const AKAR_NADA = { Angin: 293.66, Api: 220, Petir: 329.63, Air: 196, Naga: 246.94 };
+const AKAR_NADA = { Angin: 293.66, Api: 220, Petir: 329.63, Air: 196, Naga: 246.94, Cahaya: 392 };
 const nada = (akar, i) => akar * Math.pow(2, (NADA_IN[((i % 5) + 5) % 5] + 12 * Math.floor(i / 5)) / 12);
 const Musik = {
   bus: null,
@@ -681,6 +695,45 @@ const TEX = {
   stripes: canvasTex(256, 64, g => { for (let i = 0; i < 24; i++) { const x = Math.random() * 256, w = 4 + Math.random() * 18, gr = g.createLinearGradient(0, 0, 0, 64); gr.addColorStop(0, 'rgba(255,255,255,0)'); gr.addColorStop(.5, `rgba(255,255,255,${.3 + Math.random() * .6})`); gr.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = gr; g.fillRect(x, 0, w, 64); } }),
 };
 TEX.stripes.wrapS = TEX.stripes.wrapT = T.RepeatWrapping;
+// tekstur cahaya Mado: bintang kilau empat sudut, bulu peri, sinar pilar (pudar ke atas), lingkaran Taman Bulan
+TEX.kilau = canvasTex(128, 128, g => {
+  g.translate(64, 64);
+  const gr = g.createRadialGradient(0, 0, 0, 0, 0, 40); gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(.3, 'rgba(255,255,255,.45)'); gr.addColorStop(1, 'rgba(255,255,255,0)');
+  g.fillStyle = gr; g.fillRect(-64, -64, 128, 128); g.fillStyle = '#fff';
+  const bintang = (r, w) => { g.beginPath(); g.moveTo(r, 0); for (let i = 0; i < 4; i++) { const a = i * Math.PI / 2, b = a + Math.PI / 4, n = a + Math.PI / 2; g.quadraticCurveTo(Math.cos(b) * w, Math.sin(b) * w, Math.cos(n) * r, Math.sin(n) * r); } g.fill(); };
+  bintang(62, 6); g.rotate(Math.PI / 4); g.globalAlpha = .6; bintang(30, 4);
+});
+TEX.bulu = canvasTex(64, 128, g => {
+  const gr = g.createLinearGradient(0, 128, 0, 0); gr.addColorStop(0, 'rgba(255,255,255,.15)'); gr.addColorStop(.5, 'rgba(255,255,255,.85)'); gr.addColorStop(1, 'rgba(255,255,255,.35)');
+  g.fillStyle = gr; g.beginPath(); g.moveTo(32, 124); g.bezierCurveTo(4, 90, 6, 30, 32, 4); g.bezierCurveTo(58, 30, 60, 90, 32, 124); g.fill();
+  g.globalCompositeOperation = 'destination-out'; g.strokeStyle = 'rgba(0,0,0,.45)'; g.lineWidth = 1.5;
+  for (let i = 0; i < 7; i++) { const y = 34 + i * 12; g.beginPath(); g.moveTo(30, y + 5); g.lineTo(8, y - 7); g.moveTo(34, y + 5); g.lineTo(56, y - 7); g.stroke(); }
+  g.globalCompositeOperation = 'source-over'; g.strokeStyle = '#fff'; g.lineWidth = 3; g.beginPath(); g.moveTo(32, 124); g.lineTo(32, 12); g.stroke();
+});
+TEX.sinar = canvasTex(64, 128, g => {
+  const h = g.createLinearGradient(0, 0, 64, 0); [[0, 0], [.22, .08], [.4, .45], [.5, 1], [.6, .45], [.78, .08], [1, 0]].forEach(([k, a]) => h.addColorStop(k, `rgba(255,255,255,${a})`));
+  g.fillStyle = h; g.fillRect(0, 0, 64, 128); g.globalCompositeOperation = 'destination-in';
+  const v = g.createLinearGradient(0, 0, 0, 128); v.addColorStop(0, 'rgba(255,255,255,0)'); v.addColorStop(.7, 'rgba(255,255,255,.5)'); v.addColorStop(1, 'rgba(255,255,255,1)'); g.fillStyle = v; g.fillRect(0, 0, 64, 128);
+});
+TEX.lingkar = canvasTex(256, 256, g => {
+  g.translate(128, 128); g.strokeStyle = g.fillStyle = '#fff';
+  for (const [r, w] of [[122, 4], [108, 2], [62, 2]]) { g.lineWidth = w; g.beginPath(); g.arc(0, 0, r, 0, 7); g.stroke(); }
+  g.lineWidth = 3; for (const r0 of [0, Math.PI / 4]) { g.beginPath(); for (let i = 0; i < 4; i++) { const a = r0 + i * Math.PI / 2; g.lineTo(Math.cos(a) * 108, Math.sin(a) * 108); } g.closePath(); g.stroke(); }
+  for (let i = 0; i < 24; i++) { const a = i / 24 * Math.PI * 2; g.beginPath(); g.arc(Math.cos(a) * 115, Math.sin(a) * 115, i % 3 ? 2 : 4, 0, 7); g.fill(); }
+  g.beginPath(); g.arc(0, 0, 34, 0, 7); g.fill(); g.globalCompositeOperation = 'destination-out'; g.beginPath(); g.arc(13, -9, 30, 0, 7); g.fill();
+});
+// tulisan "1000x" khas Mado: satu tekstur dipakai bersama semua proyektil dan letupan, tidak pernah dibuang
+function gambarSeribu(g, w, h) {
+  const s = '1000x', x = w / 2, y = h * .55, font = p => `400 ${p}px Shojumaru, "Trebuchet MS", sans-serif`;
+  let px = h * .66; g.clearRect(0, 0, w, h); g.textAlign = 'center'; g.textBaseline = 'middle'; g.lineJoin = 'round';
+  g.font = font(px); const lebar = g.measureText(s).width; if (lebar > w * .86) { px *= w * .86 / lebar; g.font = font(px); }
+  g.shadowColor = 'rgba(255,236,150,.95)'; g.shadowBlur = h * .14; g.lineWidth = px * .22; g.strokeStyle = '#2e2450'; g.strokeText(s, x, y);
+  g.shadowBlur = 0; g.lineWidth = px * .08; g.strokeStyle = '#8f6cff'; g.strokeText(s, x, y);
+  const gr = g.createLinearGradient(0, y - px * .45, 0, y + px * .45); gr.addColorStop(0, '#ffffff'); gr.addColorStop(.5, '#fff3a8'); gr.addColorStop(1, '#ffbf3a');
+  g.fillStyle = gr; g.fillText(s, x, y);
+}
+TEX.seribu = canvasTex(512, 192, gambarSeribu);
+if (document.fonts && document.fonts.load) document.fonts.load('400 64px Shojumaru').then(() => { const cv = TEX.seribu.image; gambarSeribu(cv.getContext('2d'), cv.width, cv.height); TEX.seribu.needsUpdate = true; }).catch(() => {});
 // gradasi toon karakter; nilainya disetel untuk alur warna linear r160 supaya bayangan tetap tegas seperti versi lama
 const GRAD = (() => { const t = new T.DataTexture(new Uint8Array([44, 44, 44, 255, 118, 118, 118, 255, 255, 255, 255, 255]), 3, 1, T.RGBAFormat); t.minFilter = T.NearestFilter; t.magFilter = T.NearestFilter; t.generateMipmaps = false; t.needsUpdate = true; return t; })();
 
@@ -691,6 +744,7 @@ function glyph2D(g, el, x, y, s, color) {
   if (el === 'Angin') { g.moveTo(-12, -6); g.bezierCurveTo(-4, -14, 10, -12, 8, -4); g.bezierCurveTo(6, 2, -2, 0, 0, -4); g.moveTo(-14, 3); g.bezierCurveTo(-2, -2, 13, 0, 12, 7); g.moveTo(-10, 11); g.bezierCurveTo(-2, 8, 6, 10, 6, 14); g.stroke(); }
   else if (el === 'Api') { g.moveTo(0, -15); g.bezierCurveTo(4, -8, 12, -4, 10, 5); g.bezierCurveTo(9, 12, 3, 14, 0, 14); g.bezierCurveTo(-6, 14, -11, 10, -10, 3); g.bezierCurveTo(-9, -3, -4, -2, -5, -9); g.bezierCurveTo(-1, -6, 1, -9, 0, -15); g.fill(); }
   else if (el === 'Naga') { g.stroke(new Path2D('M-11 12C-14 4 -4 2 0 4C5 6 11 2 8 -4C6 -8 0 -8 -1 -5')); g.beginPath(); g.arc(1, -9.5, 3.6, 0, 7); g.fill(); }
+  else if (el === 'Cahaya') g.fill(new Path2D('M0 -15C1.6 -4.5 4.5 -1.6 15 0C4.5 1.6 1.6 4.5 0 15C-1.6 4.5 -4.5 1.6 -15 0C-4.5 -1.6 -1.6 -4.5 0 -15ZM9.5 -15C10 -10.5 10.5 -10 15 -9.5C10.5 -9 10 -8.5 9.5 -4C9 -8.5 8.5 -9 4 -9.5C8.5 -10 9 -10.5 9.5 -15Z'));
   else if (el === 'Petir') { g.moveTo(4, -15); g.lineTo(-7, 2); g.lineTo(0, 2); g.lineTo(-4, 15); g.lineTo(8, -3); g.lineTo(1, -3); g.lineTo(6, -15); g.closePath(); g.fill(); }
   else { g.moveTo(0, -14); g.bezierCurveTo(4, -6, 10, 0, 10, 5); g.arc(0, 5, 10, 0, Math.PI); g.bezierCurveTo(-10, 0, -4, -6, 0, -14); g.fill(); }
   g.restore();
@@ -703,6 +757,7 @@ const GLYPH_SVG = {
   Petir: '<path d="M4 -15L-7 2L0 2L-4 15L8 -3L1 -3L6 -15Z" fill="currentColor"/>',
   Air: '<path d="M0 -14C4 -6 10 0 10 5A10 10 0 0 1 -10 5C-10 0 -4 -6 0 -14Z" fill="currentColor"/>',
   Naga: '<path d="M-11 12C-14 4 -4 2 0 4C5 6 11 2 8 -4C6 -8 0 -8 -1 -5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/><circle cx="1" cy="-9.5" r="3.6" fill="currentColor"/>',
+  Cahaya: '<path d="M0 -15C1.6 -4.5 4.5 -1.6 15 0C4.5 1.6 1.6 4.5 0 15C-1.6 4.5 -4.5 1.6 -15 0C-4.5 -1.6 -1.6 -4.5 0 -15ZM9.5 -15C10 -10.5 10.5 -10 15 -9.5C10.5 -9 10 -8.5 9.5 -4C9 -8.5 8.5 -9 4 -9.5C8.5 -10 9 -10.5 9.5 -15Z" fill="currentColor"/>',
 };
 const svgGlyph = el => `<svg viewBox="-16 -16 32 32" aria-hidden="true">${GLYPH_SVG[el]}</svg>`;
 
@@ -1075,6 +1130,29 @@ FX.naga = (() => { const M = nagaMats(), g = new T.Group(), head = buildNagaHead
 FX.dragon = (() => { const g = new T.Group(); for (let i = 0; i < 28; i++) g.add(new T.Sprite(new T.SpriteMaterial({ map: TEX.fire, transparent: true, blending: T.AdditiveBlending, depthWrite: false }))); g.visible = false; scene.add(g); return g; })();
 FX.tornado = (() => { const t = TEX.stripes.clone(); t.needsUpdate = true; t.wrapS = t.wrapT = T.RepeatWrapping; t.repeat.set(3, 1); const m = new T.Mesh(new T.CylinderGeometry(2.4, .7, 5.5, 32, 1, true).translate(0, 2.75, 0), new T.MeshBasicMaterial({ map: t, color: 0x9ff5e0, transparent: true, opacity: .8, blending: T.AdditiveBlending, side: T.DoubleSide, depthWrite: false })); m.visible = false; scene.add(m); return m; })();
 FX.vortex = (() => { const t = TEX.stripes.clone(); t.needsUpdate = true; t.wrapS = t.wrapT = T.RepeatWrapping; t.repeat.set(4, 1); const m = new T.Mesh(new T.CylinderGeometry(1.7, 1.9, 4.2, 32, 1, true).translate(0, 2.1, 0), new T.MeshBasicMaterial({ map: t, color: 0x6fc8ff, transparent: true, opacity: .75, blending: T.AdditiveBlending, side: T.DoubleSide, depthWrite: false })); m.visible = false; scene.add(m); return m; })();
+// ---------- seribu cahaya (jurus & pamungkas Mado) ----------
+FX.tulisan = pool(6, () => { const s = new T.Sprite(new T.SpriteMaterial({ map: TEX.seribu, transparent: true, opacity: 0, depthWrite: false, depthTest: false })); s.renderOrder = 6; s.visible = false; scene.add(s); return { o: s, life: 0, max: 1, s0: 1 }; });
+FX.cahaya = (() => {
+  const g = new T.Group(), aditif = (c, o, map = null) => new T.MeshBasicMaterial({ color: new T.Color(c), map, transparent: true, opacity: o, blending: T.AdditiveBlending, side: T.DoubleSide, depthWrite: false });
+  // pilar dari langit: dua bidang bertepi lembut yang selalu menghadap kamera; alasnya di y=0, panjangnya lewat scale.y
+  const pilar = new T.Group(), bidang = new T.PlaneGeometry(1, 1).translate(0, .5, 0), mPilar = [aditif('#ffd86a', .3, TEX.sinar), aditif('#fff6d0', .5, TEX.sinar)];
+  [3, .6].forEach((w, i) => { const m = new T.Mesh(bidang, mPilar[i]); m.scale.x = w; pilar.add(m); });
+  // cincin cahaya yang meluncur turun di sepanjang pilar
+  const cincin = Array.from({ length: 3 }, () => new T.Mesh(geo('mdCincin', () => new T.TorusGeometry(1, .03, 4, 40).rotateX(Math.PI / 2)), aditif('#ffcf5a', .8)));
+  // mahkota cahaya: lingkar emas dengan sepuluh paku runcing
+  const mahkota = new T.Group(), mMahkota = [aditif('#e8b84a', .85), aditif('#ffe08a', .85)];
+  const lingkarM = new T.Mesh(new T.TorusGeometry(1, .045, 6, 48).rotateX(Math.PI / 2), mMahkota[0]); mahkota.add(lingkarM);
+  const paku = Array.from({ length: 10 }, (_, i) => { const m = new T.Mesh(geo('mdPaku', () => new T.OctahedronGeometry(.5, 0)), mMahkota[i % 2]); m.userData = { a: i / 10 * Math.PI * 2, h: i % 2 ? .4 : .66 }; mahkota.add(m); return m; });
+  // bulu peri yang berputar naik mengelilingi lawan
+  const bulu = Array.from({ length: 18 }, (_, i) => { const s = new T.Sprite(new T.SpriteMaterial({ map: TEX.bulu, color: new T.Color(i % 3 ? '#ffe39a' : '#c9b6ff'), transparent: true, blending: T.AdditiveBlending, depthWrite: false })); g.add(s); return s; });
+  const lingkar = new T.Mesh(new T.PlaneGeometry(1, 1).rotateX(-Math.PI / 2), aditif('#e8b84a', .6, TEX.lingkar));
+  // sayap cahaya di punggung penyerang: tujuh helai bulu per sisi, pangkalnya di bahu
+  const sayap = new T.Group(), mSayap = aditif('#bfe9ff', .5, TEX.bulu), bg = new T.PlaneGeometry(.5, 1.5).translate(0, .75, 0), helai = [];
+  for (const sx of [-1, 1]) for (let i = 0; i < 7; i++) { const m = new T.Mesh(bg, mSayap); m.userData = { sx, i }; sayap.add(m); helai.push(m); }
+  g.add(pilar, ...cincin, mahkota, lingkar, sayap); g.visible = false;
+  g.userData = { pilar, mPilar, cincin, mahkota, mMahkota, lingkarM, paku, bulu, lingkar, sayap, mSayap, helai };
+  scene.add(g); return g;
+})();
 
 function sparks(p, color, n, big) {
   const c = col(color);
@@ -1087,6 +1165,8 @@ function puff(x, y, z, n, s = 1, color = 0xe8e4f0) {
   for (let i = 0; i < n; i++) { const it = take(FX.smoke); it.o.position.set(x + rand(-.4, .4) * s, y + rand(-.6, .6) * s, z + rand(-.4, .4) * s); rndDir(it.vel).multiplyScalar(rand(.5, 2.5) * s); it.life = it.max = rand(.45, .85); it.s0 = .6 * s; it.s1 = rand(1.6, 2.4) * s; it.a = .55; it.o.material.color.set(color); it.o.visible = true; }
 }
 function dust(p, n) { for (let i = 0; i < n; i++) { const it = take(FX.smoke); it.o.position.set(p.x + rand(-.5, .5), .15, p.z + rand(-.5, .5)); it.vel.set(rand(-2, 2), rand(.2, 1), rand(-2, 2)); it.life = it.max = rand(.35, .6); it.s0 = .3; it.s1 = 1.1; it.a = .4; it.o.material.color.set(0xb9a99a); it.o.visible = true; } }
+// letupan tulisan "1000x": membesar cepat, naik, lalu memudar
+function letupanSeribu(p, s = 1, life = .8) { const it = take(FX.tulisan); it.o.position.set(p.x, p.y + .35, p.z); it.life = it.max = life; it.s0 = s; it.o.material.opacity = 1; it.o.scale.set(0, 0, 1); it.o.visible = true; }
 function ringAt(p, color, s0, s1, flat, life = .45) { const it = take(FX.rings); it.o.position.set(p.x, p.y, p.z); it.o.material.color.set(color); it.s0 = s0; it.s1 = s1; it.flat = flat; it.life = it.max = life; it.o.visible = true; if (flat) it.o.rotation.set(-Math.PI / 2, 0, 0); }
 function slashAt(f) {
   const it = take(FX.slashes); f.chest(_e); f.fwd(_d);
@@ -1102,8 +1182,8 @@ function boltGeo(a, b, jag) {
 function showBolt(a, b, life, color, jag = 1.2) { const it = take(FX.bolts); it.o.geometry.dispose(); it.o.geometry = boltGeo(a, b, jag); it.o.material.color.set(color); it.life = it.max = life; it.o.visible = true; }
 function clearFX() {
   FX.spark.clear(); FX.glow.clear(); FX.big.clear();
-  for (const p of [FX.smoke, FX.stars, FX.rings, FX.slashes, FX.bolts]) for (const it of p) { it.life = 0; it.o.visible = false; }
-  FX.dragon.visible = FX.tornado.visible = FX.vortex.visible = FX.naga.visible = false; fxLight.intensity = 0;
+  for (const p of [FX.smoke, FX.stars, FX.rings, FX.slashes, FX.bolts, FX.tulisan]) for (const it of p) { it.life = 0; it.o.visible = false; }
+  FX.dragon.visible = FX.tornado.visible = FX.vortex.visible = FX.naga.visible = FX.cahaya.visible = false; fxLight.intensity = 0;
 }
 function updatePools(dt) {
   for (const it of FX.smoke) if (it.life > 0) { it.life -= dt; const k = 1 - it.life / it.max; it.o.position.addScaledVector(it.vel, dt); it.vel.multiplyScalar(Math.exp(-3 * dt)); const s = lerp(it.s0, it.s1, easeOut(k)); it.o.scale.set(s, s, 1); it.o.material.opacity = it.a * (1 - k); if (it.life <= 0) it.o.visible = false; }
@@ -1111,6 +1191,7 @@ function updatePools(dt) {
   for (const it of FX.rings) if (it.life > 0) { it.life -= dt; const k = 1 - it.life / it.max, s = lerp(it.s0, it.s1, easeOut(k)); it.o.scale.set(s, s, s); it.o.material.opacity = .9 * (1 - k); if (!it.flat) it.o.quaternion.copy(camera.quaternion); if (it.life <= 0) it.o.visible = false; }
   for (const it of FX.slashes) if (it.life > 0) { it.life -= dt; const k = 1 - it.life / it.max, s = it.s0 * lerp(1, 1.3, k); it.o.scale.set(s, s, s); it.o.material.opacity = .95 * (1 - k); if (it.life <= 0) it.o.visible = false; }
   for (const it of FX.bolts) if (it.life > 0) { it.life -= dt; it.o.material.opacity = it.life / it.max; if (it.life <= 0) it.o.visible = false; }
+  for (const it of FX.tulisan) if (it.life > 0) { it.life -= dt; const k = 1 - it.life / it.max, s = it.s0 * (k < .15 ? lerp(.3, 1.2, k / .15) : lerp(1.2, 1, Math.min(1, (k - .15) / .25))); it.o.scale.set(s * 2.67, s, 1); it.o.position.y += dt * .8; it.o.material.opacity = k < .65 ? 1 : 1 - (k - .65) / .35; if (it.life <= 0) it.o.visible = false; }
 }
 
 // ---------- world state ----------
@@ -1251,6 +1332,10 @@ function spawnJutsu(def, origin, yaw, owner, o, scale) {
   } else if (def.id === 'akane') makeProj('fire', owner, c, dir, { speed: 15, r: 1.0, dmg: 115 * scale, kb: 9, up: 7, type: 'spin', heavy: true, homing: .7, strength: 3, life: 2.6, guardDmg: 34 });
   else if (def.id === 'mio') { const d = dir.clone(); d.y = 0; d.normalize(); const p = c.clone(); p.y = 1.0; makeProj('wave', owner, p, d, { speed: 16, r: 1.5, dmg: 100 * scale, kb: 11, up: 6, type: 'spin', heavy: true, homing: .5, strength: 3, life: 1.8, pierce: true, flat: true, guardDmg: 30 }); }
   else if (def.id === 'azam') { const d = dir.clone(); d.y = 0; d.normalize(); const p = c.clone(); p.y = .55; makeProj('naga', owner, p, d, { speed: 17, r: .8, dmg: 95 * scale, kb: 8, up: 6, type: 'spin', heavy: true, homing: 1.2, strength: 3, life: 1.9, flat: true, guardDmg: 28 }); }
+  else if (def.id === 'mado') {
+    makeProj('cahaya', owner, c, dir, { speed: 26, r: .55, dmg: 90 * scale, kb: 8, up: 6, type: 'spin', heavy: true, homing: 1.6, strength: 2, life: 1.4, guardDmg: 26 });
+    letupanSeribu(c, scale < 1 ? .75 : 1); ringAt(c, def.fx, .3, 2.2, false, .3); starAt(c, 1.8);
+  }
   else makeProj('spear', owner, c, dir, { speed: 40, r: .5, dmg: 70 * scale, kb: 9, up: 5, type: 'spin', heavy: true, homing: 1.5, strength: 2, life: .9, guardDmg: 24 });
 }
 
@@ -1265,6 +1350,13 @@ function projMesh(type, owner, o) {
   if (type === 'fire') { const g = new T.Group(); const s1 = new T.Sprite(new T.SpriteMaterial({ map: TEX.fire, blending: T.AdditiveBlending, transparent: true, depthWrite: false })); s1.scale.setScalar(2.4); g.add(s1); const s2 = new T.Sprite(new T.SpriteMaterial({ map: TEX.glow, color: 0xff7a30, blending: T.AdditiveBlending, transparent: true, opacity: .8, depthWrite: false })); s2.scale.setScalar(4); g.add(s2); return g; }
   if (type === 'wave') { const g = new T.Group(); const m = new T.Mesh(WAVE_GEO, new T.MeshBasicMaterial({ color: 0x4aa8f0, transparent: true, opacity: .78, side: T.DoubleSide, depthWrite: false })); g.add(m); const top = new T.Mesh(WAVE_GEO, new T.MeshBasicMaterial({ color: 0xd8f2ff, transparent: true, opacity: .55, blending: T.AdditiveBlending, side: T.DoubleSide, depthWrite: false })); top.scale.set(.9, .35, 1); top.position.set(0, .8, .5); g.add(top); return g; }
   if (type === 'naga') { const M = nagaMats(), g = new T.Group(), head = buildNagaHead(M), body = buildNagaBody(M, 9); head.g.scale.setScalar(1.1); g.add(head.g, body.g); g.userData = { head, body }; return g; }
+  if (type === 'cahaya') {
+    // bintang cahaya berputar dengan tulisan "1000x" yang ikut terbang (tekstur tulisan dipakai bersama)
+    const g = new T.Group(), sp = (map, color, s, op = 1) => { const m = new T.Sprite(new T.SpriteMaterial({ map, color: new T.Color(color), opacity: op, blending: T.AdditiveBlending, transparent: true, depthWrite: false })); m.scale.setScalar(s); g.add(m); return m; };
+    sp(TEX.glow, '#b9a2f0', 2.4, .5); sp(TEX.glow, fx, 1.6, .85); const bintang = sp(TEX.kilau, '#ffffff', 1.4);
+    const tulis = new T.Sprite(new T.SpriteMaterial({ map: TEX.seribu, transparent: true, depthWrite: false, depthTest: false })); tulis.scale.set(2.2, .82, 1); tulis.position.y = 1.15; tulis.renderOrder = 6; g.add(tulis);
+    g.userData = { bintang, tulis }; return g;
+  }
   const g = new T.Group(); const m = new T.Mesh(geo('spear', () => new T.OctahedronGeometry(.25, 0).scale(.7, .7, 3.2)), new T.MeshBasicMaterial({ color: 0xf2eeff, transparent: true, opacity: .95, blending: T.AdditiveBlending, depthWrite: false })); g.add(m); const s = new T.Sprite(new T.SpriteMaterial({ map: TEX.glow, color: new T.Color(fx), blending: T.AdditiveBlending, transparent: true, depthWrite: false })); s.scale.setScalar(2); g.add(s); return g;
 }
 function updateNagaProj(p) {
@@ -1309,15 +1401,21 @@ function updateProjectiles(dt) {
     else if (p.kind === 'wind') { p.mesh.rotation.set(0, yaw - Math.PI / 2, 0); p.mesh.rotateX(p.tilt || 0); if (Math.random() < .7) FX.glow.add(p.pos.x + rand(-.3, .3), p.pos.y + rand(-.4, .4), p.pos.z + rand(-.3, .3), -p.vel.x * .1, 0, -p.vel.z * .1, .25, col('#9ff5e0'), 0, 2); }
     else if (p.kind === 'fire') { const s = 1 + Math.sin(p.t * 30) * .06; p.mesh.scale.setScalar(s); for (let i = 0; i < 3; i++) FX.glow.add(p.pos.x + rand(-.5, .5), p.pos.y + rand(-.5, .5), p.pos.z + rand(-.5, .5), -p.vel.x * .2 + rand(-1, 1), rand(0, 2.5), -p.vel.z * .2 + rand(-1, 1), rand(.3, .6), col(Math.random() < .5 ? '#ffb347' : '#ff5a2e'), -1, 1.5); }
     else if (p.kind === 'wave') { p.mesh.rotation.set(0, yaw, 0); const s = 1 + p.t * .25; p.mesh.scale.set(s, s, 1); p.pos.y = 1.0; p.r = 1.5 * s; for (let i = 0; i < 2; i++) FX.glow.add(p.pos.x + rand(-1.5, 1.5) * s, rand(.2, 2), p.pos.z + rand(-1.5, 1.5) * s, p.vel.x * .5 + rand(-1, 1), rand(1, 4), p.vel.z * .5 + rand(-1, 1), .6, col('#cfefff'), 9, 1); }
+    else if (p.kind === 'cahaya') {
+      const u = p.mesh.userData; u.bintang.material.rotation = p.t * 7; u.bintang.scale.setScalar(1.4 + Math.sin(p.t * 40) * .12); u.tulis.position.y = 1.15 + Math.sin(p.t * 12) * .06;
+      for (let i = 0; i < 2; i++) FX.glow.add(p.pos.x + rand(-.25, .25), p.pos.y + rand(-.25, .25), p.pos.z + rand(-.25, .25), -p.vel.x * .08 + rand(-.6, .6), rand(-.6, .6), -p.vel.z * .08 + rand(-.6, .6), rand(.25, .5), col(Math.random() < .6 ? '#fff3a8' : '#d9c8ff'), 0, 2);
+      if (Math.random() < .5) { rndDir(_d).multiplyScalar(rand(1, 3)); FX.spark.add(p.pos.x, p.pos.y, p.pos.z, _d.x, _d.y, _d.z, .3, col('#ffffff'), 0, 2); }
+    }
     else if (p.kind === 'spear') { p.mesh.rotation.set(0, yaw, 0); p.mesh.rotateX(-Math.asin(clamp(p.vel.y / p.speed, -1, 1))); if (Math.random() < .5) showBolt(p.pos, _b.copy(p.pos).addScaledVector(p.vel, -.05), .06, '#e6dcff', .5); }
     if ((p.kind === 'shur' || p.kind === 'cshur') && p.pos.y < .05) { p.dead = true; sparks(p.pos, '#d8dde8', 4); continue; }
-    if (p.life <= 0 || Math.hypot(p.pos.x, p.pos.z) > ARENA_R + 8) { p.dead = true; if (p.kind === 'fire') { puff(p.pos.x, p.pos.y, p.pos.z, 4, 1, 0x6a5a5a); } continue; }
+    if (p.life <= 0 || Math.hypot(p.pos.x, p.pos.z) > ARENA_R + 8) { p.dead = true; if (p.kind === 'fire') { puff(p.pos.x, p.pos.y, p.pos.z, 4, 1, 0x6a5a5a); } else if (p.kind === 'cahaya') sparks(p.pos, '#fff3a8', 8); continue; }
     if (!tgt || isProjImmune(tgt) || !canBeHit(tgt) || p.hitSet.includes(tgt)) continue;
     const dx = p.pos.x - tgt.pos.x, dz = p.pos.z - tgt.pos.z;
     if (dx * dx + dz * dz < (p.r + .45) ** 2 && p.pos.y > tgt.pos.y - p.r && p.pos.y < tgt.pos.y + 1.85 + p.r) {
       applyHit(p.owner, tgt, { dmg: p.dmg, stun: p.stun, kb: p.kb, up: p.up, type: p.type === 'shur' && !tgt.onGround ? 'hit' : p.type, heavy: p.heavy, guardDmg: p.guardDmg, dirV: p.vel }, p.pos.clone());
       if (p.pierce) p.hitSet.push(tgt); else p.dead = true;
       if (p.kind === 'fire') { ringAt(p.pos, '#ffb347', .5, 4, false); puff(p.pos.x, p.pos.y, p.pos.z, 6, 1.2, 0x5a4a4a); for (let i = 0; i < 24; i++) { rndDir(_d).multiplyScalar(rand(3, 9)); FX.glow.add(p.pos.x, p.pos.y, p.pos.z, _d.x, _d.y, _d.z, rand(.3, .6), col('#ff8a3d'), 3, 2); } }
+      else if (p.kind === 'cahaya') { ringAt(p.pos, '#fff3a8', .4, 3.2, false, .4); starAt(p.pos, 2.6); letupanSeribu(p.pos, .8, .7); for (let i = 0; i < 20; i++) { rndDir(_d).multiplyScalar(rand(2, 7)); FX.glow.add(p.pos.x, p.pos.y, p.pos.z, _d.x, _d.y, _d.z, rand(.3, .6), col(i % 3 ? '#fff3a8' : '#d9c8ff'), 2, 2); } }
     }
   }
   for (let i = 0; i < projectiles.length; i++) for (let j = i + 1; j < projectiles.length; j++) {
@@ -1408,13 +1506,15 @@ function updateCine(dt) {
       if (att.ai) c.aM += att.ai.L.mash * dt * rand(.6, 1.4); else if (att.rawAtk) c.aM++;
       // naga Azam menggigit setiap kali penyerang menekan Serang
       if (el === 'Naga' && Math.floor(c.aM) > sebelum && c.biteT <= .06) { c.biteT = .24; c.biteHit = false; }
+      // panah cahaya Mado turun dari langit setiap kali penyerang menekan Serang
+      if (el === 'Cahaya' && Math.floor(c.aM) > sebelum) panahLangit(c);
       if (def.ai) c.dM += def.ai.L.mash * dt * rand(.4, 1.1); else if (def.rawAtk) c.dM++;
     } else updateSeal(c);
     const n = Math.floor((c.t - .6) / .16) + 1;
     if (n > c.ticks) { c.ticks = n; def.flash = .07; shake(5); sfx.hit(); sparks(_d.set(_c.x + rand(-.5, .5), _c.y + rand(-.6, .6), _c.z + rand(-.5, .5)), fx, 10); }
     updateQTE(c);
     if (el === 'Air') { c.lift = Math.min(1.6, c.lift + dt * 1.4); def.pos.y = c.lift; }
-    else if (el === 'Naga' && c.t > SEAL_END) { c.lift = Math.min(1.0, c.lift + dt * .9); def.pos.y = c.lift; }
+    else if ((el === 'Naga' || el === 'Cahaya') && c.t > SEAL_END) { c.lift = Math.min(el === 'Naga' ? 1.0 : .8, c.lift + dt * .9); def.pos.y = c.lift; }
   }
   cineFX(c, dt);
   if (c.t >= 1.7) $('#ultban').classList.add('out');
@@ -1426,10 +1526,12 @@ function updateCine(dt) {
     // ledakan akhir diperlambat sebentar
     timeScale = .3; c.slowEnd = c.t + (c.awk ? .24 : .18);
     if (el === 'Naga') sfx.roar();
+    else if (el === 'Cahaya') { sfx.kilau(); seribuCahaya(_c, c.awk); fxLight.color.set(0xffd27a); fxLight.intensity = c.awk ? 5 : 4.2; }
     Musik.ultLedak(c);
     const sub = c.seal.win === att ? 'Segel sempurna · kerusakan +20%' : c.seal.win === def ? 'Segel ditahan · kerusakan −20%' : '';
     showCall(c.awk ? 'Bangkit!' : 'Pamungkas!', sub, 1.4, att.def.scarf);
   }
+  if (el === 'Cahaya') updateSeribu(c, dt);
   if (c.slowEnd && c.t >= c.slowEnd) { timeScale = 1; c.slowEnd = 0; }
   if (c.t >= c.dur) endCine();
 }
@@ -1482,6 +1584,68 @@ function updateNaga(c, dt) {
   if (c.biteT > 0 && lunge > .85 && !c.biteHit) { c.biteHit = true; def.flash = .08; sfx.bite(); sparks(chest, '#7cff8a', 12); shake(4); }
   for (let i = 0; i < n; i++) segs[i].lookAt(i ? segs[i - 1].position : hp);
 }
+// Mahkota Seribu Cahaya: pilar cahaya turun dari langit, mahkota cahaya turun lalu mengunci lawan, bulu peri berputar naik,
+// lingkaran Taman Bulan berputar di tanah, sayap cahaya terbentang di punggung Mado. Versi bangkit lebih besar dan terang.
+function updateCahaya(c, dt) {
+  const g = FX.cahaya, u = g.userData, att = c.att, def = c.def, t = c.t, big = c.awk ? 1.3 : 1;
+  g.visible = true;
+  const cx = def.pos.x, cz = def.pos.z, cy = def.pos.y, pecah = easeOut(clamp((t - 2.75) / .45, 0, 1)), redup = 1 - clamp((t - 2.75) / .45, 0, 1);
+  c.denyut = Math.max(0, (c.denyut || 0) - dt * 4);
+  c.putar = (c.putar || 0) + dt * (1.4 + (t > SEAL_END ? 1.6 : 0) + c.denyut * 5 + (t > 2.45 && t < 2.75 ? 7 : 0));
+  // sayap: terbentang di adegan pembuka, tetap ada sampai ledakan
+  const buka = easeOut(clamp((t - .05) / .4, 0, 1)), sb = c.awk ? 1.5 : 1;
+  att.fwd(_e); u.sayap.visible = t > .05; u.sayap.position.set(att.pos.x - _e.x * .3, att.pos.y + 1.2, att.pos.z - _e.z * .3); u.sayap.rotation.y = att.yaw;
+  for (const m of u.helai) { const { sx, i } = m.userData, k = i / 6; m.position.set(sx * .12, 0, -.02 - i * .012); m.rotation.set(0, sx * .35, -sx * (lerp(.25, .3 + k * 1.5, buka) + Math.sin(t * 7 + i) * .04)); m.scale.setScalar(sb * (1.15 - k * .45) * (.4 + .6 * buka)); }
+  u.mSayap.opacity = (c.awk ? .6 : .4) * buka * redup * lerp(1, .35, clamp((t - .6) / .3, 0, 1));
+  // pilar turun dari langit
+  const turun = easeOut(clamp((t - .5) / .35, 0, 1)), H = 30, lebar = big * (1 + pecah * .5) * (1 + Math.sin(t * 31) * .05 + c.denyut * .2);
+  u.pilar.visible = t > .5; u.pilar.position.set(cx, H * (1 - turun), cz); u.pilar.scale.set(lebar, Math.max(.01, H * turun), lebar);
+  u.pilar.rotation.y = Math.atan2(camera.position.x - cx, camera.position.z - cz);
+  u.mPilar.forEach((m, i) => { m.opacity = [.26, .32][i] * (c.awk ? 1.2 : 1) * redup * redup; });
+  u.cincin.forEach((m, i) => { const f = (t * 1.4 + i / 3) % 1; m.visible = turun >= 1 && !c.boom; m.position.set(cx, cy + 6.5 * (1 - f), cz); m.scale.setScalar(big * lerp(.5, 1.3, f)); m.material.opacity = .8 * Math.sin(f * Math.PI); });
+  // mahkota: turun dari langit ke atas kepala, lalu mengecil mengunci dada lawan, berputar makin cepat, pecah saat ledakan
+  const turunM = easeOut(clamp((t - .7) / .6, 0, 1)), kunci = easeOut(clamp((t - SEAL_END) / .6, 0, 1));
+  const R = lerp(1.35, 1.0, kunci) * big * (1 + pecah * 3.5);
+  u.mahkota.visible = t > .7; u.mahkota.position.set(cx, cy + lerp(11, 2.3, turunM) - kunci * 1.0 + pecah * 1.5, cz); u.mahkota.rotation.y = c.putar;
+  u.lingkarM.scale.setScalar(R);
+  for (const m of u.paku) { const { a, h } = m.userData; m.position.set(Math.cos(a) * R, h * .5 * big * (1 + c.denyut * .4), Math.sin(a) * R); m.scale.set(.16 * big, h * big * (1 + c.denyut * .4), .16 * big); }
+  u.mMahkota.forEach(m => { m.opacity = .85 * clamp((t - .7) / .2, 0, 1) * redup * redup; });
+  // bulu peri
+  u.bulu.forEach((s, i) => {
+    const f = (i / u.bulu.length + t * .32) % 1, a = -c.putar * .8 + i * 2.4, r = (2.1 + Math.sin(t * 3 + i) * .2) * big * (1 + pecah * 2.5);
+    s.position.set(cx + Math.cos(a) * r, cy + .15 + f * 2.9 * big + pecah * 2, cz + Math.sin(a) * r);
+    s.material.opacity = .75 * Math.sin(f * Math.PI) * clamp((t - .6) / .3, 0, 1) * redup; s.material.rotation = Math.sin(t * 5 + i) * .7; s.scale.set(.34 * big, .68 * big, 1);
+  });
+  // lingkaran Taman Bulan
+  const kl = easeOut(clamp((t - .5) / .4, 0, 1)), sl = (3.8 * kl + pecah * 3) * big;
+  u.lingkar.position.set(cx, .04, cz); u.lingkar.rotation.y = -c.putar * .5; u.lingkar.scale.set(sl, 1, sl); u.lingkar.material.opacity = .45 * kl * redup * redup;
+}
+function panahLangit(c) {
+  const d = c.def, s = c.awk ? 1.3 : 1, ch = d.chest(new V3()), atas = new V3(ch.x + rand(-1.6, 1.6) * s, ch.y + rand(7, 10), ch.z + rand(-1.6, 1.6) * s);
+  showBolt(atas, ch, .14, Math.random() < .5 ? '#fff3a8' : '#ffffff', .25); sparks(ch, '#fff3a8', 8); c.denyut = 1;
+}
+// ledakan akhir: seribu butir cahaya memancar dari lawan
+function seribuCahaya(p, awk) {
+  const W = ['#ffcf5a', '#b9a2f0', '#fff3a8', '#8fd8ff'];
+  for (let i = 0; i < (awk ? 110 : 80); i++) { rndDir(_d).multiplyScalar(rand(5, awk ? 16 : 12)); FX.glow.add(p.x, p.y, p.z, _d.x, _d.y, _d.z, rand(.5, 1.1), col(W[i % 4]), 1.5, 1.6); }
+}
+// penghitung pamungkas Mado: naik dari 0x sepanjang adegan (lebih cepat tiap penyerang menekan Serang),
+// berhenti paling tinggi di 999x, dan tepat 1000x! saat ledakan akhir
+function updateSeribu(c, dt) {
+  if (c.t < .55) return;
+  if (c.boom) { setSeribu('1000x!', true, 1); return; }
+  const p = clamp((c.t - .55) / (2.75 - .55), 0, 1), E = 2.3 * Math.pow(p, 1.8) + .085 * c.aM;
+  const tuju = Math.min(999, Math.floor(999 * (1 - Math.exp(-E)))), lama = c.hitung || 0;
+  c.hitung = Math.min(tuju, Math.max(lama, Math.ceil(lerp(lama, tuju, 1 - Math.exp(-14 * dt)))));
+  const ratus = Math.floor(c.hitung / 100); if (ratus > (c.ratus || 0)) { c.ratus = ratus; sfx.ting(ratus); }
+  setSeribu(c.hitung + 'x', false, 1 + (c.denyut || 0) * .16);
+}
+let seribuTeks = '';
+function setSeribu(s, boom, k) {
+  const el = $('#seribu'); if (seribuTeks !== s) { seribuTeks = s; $('#seribuN').textContent = s; }
+  el.classList.add('on'); el.classList.toggle('boom', boom); el.style.setProperty('--k', k.toFixed(3));
+}
+function hideSeribu() { const el = $('#seribu'); el.classList.remove('on', 'boom'); seribuTeks = ''; }
 function cineFX(c, dt) {
   const att = c.att, def = c.def, el = att.def.element, t = c.t;
   const on = t > .5 && t < 2.85;
@@ -1489,6 +1653,7 @@ function cineFX(c, dt) {
   const cx = def.pos.x, cz = def.pos.z, cy = def.pos.y;
   FX.tornado.visible = on && el === 'Angin'; FX.dragon.visible = on && el === 'Api'; FX.vortex.visible = on && el === 'Air';
   if (el === 'Naga') updateNaga(c, dt); else FX.naga.visible = false;
+  if (el === 'Cahaya') updateCahaya(c, dt); else FX.cahaya.visible = false;
   if (!c.boom) fxLight.intensity = on ? 2.5 * k : 0;
   fxLight.position.set(cx, cy + 1.5, cz);
   if (!on) return;
@@ -1515,6 +1680,11 @@ function cineFX(c, dt) {
       fxLight.color.set(Math.random() < .5 ? 0xffffff : 0x9f86ff); fxLight.intensity = rand(2, 5) * k;
     }
     if (Math.random() < .7) { rndDir(_d).multiplyScalar(rand(6, 12)); FX.spark.add(cx, cy + 1.1, cz, _d.x, _d.y, _d.z, .15, col('#e6dcff'), 0, 3); }
+  } else if (el === 'Cahaya') {
+    fxLight.color.set(0xffe08a); if (!c.boom) fxLight.intensity = (2.2 + (c.awk ? .5 : 0) + (c.denyut || 0) * .8) * k;
+    const W = ['#fff3a8', '#e8fbff', '#d9c8ff'];
+    for (let i = 0; i < (c.awk ? 5 : 3); i++) { const a = Math.random() * 7, r = Math.sqrt(Math.random()) * 3.2; FX.glow.add(cx + Math.cos(a) * r, rand(3, 7.5), cz + Math.sin(a) * r, 0, rand(-6, -3), 0, rand(.6, 1), col(W[i % 3]), 2, .4); }
+    if (Math.random() < .5) { rndDir(_d).multiplyScalar(rand(3, 7)); FX.spark.add(cx, cy + 1.1, cz, _d.x, _d.y, _d.z, .2, col('#ffffff'), 0, 3); }
   } else if (el === 'Naga') {
     fxLight.color.set(0x7cff8a);
     if (Math.random() < .6) { const a = Math.random() * 7, r = rand(1, 2.6); FX.glow.add(cx + Math.cos(a) * r, rand(0, 3), cz + Math.sin(a) * r, 0, rand(.5, 2), 0, .35, col('#7cff8a'), 0, 1); }
@@ -1533,8 +1703,8 @@ function endCine() {
   def.setState('knock'); def.knockType = 'spin'; def.vel.set(dir.x * 9, 9, dir.z * 9); def.pos.y = Math.max(def.pos.y, .01);
   att.setState('idle'); att.comboCount = c.ticks + 1; att.comboShow = 1.6;
   floatText(def, '−' + dmg, '#ffe08a'); cheer('sorak', 2.4, true);
-  hideQTE(); hideUltBanner();
-  FX.tornado.visible = FX.dragon.visible = FX.vortex.visible = FX.naga.visible = false;
+  hideQTE(); hideUltBanner(); hideSeribu();
+  FX.tornado.visible = FX.dragon.visible = FX.vortex.visible = FX.naga.visible = FX.cahaya.visible = false;
   cine = null; cam.snap = true; timeScale = 1; Musik.stop(.3);
   if (def.hp <= 0) onKO(def, att);
 }
@@ -2131,11 +2301,11 @@ function updateCamera(dt) {
   const tp = _a, tl = _b;
   if (state.scene === 'select') { tp.set(0, 1.5, 5.6); tl.set(0, 1.05, 0); setCam(tp, tl, 1 - Math.exp(-4 * dt)); }
   else if (cine) {
-    const c = cine, att = c.att, def = c.def, ph = c.t < .6 ? 0 : c.t < 2.75 ? 1 : 2, nz = att.def.element === 'Naga';
+    const c = cine, att = c.att, def = c.def, ph = c.t < .6 ? 0 : c.t < 2.75 ? 1 : 2, nz = att.def.element === 'Naga', ch = att.def.element === 'Cahaya';
     if (ph !== c.phase) { c.phase = ph; cam.snap = true; }
-    if (ph === 0) { const fw = att.fwd(_c), rx = -fw.z, rz = fw.x, d = 2.5 - c.t * .7; tp.set(att.pos.x + fw.x * d + rx * .6, 1.55, att.pos.z + fw.z * d + rz * .6); tl.set(att.pos.x, 1.35, att.pos.z); }
-    else if (ph === 1) { const a = c.ang + (c.t - .6) * 1.3, z = nz ? 1.55 : 1; tp.set(def.pos.x + Math.cos(a) * 5.4 * z, 2.1 + c.lift + (nz ? 1.6 : 0), def.pos.z + Math.sin(a) * 5.4 * z); tl.set(def.pos.x, 1.1 + c.lift + (nz ? 1 : 0), def.pos.z); }
-    else { const a = c.ang + 2.15 * 1.3, z = nz ? 1.3 : 1; tp.set(def.pos.x + Math.cos(a) * 9 * z, 3.4 + (nz ? 1.5 : 0), def.pos.z + Math.sin(a) * 9 * z); tl.set(def.pos.x, 1.2 + (nz ? .8 : 0), def.pos.z); }
+    if (ph === 0) { const fw = att.fwd(_c), rx = -fw.z, rz = fw.x, d = 2.5 - c.t * .7 + (ch ? .6 : 0); tp.set(att.pos.x + fw.x * d + rx * .6, 1.55, att.pos.z + fw.z * d + rz * .6); tl.set(att.pos.x, 1.35, att.pos.z); }
+    else if (ph === 1) { const a = c.ang + (c.t - .6) * 1.3, z = nz ? 1.55 : ch ? 1.2 : 1; tp.set(def.pos.x + Math.cos(a) * 5.4 * z, 2.1 + c.lift + (nz ? 1.6 : ch ? .6 : 0), def.pos.z + Math.sin(a) * 5.4 * z); tl.set(def.pos.x, 1.1 + c.lift + (nz ? 1 : ch ? .6 : 0), def.pos.z); }
+    else { const a = c.ang + 2.15 * 1.3, z = nz ? 1.3 : ch ? 1.1 : 1; tp.set(def.pos.x + Math.cos(a) * 9 * z, 3.4 + (nz ? 1.5 : ch ? .8 : 0), def.pos.z + Math.sin(a) * 9 * z); tl.set(def.pos.x, 1.2 + (nz ? .8 : ch ? 1 : 0), def.pos.z); }
     setCam(tp, tl, 1 - Math.exp(-12 * dt));
   } else if (match && match.phase === 'over') {
     const w = F[match.winner]; const fw = w.fwd(_c);
@@ -2292,7 +2462,7 @@ function setupFighters(a, b, withSup) {
   F = [new Fighter(d0, 0, withSup ? supportDefs(0, a, b) : []), new Fighter(d1, 1, withSup ? supportDefs(1, a, b) : [])];
 }
 function resetWorld() {
-  clearProjectiles(); clearFX(); hideQTE(); hideUltBanner();
+  clearProjectiles(); clearFX(); hideQTE(); hideUltBanner(); hideSeribu();
   hitstop = 0; timeScale = 1; cine = null; cam.snap = true; cam.shake = 0;
   floats.forEach(fl => fl.el && fl.el.remove()); floats.length = 0;
 }
