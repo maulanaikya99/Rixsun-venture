@@ -402,8 +402,8 @@ const CHARS = [
     color: '#3a4a7a', dark: '#141c34', wrap: '#ddd8ee', sandal: '#2a2540', skin: '#e9be97', hair: '#eceaf5', hairStyle: 'tall', band: '#1d1a33', scarf: '#f2c230', belt: '#1a1530', fx: '#e6dcff', altColor: '#8a2f3e', altScarf: '#e6e9f0' },
   { id: 'mio', model: 'tirta', name: 'Tirta', element: 'Air', desc: 'Penjaga Teluk. Seimbang. Gelombangnya menembus shuriken dan menyapu lawan.', jutsu: 'Gelombang Pasang', ult: 'Pusaran Samudra', ult2: 'Amukan Palung Laut', speed: 8.0, power: 1,
     color: '#2a7fc0', dark: '#1c3550', wrap: '#dbe7f5', sandal: '#25304a', skin: '#f3cfab', hair: '#202a4a', hairStyle: 'bob', band: '#162038', scarf: '#86cdf2', belt: '#141c33', fx: '#8fdcff', altColor: '#e05a4a', altScarf: '#f2b84c' },
-  // proc: belum punya file .glb, jadi memakai model prosedural
-  { id: 'azam', model: 'azam', proc: true, name: 'Azam', element: 'Naga', desc: 'Pawang Naga dari Rawa Hijau. Ular naganya meliuk di tanah dan menggigit dari jauh. Pamungkasnya memanggil naga raksasa yang ia kendalikan.', jutsu: 'Taring Naga Hijau', ult: 'Panggilan Naga Hijau', ult2: 'Murka Naga Rawa', speed: 8.1, power: 1.05,
+  // model chibi dibuat oleh tools/buat-azam.mjs
+  { id: 'azam', model: 'azam', name: 'Azam', element: 'Naga', desc: 'Pawang Naga dari Rawa Hijau. Ular naganya meliuk di tanah dan menggigit dari jauh. Pamungkasnya memanggil naga raksasa yang ia kendalikan.', jutsu: 'Taring Naga Hijau', ult: 'Panggilan Naga Hijau', ult2: 'Murka Naga Rawa', speed: 8.1, power: 1.05,
     color: '#2f7a3a', dark: '#1a2e22', wrap: '#e2e8cf', sandal: '#2a3326', skin: '#d9a77c', hair: '#14231a', hairStyle: 'naga', band: '#1f2a1c', scarf: '#d9ac3a', belt: '#3a2a14', fx: '#7cff8a', altColor: '#5a3a8a', altScarf: '#d8dce6' },
 ];
 const JUTSU_RANGE = { sora: [4, 16], akane: [4, 16], rai: [2.5, 11], mio: [3, 14], azam: [3.5, 15] };
@@ -523,6 +523,99 @@ const sfx = {
   ko() { Sound.tone(98, 2.2, 'sine', .5); Sound.tone(147, 1.8, 'triangle', .16); Sound.noise(.5, 300, .5, .36, 'lowpass', 80); },
   select() { Sound.tone(520, .06, 'triangle', .12); },
   round() { Sound.tone(330, .25, 'triangle', .18); Sound.tone(495, .35, 'triangle', .18, null, .18); },
+};
+
+// ---------- musik pengiring jurus ----------
+// Komposisi orisinal dengan tangga nada pentatonik "in" (0, 1, 5, 7, 8 semitone): taiko, kayu tepuk,
+// petikan kecapi, seruling bambu, dan gong, semuanya disintesis Web Audio.
+const NADA_IN = [0, 1, 5, 7, 8];
+const AKAR_NADA = { Angin: 293.66, Api: 220, Petir: 329.63, Air: 196, Naga: 246.94 };
+const nada = (akar, i) => akar * Math.pow(2, (NADA_IN[((i % 5) + 5) % 5] + 12 * Math.floor(i / 5)) / 12);
+const Musik = {
+  bus: null,
+  siap() { return Sound.ctx && !Sound.muted; },
+  // bus khusus adegan pamungkas supaya iringannya bisa dipudarkan saat ledakan
+  mulai() { if (!this.siap()) return null; this.stop(0); const g = Sound.ctx.createGain(); g.gain.value = 1; g.connect(Sound.master); return (this.bus = g); },
+  stop(fade = .25, g = this.bus) {
+    if (!g) return; const t = Sound.ctx.currentTime;
+    g.gain.cancelScheduledValues(t); g.gain.setValueAtTime(g.gain.value, t); g.gain.linearRampToValueAtTime(0, t + fade);
+    setTimeout(() => g.disconnect(), (fade + .2) * 1000); if (g === this.bus) this.bus = null;
+  },
+  env(t, out, peak, att, dur) { const g = Sound.ctx.createGain(); g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(peak, t + att); g.gain.exponentialRampToValueAtTime(.0001, t + dur); g.connect(out); return g; },
+  taiko(t, out, kuat = 1, f = 68) {
+    const c = Sound.ctx, o = c.createOscillator(); o.type = 'sine';
+    o.frequency.setValueAtTime(f * 1.7, t); o.frequency.exponentialRampToValueAtTime(f * .55, t + .32);
+    o.connect(this.env(t, out, .55 * kuat, .004, .5)); o.start(t); o.stop(t + .55);
+    const n = c.createBufferSource(), fl = c.createBiquadFilter(); n.buffer = Sound.buf; fl.type = 'lowpass'; fl.frequency.value = 380;
+    n.connect(fl).connect(this.env(t, out, .3 * kuat, .002, .09)); n.start(t, Math.random() * .5); n.stop(t + .12);
+  },
+  kayu(t, out, g = .3) {
+    const c = Sound.ctx, n = c.createBufferSource(), fl = c.createBiquadFilter(); n.buffer = Sound.buf; fl.type = 'bandpass'; fl.frequency.value = 2300; fl.Q.value = 9;
+    n.connect(fl).connect(this.env(t, out, g, .001, .05)); n.start(t, Math.random() * .5); n.stop(t + .07);
+  },
+  kecapi(t, out, f, dur = .9, g = .12) {
+    const c = Sound.ctx, fl = c.createBiquadFilter(); fl.type = 'lowpass'; fl.frequency.setValueAtTime(3800, t); fl.frequency.exponentialRampToValueAtTime(700, t + dur * .6);
+    fl.connect(this.env(t, out, g, .004, dur));
+    for (const [type, k, gg] of [['triangle', 1, 1], ['sawtooth', 2.003, .25]]) {
+      const o = c.createOscillator(), og = c.createGain(); o.type = type; o.frequency.setValueAtTime(f * k * 1.012, t); o.frequency.exponentialRampToValueAtTime(f * k, t + .05);
+      og.gain.value = gg; o.connect(og).connect(fl); o.start(t); o.stop(t + dur + .05);
+    }
+  },
+  seruling(t, out, f, dur, g = .08, naik = 0) {
+    const c = Sound.ctx, o = c.createOscillator(), lfo = c.createOscillator(), lg = c.createGain(), eg = c.createGain();
+    o.type = 'sine'; o.frequency.setValueAtTime(f * .94, t); o.frequency.exponentialRampToValueAtTime(f, t + .12);
+    if (naik) o.frequency.exponentialRampToValueAtTime(f * Math.pow(2, naik / 12), t + dur * .85);
+    lfo.frequency.value = 5.4; lg.gain.setValueAtTime(0, t); lg.gain.linearRampToValueAtTime(f * .012, t + .3); lfo.connect(lg).connect(o.frequency);
+    eg.gain.setValueAtTime(.0001, t); eg.gain.exponentialRampToValueAtTime(g, t + .1); eg.gain.setValueAtTime(g, t + dur - .15); eg.gain.exponentialRampToValueAtTime(.0001, t + dur);
+    o.connect(eg).connect(out); o.start(t); lfo.start(t); o.stop(t + dur + .02); lfo.stop(t + dur + .02);
+    const n = c.createBufferSource(), fl = c.createBiquadFilter(); n.buffer = Sound.buf; fl.type = 'bandpass'; fl.frequency.value = f * 2; fl.Q.value = 1.4;
+    n.connect(fl).connect(this.env(t, out, g * .35, .08, dur)); n.start(t, Math.random() * .4); n.stop(t + dur);
+  },
+  gong(t, out, f = 98, g = .16) { for (const [k, gg, d] of [[1, 1, 2.6], [2.76, .45, 1.6], [5.4, .2, .9]]) { const o = Sound.ctx.createOscillator(); o.frequency.value = f * k; o.connect(this.env(t, out, g * gg, .01, d)); o.start(t); o.stop(t + d); } },
+
+  // aba-aba singkat setiap jurus
+  jurus(el) {
+    if (!this.siap()) return; const t = Sound.ctx.currentTime + .01, a = AKAR_NADA[el] || 261.6, m = Sound.master;
+    this.kayu(t, m, .22); this.kayu(t + .08, m, .18);
+    [2, 3, 4].forEach((i, k) => this.kecapi(t + k * .06, m, nada(a, i), .5, .08));
+    this.kecapi(t + .2, m, nada(a, 7), .7, .09); this.taiko(t + .2, m, .7);
+  },
+  kebangkitan(el) {
+    if (!this.siap()) return; const t = Sound.ctx.currentTime + .01, a = AKAR_NADA[el] || 261.6, m = Sound.master;
+    for (let i = 0; i < 7; i++) this.taiko(t + i * (.13 - i * .01), m, .45 + i * .08, 62);
+    this.seruling(t + .15, m, nada(a, 5), 1.1, .07, 5); this.gong(t + .75, m, a / 2, .14);
+  },
+  // adegan pamungkas: pembuka, ketegangan saat segel, irama saat adu tenaga, ledakan akhir
+  ultBuka(c) {
+    const out = this.mulai(); if (!out) return; const t = Sound.ctx.currentTime + .01, a = AKAR_NADA[c.att.def.element] || 261.6;
+    this.kayu(t, out); this.kayu(t + .12, out); this.gong(t + .05, out, a / 2, .18); this.taiko(t + .05, out, 1.1, 60);
+    this.seruling(t + .2, out, nada(a, 9), 1.0, .075, 1);
+  },
+  ultTegang(c) {
+    if (!this.bus) return; const c2 = Sound.ctx, out = c2.createGain(); out.connect(this.bus); c.mTegang = out;
+    const t = c2.currentTime + .01, a = AKAR_NADA[c.att.def.element] || 261.6; let dt = .16, tt = 0;
+    while (tt < .75) { this.taiko(t + tt, out, .35 + tt * .9, 74); tt += dt; dt = Math.max(.055, dt * .86); }
+    for (let k = 0; k < 9; k++) this.kecapi(t + k * .08, out, nada(a, 6), .2, .05);
+  },
+  ultIrama(c) {
+    if (!this.bus) return; if (c.mTegang) { this.stop(.08, c.mTegang); c.mTegang = null; }
+    const out = this.bus, t = Sound.ctx.currentTime + .01, a = AKAR_NADA[c.att.def.element] || 261.6, b = .19;
+    const pukul = [1.1, 0, .55, 0, 1, .6, 0, .7];
+    const petik = [0, 2, 3, 2, 4, 3, 2, 1];
+    for (let k = 0; k < 16; k++) {
+      const tk = t + k * b;
+      if (pukul[k % 8]) this.taiko(tk, out, pukul[k % 8], k % 8 === 0 ? 58 : 76);
+      if (k % 2 === 1) this.kayu(tk, out, .12);
+      this.kecapi(tk, out, nada(a, petik[k % 8] + (k >= 8 ? 5 : 0)), .35, .07);
+    }
+    this.seruling(t, out, nada(a, 7), b * 6, .07); this.seruling(t + b * 6, out, nada(a, 8), b * 4, .075, -1); this.seruling(t + b * 10, out, nada(a, 10), b * 6, .08, 2);
+  },
+  ultLedak(c) {
+    this.stop(.12); if (!this.siap()) return; const t = Sound.ctx.currentTime + .01, a = AKAR_NADA[c.att.def.element] || 261.6, m = Sound.master;
+    this.taiko(t, m, 1.5, 50); this.taiko(t + .16, m, 1.2, 55); this.gong(t, m, a / 2, .22); this.kayu(t + .02, m, .3);
+    this.seruling(t + .05, m, nada(a, c.awk ? 12 : 10), 1.1, .085, 3);
+    if (c.awk) this.gong(t + .1, m, a, .14);
+  },
 };
 
 // ---------- input ----------
@@ -1131,14 +1224,14 @@ function startGrab(f, o) { f.setState('grab'); f.yaw = yawTo(f.pos, o.pos); sfx.
 function startJutsu(f, o) {
   f.chakra -= JUTSU_COST; f.yaw = yawTo(f.pos, o.pos);
   f.setState(f.def.id === 'rai' ? 'rdash' : 'cast'); f.vel.set(0, f.onGround ? 0 : 1.5, 0);
-  sfx.jutsu(f.def.element);
+  sfx.jutsu(f.def.element); Musik.jurus(f.def.element);
   const c = col(f.def.fx); f.chest(_e);
   for (let i = 0; i < 16; i++) { rndDir(_d).multiplyScalar(rand(1, 4)); FX.glow.add(_e.x, _e.y, _e.z, _d.x, _d.y, _d.z, rand(.25, .5), c, 0, 3); }
 }
 function startUlt(f, o) { f.chakra -= ULT_COST; f.setState('ult'); f.yaw = yawTo(f.pos, o.pos); sfx.jutsu(f.def.element); ringAt(f.chest(_e), f.def.fx, .6, 3, false, .4); }
 function startAwake(f) {
   f.awakeUsed = true; f.awake = AWAKE_TIME; f.setState('awaken'); f.invuln = 1; f.chakra = 100;
-  sfx.awaken(); shake(8); ringAt(f.chest(_e), f.def.fx, .5, 6, false, .6); ringAt(new V3(f.pos.x, .05, f.pos.z), f.def.fx, .5, 5, true, .6);
+  sfx.awaken(); Musik.kebangkitan(f.def.element); shake(8); ringAt(f.chest(_e), f.def.fx, .5, 6, false, .6); ringAt(new V3(f.pos.x, .05, f.pos.z), f.def.fx, .5, 5, true, .6);
   floatText(f, 'Kebangkitan!', f.def.fx); showCall('Kebangkitan', f.def.name, 1.2, f.def.scarf);
 }
 function throwShur(f, o, charged) {
@@ -1301,12 +1394,14 @@ function startCine(att, def) {
   att.yaw = yawTo(att.pos, def.pos); def.yaw = yawTo(def.pos, att.pos);
   cine.ang = Math.atan2(dir.z, dir.x) + .9;
   F.forEach(f => f.sups.forEach(s => { s.st = 'off'; s.model.root.visible = false; }));
-  sfx.ult(); shake(8); showUltBanner(att);
+  sfx.ult(); shake(8); showUltBanner(att); Musik.ultBuka(cine);
 }
 function updateCine(dt) {
   const c = cine, att = c.att, def = c.def, el = att.def.element, fx = att.def.fx;
   c.t += dt; att.t += dt;
   def.chest(_c); _c.y += c.lift;
+  if (c.t > .6 && !c.mSeal) { c.mSeal = true; Musik.ultTegang(c); }
+  if (c.t > .6 && c.seal.done && !c.mIrama) { c.mIrama = true; Musik.ultIrama(c); }
   if (c.t > .6 && c.t < 2.7) {
     if (c.seal.done) {
       const sebelum = Math.floor(c.aM);
@@ -1331,6 +1426,7 @@ function updateCine(dt) {
     // ledakan akhir diperlambat sebentar
     timeScale = .3; c.slowEnd = c.t + (c.awk ? .24 : .18);
     if (el === 'Naga') sfx.roar();
+    Musik.ultLedak(c);
     const sub = c.seal.win === att ? 'Segel sempurna · kerusakan +20%' : c.seal.win === def ? 'Segel ditahan · kerusakan −20%' : '';
     showCall(c.awk ? 'Bangkit!' : 'Pamungkas!', sub, 1.4, att.def.scarf);
   }
@@ -1439,7 +1535,7 @@ function endCine() {
   floatText(def, '−' + dmg, '#ffe08a'); cheer('sorak', 2.4, true);
   hideQTE(); hideUltBanner();
   FX.tornado.visible = FX.dragon.visible = FX.vortex.visible = FX.naga.visible = false;
-  cine = null; cam.snap = true; timeScale = 1;
+  cine = null; cam.snap = true; timeScale = 1; Musik.stop(.3);
   if (def.hp <= 0) onKO(def, att);
 }
 
@@ -2189,7 +2285,7 @@ const altCache = {};
 function altDef(d) { return altCache[d.id] || (altCache[d.id] = Object.assign({}, d, { color: d.altColor, scarf: d.altScarf, alt: true })); }
 function pickDef(s) { const p = state.picks[s]; return s === 1 && state.picks[0] === p ? altDef(CHARS[p]) : CHARS[p]; }
 function supportDefs(side, a, b) { const others = CHARS.filter((c, i) => i !== a && i !== b).slice(0, 2); return others.map(d => side === 1 ? altDef(d) : d); }
-function clearFighters() { F.forEach(f => f.dispose()); F = []; clearProjectiles(); cine = null; logs.forEach(l => scene.remove(l.o)); logs.length = 0; }
+function clearFighters() { F.forEach(f => f.dispose()); F = []; clearProjectiles(); cine = null; Musik.stop(.1); logs.forEach(l => scene.remove(l.o)); logs.length = 0; }
 function setupFighters(a, b, withSup) {
   clearFighters();
   const d0 = CHARS[a], d1 = a === b ? altDef(CHARS[b]) : CHARS[b];

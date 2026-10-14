@@ -21,6 +21,7 @@ Lalu buka http://localhost:8000. Butuh Python 3.
 | `js/petarung.js` | Pemuat model petarung, material, garis tinta |
 | `js/penonton.js` | Penonton NPC di sekeliling arena |
 | `assets/arena/` | 4 arena (glTF dalam JSON) |
-| `assets/petarung/` | 4 petarung (Bayu, Gempar, Guntur, Tirta) + warna alternatif P2 |
+| `assets/petarung/` | 5 petarung (Bayu, Gempar, Guntur, Tirta, Azam) + kostum P2 |
+| `tools/buat-azam.mjs` | Generator model chibi Azam: `node tools/buat-azam.mjs` (rangka & animasi disalin dari Bayu) |
 | `assets/npc/` | Paket karakter penonton |
 | `lib/three/` | Three.js dan addon-nya (lisensi MIT) |
