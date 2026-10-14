@@ -261,7 +261,7 @@ kbd { display: inline-block; min-width: 1.9em; padding: 2px 6px; font: 600 .82re
           </div>
           <p class="pick-el" id="pe0">Elemen Angin</p>
           <p class="pick-desc" id="pd0"></p>
-          <dl class="pick-moves"><dt>Jurus</dt><dd id="pj0"></dd><dt>Pamungkas</dt><dd id="pu0"></dd><dt>Partner</dt><dd id="pp0"></dd></dl>
+          <dl class="pick-moves"><dt>Jurus</dt><dd id="pj0"></dd><dt>Pamungkas</dt><dd id="pu0"></dd><dt>Kebangkitan</dt><dd id="pk0"></dd><dt>Partner</dt><dd id="pp0"></dd></dl>
         </div>
         <div class="pick right">
           <p class="eyebrow" id="pl1">CPU · ← / →</p>
@@ -272,7 +272,7 @@ kbd { display: inline-block; min-width: 1.9em; padding: 2px 6px; font: 600 .82re
           </div>
           <p class="pick-el" id="pe1">Elemen Api</p>
           <p class="pick-desc" id="pd1"></p>
-          <dl class="pick-moves"><dt>Jurus</dt><dd id="pj1"></dd><dt>Pamungkas</dt><dd id="pu1"></dd><dt>Partner</dt><dd id="pp1"></dd></dl>
+          <dl class="pick-moves"><dt>Jurus</dt><dd id="pj1"></dd><dt>Pamungkas</dt><dd id="pu1"></dd><dt>Kebangkitan</dt><dd id="pk1"></dd><dt>Partner</dt><dd id="pp1"></dd></dl>
         </div>
       </div>
       <div class="select-foot">
@@ -340,6 +340,7 @@ kbd { display: inline-block; min-width: 1.9em; padding: 2px 6px; font: 600 .82re
           <tr class="sub"><th scope="row">Substitusi</th><td colspan="3">Tekan Tangkis tepat saat terkena serangan</td></tr>
           <tr class="sub"><th scope="row">Bantingan</th><td colspan="3">Tahan Tangkis, lalu Serang (menembus tangkisan)</td></tr>
           <tr class="sub"><th scope="row">Variasi kombo</th><td colspan="3">Tahan maju (W / ↑) atau mundur (S / ↓) di pukulan terakhir: lempar ke atas atau banting</td></tr>
+          <tr class="sub"><th scope="row">Segel pamungkas</th><td colspan="3">Saat adegan pamungkas dimulai, tekan tombol yang muncul paling cepat</td></tr>
           <tr class="sub"><th scope="row">Kebangkitan</th><td colspan="3">Saat darah di bawah 30%, tahan Chakra</td></tr>
           <tr><th scope="row">Jeda</th><td><kbd>Esc</kbd></td><td><kbd>Esc</kbd></td><td>Options / Start</td></tr>
         </tbody>
@@ -351,7 +352,8 @@ kbd { display: inline-block; min-width: 1.9em; padding: 2px 6px; font: 600 .82re
       <li><b>Substitusi.</b> Bar substitusi punya 4 ruas dan terisi lagi pelan-pelan. Pakai untuk lolos dari kombo, lalu muncul di belakang lawan.</li>
       <li><b>Tangkisan.</b> Menahan pukulan terlalu lama menjebol tangkisan. Bantingan tidak bisa ditangkis.</li>
       <li><b>Partner.</b> Dua karakter yang tidak dipilih menjadi partner. Panggil di tengah kombo untuk memperpanjangnya.</li>
-      <li><b>Jurus pamungkas.</b> Kalau terjangan awalnya kena, adegan sinematik dimulai. Tekan Serang berulang-ulang untuk menambah kerusakan, atau untuk menguranginya kalau kamu yang terkena.</li>
+      <li><b>Jurus pamungkas.</b> Kalau terjangan awalnya kena, adegan sinematik dimulai. Pertama muncul <b>segel</b>: satu tombol acak (Serang, Lompat, Chakra, atau Tangkis). Yang menekannya duluan menang: penyerang menambah kerusakan 20%, yang bertahan menguranginya 20%. Salah tombol berarti gugur. Setelah itu, tekan Serang berulang-ulang untuk adu tenaga.</li>
+      <li><b>Pamungkas Kebangkitan.</b> Jurus pamungkas yang dipakai saat bangkit berganti menjadi versi terkuat: nama baru, ledakan lebih besar, dan kerusakan 35% lebih tinggi.</li>
       <li><b>Mode 1 pemain.</b> Kedua set tombol bisa dipakai. Susunan nyaman: gerak dengan <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>, aksi dengan <kbd>J</kbd><kbd>K</kbd><kbd>L</kbd><kbd>I</kbd><kbd>U</kbd><kbd>O</kbd><kbd>P</kbd>.</li>
     </ul>
   </section>
@@ -385,18 +387,19 @@ const T = THREE, V3 = T.Vector3;
 // ---------- constants ----------
 const ARENA_R = 17, GRAV = 26, JUMP_V = 9.4, MAX_HP = 1000, ROUND_TIME = 99;
 const JUTSU_COST = 25, ULT_COST = 100, DASH_COST = 6, CSHUR_COST = 8, CHARGE_RATE = 42;
+const SEAL_KEYS = ['atk', 'jump', 'chakra', 'guard'], SEAL_END = 1.3, SEAL_BONUS = .2;
 const SUB_REGEN = 7, SUP_CD = 10, ULT_BASE = 300, AWAKE_HP = .3, AWAKE_TIME = 18, TAP = .22;
 const motionK = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches ? .3 : 1;
 const UP = new V3(0, 1, 0), ZERO = new V3();
 
 const CHARS = [
-  { id: 'sora', model: 'bayu', name: 'Bayu', element: 'Angin', desc: 'Si Pusaran. Lincah dan cepat. Menekan dari jauh dengan bilah angin beruntun.', jutsu: 'Bilah Angin', ult: 'Badai Seribu Bilah', speed: 8.4, power: .95,
+  { id: 'sora', model: 'bayu', name: 'Bayu', element: 'Angin', desc: 'Si Pusaran. Lincah dan cepat. Menekan dari jauh dengan bilah angin beruntun.', jutsu: 'Bilah Angin', ult: 'Badai Seribu Bilah', ult2: 'Mata Badai Nusantara', speed: 8.4, power: .95,
     color: '#1f8f88', dark: '#173a3c', wrap: '#d9e6df', sandal: '#2b3340', skin: '#f1c9a1', hair: '#1d2633', hairStyle: 'spiky', band: '#26314a', scarf: '#9ef0e2', belt: '#16212c', fx: '#9ff5e0', altColor: '#3a4fa8', altScarf: '#f2d24a' },
-  { id: 'akane', model: 'gempar', name: 'Gempar', element: 'Api', elementLabel: 'Bara', desc: 'Pandai Besi Gunung Bara. Pukulan paling berat. Bola apinya lambat tapi menghancurkan.', jutsu: 'Bola Api Besar', ult: 'Naga Api Merah', speed: 7.6, power: 1.12,
+  { id: 'akane', model: 'gempar', name: 'Gempar', element: 'Api', elementLabel: 'Bara', desc: 'Pandai Besi Gunung Bara. Pukulan paling berat. Bola apinya lambat tapi menghancurkan.', jutsu: 'Bola Api Besar', ult: 'Naga Api Merah', ult2: 'Tempa Gunung Bara', speed: 7.6, power: 1.12,
     color: '#b8321e', dark: '#2e2b2e', wrap: '#ecd9c3', sandal: '#3a262a', skin: '#efc39b', hair: '#7a1f1a', hairStyle: 'pony', band: '#2a2030', scarf: '#ff8a2a', belt: '#341a1c', fx: '#ffb347', altColor: '#2f6fb3', altScarf: '#4ad8ff' },
-  { id: 'rai', model: 'guntur', name: 'Guntur', element: 'Petir', desc: 'Si Bertopeng. Paling cepat. Jurusnya terjangan kilat yang mengejar lawan.', jutsu: 'Tusukan Petir', ult: 'Seribu Petir Langit', speed: 8.8, power: 1,
+  { id: 'rai', model: 'guntur', name: 'Guntur', element: 'Petir', desc: 'Si Bertopeng. Paling cepat. Jurusnya terjangan kilat yang mengejar lawan.', jutsu: 'Tusukan Petir', ult: 'Seribu Petir Langit', ult2: 'Tombak Langit Sembilan', speed: 8.8, power: 1,
     color: '#3a4a7a', dark: '#141c34', wrap: '#ddd8ee', sandal: '#2a2540', skin: '#e9be97', hair: '#eceaf5', hairStyle: 'tall', band: '#1d1a33', scarf: '#f2c230', belt: '#1a1530', fx: '#e6dcff', altColor: '#8a2f3e', altScarf: '#e6e9f0' },
-  { id: 'mio', model: 'tirta', name: 'Tirta', element: 'Air', desc: 'Penjaga Teluk. Seimbang. Gelombangnya menembus shuriken dan menyapu lawan.', jutsu: 'Gelombang Pasang', ult: 'Pusaran Samudra', speed: 8.0, power: 1,
+  { id: 'mio', model: 'tirta', name: 'Tirta', element: 'Air', desc: 'Penjaga Teluk. Seimbang. Gelombangnya menembus shuriken dan menyapu lawan.', jutsu: 'Gelombang Pasang', ult: 'Pusaran Samudra', ult2: 'Amukan Palung Laut', speed: 8.0, power: 1,
     color: '#2a7fc0', dark: '#1c3550', wrap: '#dbe7f5', sandal: '#25304a', skin: '#f3cfab', hair: '#202a4a', hairStyle: 'bob', band: '#162038', scarf: '#86cdf2', belt: '#141c33', fx: '#8fdcff', altColor: '#e05a4a', altScarf: '#f2b84c' },
 ];
 const JUTSU_RANGE = { sora: [4, 16], akane: [4, 16], rai: [2.5, 11], mio: [3, 14] };
@@ -995,7 +998,7 @@ class Fighter {
     this.model = buildModel(def); scene.add(this.model.root); if (this.model.scarf) scene.add(this.model.scarf);
     this.pos = new V3(); this.vel = new V3(); this.pose = makePose();
     this.sups = supDefs.map((d, i) => new Support(d, this, i));
-    this.rawAtk = false; this.prevAtk = false;
+    this.rawAtk = false; this.prevAtk = false; this.rawPress = {}; this.rawHeld = {};
     this.resetRound();
   }
   resetRound() {
@@ -1223,7 +1226,10 @@ function updateLogs(dt) {
 }
 function startCine(att, def) {
   clearProjectiles();
-  cine = { att, def, t: 0, dur: 3.3, ticks: 0, boom: false, aM: 0, dM: 0, lift: 0, ang: 0, phase: 0, boltT: 0, slashT: 0 };
+  cine = { att, def, t: 0, dur: 3.3, ticks: 0, boom: false, aM: 0, dM: 0, lift: 0, ang: 0, phase: 0, boltT: 0, slashT: 0, awk: att.awake > 0, sealMul: 1, slowEnd: 0, qMode: '' };
+  // segel: satu tombol acak di awal adegan; yang menekannya duluan menang, salah tombol langsung gugur
+  const aiSeal = (f, lambat) => f.ai ? { t: .75 + f.ai.L.react * rand(1, 2.2) * lambat, ok: Math.random() < f.ai.L.aggr } : null;
+  cine.seal = { key: SEAL_KEYS[Math.floor(Math.random() * SEAL_KEYS.length)], done: false, win: null, out: new Set(), ai: new Map([[att, aiSeal(att, 1)], [def, aiSeal(def, 1.15)]]) };
   att.setState('ultpose'); att.vel.set(0, 0, 0); def.setState('hit'); def.stun = 99; def.vel.set(0, 0, 0);
   def.pos.y = 0; att.pos.y = 0;
   const dir = _a.set(att.pos.x - def.pos.x, 0, att.pos.z - def.pos.z); if (dir.lengthSq() < .01) def.fwd(dir); dir.normalize();
@@ -1238,8 +1244,10 @@ function updateCine(dt) {
   c.t += dt; att.t += dt;
   def.chest(_c); _c.y += c.lift;
   if (c.t > .6 && c.t < 2.7) {
-    if (att.ai) c.aM += att.ai.L.mash * dt * rand(.6, 1.4); else if (att.rawAtk) c.aM++;
-    if (def.ai) c.dM += def.ai.L.mash * dt * rand(.4, 1.1); else if (def.rawAtk) c.dM++;
+    if (c.seal.done) {
+      if (att.ai) c.aM += att.ai.L.mash * dt * rand(.6, 1.4); else if (att.rawAtk) c.aM++;
+      if (def.ai) c.dM += def.ai.L.mash * dt * rand(.4, 1.1); else if (def.rawAtk) c.dM++;
+    } else updateSeal(c);
     const n = Math.floor((c.t - .6) / .16) + 1;
     if (n > c.ticks) { c.ticks = n; def.flash = .07; shake(5); sfx.hit(); sparks(_d.set(_c.x + rand(-.5, .5), _c.y + rand(-.6, .6), _c.z + rand(-.5, .5)), fx, 10); }
     updateQTE(c);
@@ -1248,11 +1256,33 @@ function updateCine(dt) {
   cineFX(c, dt);
   if (c.t >= 1.7) $('#ultban').classList.add('out');
   if (c.t >= 2.75 && !c.boom) {
-    c.boom = true; shake(22); sfx.heavy(); hideQTE();
+    c.boom = true; shake(c.awk ? 30 : 22); sfx.heavy(); hideQTE();
     ringAt(_c, fx, .5, 9, false, .6); ringAt(_d.set(def.pos.x, .05, def.pos.z), fx, .5, 8, true, .7); starAt(_c, 4); sparks(_c, fx, 30, true);
-    fxLight.color.set(0xffffff); fxLight.intensity = 6;
+    if (c.awk) { ringAt(_c, att.def.scarf, .6, 11, false, .7); starAt(_c, 5); sparks(_c, att.def.scarf, 24, true); }
+    fxLight.color.set(0xffffff); fxLight.intensity = c.awk ? 7 : 6;
+    // ledakan akhir diperlambat sebentar
+    timeScale = .3; c.slowEnd = c.t + (c.awk ? .24 : .18);
+    const sub = c.seal.win === att ? 'Segel sempurna · kerusakan +20%' : c.seal.win === def ? 'Segel ditahan · kerusakan −20%' : '';
+    showCall(c.awk ? 'Bangkit!' : 'Pamungkas!', sub, 1.4, att.def.scarf);
   }
+  if (c.slowEnd && c.t >= c.slowEnd) { timeScale = 1; c.slowEnd = 0; }
   if (c.t >= c.dur) endCine();
+}
+function sealTry(c, f, ok) {
+  const s = c.seal; if (s.done || s.out.has(f)) return;
+  if (!ok) { s.out.add(f); floatText(f, 'Segel salah', '#aaa6bf'); sfx.block(); if (s.out.size === 2) s.done = true; return; }
+  s.done = true; s.win = f; c.sealMul = f === c.att ? 1 + SEAL_BONUS : 1 - SEAL_BONUS;
+  floatText(f, f === c.att ? 'Segel sempurna!' : 'Segel ditahan!', f.def.scarf); sfx.ready();
+  ringAt(f.chest(_e), f.def.fx, .4, 3, false, .4);
+}
+function updateSeal(c) {
+  const s = c.seal;
+  if (c.t >= SEAL_END) { s.done = true; return; }
+  for (const f of [c.att, c.def]) {
+    const a = s.ai.get(f);
+    if (a) { if (c.t >= a.t) { s.ai.set(f, null); sealTry(c, f, a.ok); } }
+    else if (!f.ai) for (const k of SEAL_KEYS) if (f.rawPress[k]) sealTry(c, f, k === s.key);
+  }
 }
 function cineFX(c, dt) {
   const att = c.att, def = c.def, el = att.def.element, t = c.t;
@@ -1295,7 +1325,7 @@ function cineFX(c, dt) {
 function endCine() {
   const c = cine, att = c.att, def = c.def;
   const r = (c.aM + 1) / (c.aM + c.dM + 2);
-  const dmg = Math.round(ULT_BASE * (.7 + .6 * r) * att.def.power * (att.awake > 0 ? 1.2 : 1));
+  const dmg = Math.round(ULT_BASE * (.7 + .6 * r) * att.def.power * (c.awk ? 1.35 : 1) * c.sealMul);
   def.hp = Math.max(0, def.hp - dmg);
   const dir = _a.set(def.pos.x - att.pos.x, 0, def.pos.z - att.pos.z).normalize();
   def.setState('knock'); def.knockType = 'spin'; def.vel.set(dir.x * 9, 9, dir.z * 9); def.pos.y = Math.max(def.pos.y, .01);
@@ -1303,7 +1333,7 @@ function endCine() {
   floatText(def, '−' + dmg, '#ffe08a'); cheer('sorak', 2.4, true);
   hideQTE(); hideUltBanner();
   FX.tornado.visible = FX.dragon.visible = FX.vortex.visible = false;
-  cine = null; cam.snap = true;
+  cine = null; cam.snap = true; timeScale = 1;
   if (def.hp <= 0) onKO(def, att);
 }
 
@@ -2013,21 +2043,37 @@ function showCall(text, sub, dur, color) {
 function showUltBanner(att) {
   const el = $('#ultban'); el.classList.remove('show', 'out');
   el.style.setProperty('--ub', att.def.dark); el.style.setProperty('--uc', att.def.scarf);
-  $('#ultSmall').textContent = 'JURUS PAMUNGKAS · ' + att.def.name.toUpperCase(); $('#ultName').textContent = att.def.ult;
+  const awk = att.awake > 0;
+  $('#ultSmall').textContent = (awk ? 'PAMUNGKAS KEBANGKITAN · ' : 'JURUS PAMUNGKAS · ') + att.def.name.toUpperCase(); $('#ultName').textContent = awk ? att.def.ult2 : att.def.ult;
   void el.offsetWidth; el.classList.add('show');
 }
 function hideUltBanner() { $('#ultban').classList.remove('show', 'out'); }
-function keyLabel(f) { if (!f.src) return 'Serang'; return f.src.maps.includes('A') && f.src.maps.includes('B') ? 'F / J' : f.src.maps.includes('A') ? 'F' : 'J'; }
+const ACT_NAME = { atk: 'Serang', jump: 'Lompat', chakra: 'Chakra', guard: 'Tangkis' };
+const PAD_NAME = { atk: '○ / B', jump: '✕ / A', chakra: '△ / Y', guard: 'R1 / RB' };
+function actLabel(f, act) {
+  if (!f.src) return ACT_NAME[act];
+  const l = f.src.maps.map(m => KEYMAPS[m][act].replace('Key', ''));
+  const pads = connectedPads();
+  if (f.src.pads.some(i => pads[i])) l.push(PAD_NAME[act]);
+  return l.join(' / ');
+}
 function updateQTE(c) {
-  const el = $('#qte');
-  if (!el.classList.contains('on')) {
-    el.classList.add('on');
-    const human = !c.att.ai ? c.att : !c.def.ai ? c.def : null;
-    const txt = !human ? 'Adu tenaga jurus pamungkas' : human === c.att ? `Tekan <kbd>${keyLabel(human)}</kbd> berulang-ulang untuk menambah kerusakan!` : `Tekan <kbd>${keyLabel(human)}</kbd> berulang-ulang untuk menahan!`;
+  const el = $('#qte'), mode = c.seal.done ? 'mash' : 'seal';
+  if (c.qMode !== mode) {
+    c.qMode = mode; el.classList.add('on');
+    const humans = [c.att, c.def].filter(f => !f.ai), human = humans.length === 1 ? humans[0] : null;
+    let txt;
+    if (mode === 'seal') {
+      const k = c.seal.key;
+      txt = !humans.length ? 'Adu cepat segel' : `Segel! Tekan <kbd>${ACT_NAME[k]}</kbd> (${humans.map(f => actLabel(f, k)).join(' · ')}) paling cepat`;
+      el.style.setProperty('--qa', '#f2e8d2'); el.style.setProperty('--qd', c.def.def.dark);
+    } else {
+      txt = !human ? 'Adu tenaga jurus pamungkas' : human === c.att ? `Tekan <kbd>${actLabel(human, 'atk')}</kbd> berulang-ulang untuk menambah kerusakan!` : `Tekan <kbd>${actLabel(human, 'atk')}</kbd> berulang-ulang untuk menahan!`;
+      el.style.setProperty('--qa', c.att.def.scarf); el.style.setProperty('--qd', c.def.def.dark);
+    }
     $('#qteText').innerHTML = txt;
-    el.style.setProperty('--qa', c.att.def.scarf); el.style.setProperty('--qd', c.def.def.dark);
   }
-  const r = (c.aM + 1) / (c.aM + c.dM + 2);
+  const r = mode === 'seal' ? clamp((SEAL_END - c.t) / (SEAL_END - .6), 0, 1) : (c.aM + 1) / (c.aM + c.dM + 2);
   $('#qfill').style.transform = `scaleX(${r.toFixed(3)})`;
 }
 function hideQTE() { $('#qte').classList.remove('on'); }
@@ -2147,6 +2193,7 @@ function step(rdt) {
         fwd = my; mv.addScaledVector(camRight, mx).addScaledVector(camFwd, my); if (mv.lengthSq() > 1) mv.normalize();
       }
       f.rawAtk = h.atk && !f.prevAtk; f.prevAtk = h.atk;
+      if (!f.ai) for (const k of SEAL_KEYS) { f.rawPress[k] = h[k] && !f.rawHeld[k]; f.rawHeld[k] = h[k]; }
       if (locked) f.ctrl.feed(blankInput(), ZERO, 0); else f.ctrl.feed(h, mv, fwd);
     }
     tapped.clear();
@@ -2171,7 +2218,7 @@ function updateSelectUI() {
     const d = pickDef(s);
     $('#pn' + s).textContent = d.name;
     const pe = $('#pe' + s); pe.textContent = 'Elemen ' + (d.elementLabel || d.element); pe.style.color = d.scarf;
-    $('#pd' + s).textContent = d.desc; $('#pj' + s).textContent = d.jutsu; $('#pu' + s).textContent = d.ult;
+    $('#pd' + s).textContent = d.desc; $('#pj' + s).textContent = d.jutsu; $('#pu' + s).textContent = d.ult; $('#pk' + s).textContent = d.ult2;
     $('#pp' + s).textContent = CHARS.filter((c, i) => i !== state.picks[0] && i !== state.picks[1]).slice(0, 2).map(c => c.name).join(' & ');
   }
   $('#pl1').textContent = state.mode === 'cpu' ? 'CPU · ← / →' : 'Pemain 2 · ← / →';
