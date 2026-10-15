@@ -17,9 +17,9 @@
 import * as THREE from '../lib/three/three.module.js';
 import { GLTFLoader } from '../lib/three/addons/loaders/GLTFLoader.js';
 import { EffectComposer } from '../lib/three/addons/postprocessing/EffectComposer.js';
-import { RenderPass } from '../lib/three/addons/postprocessing/RenderPass.js';
 import { ShaderPass } from '../lib/three/addons/postprocessing/ShaderPass.js';
 import { UnrealBloomPass } from '../lib/three/addons/postprocessing/UnrealBloomPass.js';
+import { Pass, FullScreenQuad } from '../lib/three/addons/postprocessing/Pass.js';
 
 const loader = new GLTFLoader();
 const PI = Math.PI;
@@ -288,51 +288,168 @@ export function bangunArena(gltf, opsi = {}){
   };
 }
 
-/**
- * Efek sinematik: bloom + color grading (tint bayangan/terang, kontras, saturasi) + vignette.
- * Satu composer untuk seluruh game; atur(env) mengganti suasananya sesuai arena.
+/* ---------- pipeline gambar HD ----------
+ * Adegan dirender ke buffer HDR (half float) dengan MSAA 4x, lalu:
+ *   1. batas terang      efek aditif yang bertumpuk tidak membanjiri bloom
+ *   2. kilau anamorfik   garis cahaya horizontal tipis dari lampu dan jurus yang sangat terang
+ *   3. bloom             (UnrealBloomPass three.js)
+ *   4. akhir             eksposur, aberasi kromatik di tepi, vignette di ruang linear,
+ *                        tone mapping filmis ACES, color grading arena, kilat, grain halus,
+ *                        dither 1/255 supaya gradasi langit dan kabut tidak bergaris.
+ * Ditulis untuk Badai Shinobi di atas pass bawaan three.js (lisensi MIT).
  */
+const VERT_LAYAR = 'varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}';
+const GLSL_HASH = 'float hash3(vec3 p){p=fract(p*.1031);p+=dot(p,p.zyx+31.32);return fract((p.x+p.y)*p.z);}';
+
+/** Garis kilau horizontal (lensa anamorfik) dari bagian gambar yang sangat terang. */
+class PassKilau extends Pass {
+  constructor(){
+    super();
+    const rt = () => new THREE.WebGLRenderTarget(4, 4, { type:THREE.HalfFloatType, depthBuffer:false });
+    this.rtA = rt(); this.rtB = rt();
+    this.ambil = new THREE.ShaderMaterial({
+      uniforms:{ tSrc:{ value:null }, uPx:{ value:new THREE.Vector2() }, uAmbang:{ value:1.1 } },
+      vertexShader:VERT_LAYAR,
+      fragmentShader:`uniform sampler2D tSrc;uniform vec2 uPx;uniform float uAmbang;varying vec2 vUv;
+        vec3 terang(vec2 uv){vec3 c=texture2D(tSrc,uv).rgb;float m=max(c.r,max(c.g,c.b));return c*max(m-uAmbang,0.)/max(m,1e-4);}
+        void main(){vec3 s=terang(vUv+uPx*vec2(-1.,-1.))+terang(vUv+uPx*vec2(1.,-1.))+terang(vUv+uPx*vec2(-1.,1.))+terang(vUv+uPx*vec2(1.,1.));
+          gl_FragColor=vec4(s*.25,1.);}`,
+      depthTest:false, depthWrite:false
+    });
+    this.oles = new THREE.ShaderMaterial({
+      uniforms:{ tSrc:{ value:null }, uPx:{ value:new THREE.Vector2() }, uLangkah:{ value:1 } },
+      vertexShader:VERT_LAYAR,
+      fragmentShader:`uniform sampler2D tSrc;uniform vec2 uPx;uniform float uLangkah;varying vec2 vUv;
+        void main(){vec3 a=vec3(0.);float w=0.;
+          for(int i=-7;i<=7;i++){float f=float(i);float k=exp(-f*f*.06);a+=texture2D(tSrc,vUv+vec2(f*uLangkah*uPx.x,0.)).rgb*k;w+=k;}
+          gl_FragColor=vec4(a/w,1.);}`,
+      depthTest:false, depthWrite:false
+    });
+    this.gabung = new THREE.ShaderMaterial({
+      uniforms:{ tDiffuse:{ value:null }, tKilau:{ value:null }, uKuat:{ value:.05 }, uWarna:{ value:new THREE.Color(.5, .72, 1) } },
+      vertexShader:VERT_LAYAR,
+      fragmentShader:`uniform sampler2D tDiffuse;uniform sampler2D tKilau;uniform float uKuat;uniform vec3 uWarna;varying vec2 vUv;
+        void main(){vec4 c=texture2D(tDiffuse,vUv);gl_FragColor=vec4(c.rgb+texture2D(tKilau,vUv).rgb*uWarna*uKuat,c.a);}`,
+      depthTest:false, depthWrite:false
+    });
+    this.quad = new FullScreenQuad(this.ambil);
+  }
+  setSize(w, h){ const W = Math.max(4, Math.round(w / 4)), H = Math.max(4, Math.round(h / 4)); this.rtA.setSize(W, H); this.rtB.setSize(W, H); }
+  render(renderer, writeBuffer, readBuffer){
+    const q = this.quad, A = this.rtA, B = this.rtB;
+    q.material = this.ambil; this.ambil.uniforms.tSrc.value = readBuffer.texture; this.ambil.uniforms.uPx.value.set(.5 / readBuffer.width * 4, .5 / readBuffer.height * 4);
+    renderer.setRenderTarget(A); q.render(renderer);
+    q.material = this.oles; this.oles.uniforms.uPx.value.set(1 / A.width, 1 / A.height);
+    for(const [dari, ke, langkah] of [[A, B, 1.5], [B, A, 4.5], [A, B, 12]]){
+      this.oles.uniforms.tSrc.value = dari.texture; this.oles.uniforms.uLangkah.value = langkah;
+      renderer.setRenderTarget(ke); q.render(renderer);
+    }
+    q.material = this.gabung; this.gabung.uniforms.tDiffuse.value = readBuffer.texture; this.gabung.uniforms.tKilau.value = B.texture;
+    renderer.setRenderTarget(this.renderToScreen ? null : writeBuffer); q.render(renderer);
+  }
+  dispose(){ this.rtA.dispose(); this.rtB.dispose(); this.ambil.dispose(); this.oles.dispose(); this.gabung.dispose(); this.quad.dispose(); }
+}
+
+/**
+ * Efek sinematik HD untuk seluruh game. atur(env) mengganti suasananya sesuai arena.
+ * render(kilat, redup, dt): kilat = kilat petir 0..1, redup = pengali cahaya game (adegan jurus pamungkas).
+ * denyut(k): dorongan radial + aberasi singkat saat benturan keras. putih(k): kilatan layar.
+ */
+/** Render adegan ke buffer HDR MSAA 4x, lalu salin ke rantai efek sambil membatasi terang maksimum. */
+class PassAdegan extends Pass {
+  constructor(scene, camera, msaa){
+    super();
+    this.scene = scene; this.camera = camera;
+    this.rt = new THREE.WebGLRenderTarget(4, 4, { type:THREE.HalfFloatType, samples:msaa });
+    this.salin = new THREE.ShaderMaterial({
+      uniforms:{ tSrc:{ value:null }, uMax:{ value:2.2 } }, vertexShader:VERT_LAYAR,
+      // batas terang: efek jurus aditif yang bertumpuk tidak membuat layar putih total
+      fragmentShader:'uniform sampler2D tSrc;uniform float uMax;varying vec2 vUv;void main(){vec4 c=texture2D(tSrc,vUv);gl_FragColor=vec4(min(c.rgb,vec3(uMax)),1.);}',
+      depthTest:false, depthWrite:false
+    });
+    this.quad = new FullScreenQuad(this.salin);
+  }
+  setSize(w, h){ this.rt.setSize(w, h); }
+  render(renderer, writeBuffer){
+    renderer.setRenderTarget(this.rt); renderer.clear(); renderer.render(this.scene, this.camera);
+    this.salin.uniforms.tSrc.value = this.rt.texture;
+    renderer.setRenderTarget(this.renderToScreen ? null : writeBuffer); this.quad.render(renderer);
+  }
+  dispose(){ this.rt.dispose(); this.salin.dispose(); this.quad.dispose(); }
+}
+
 export function buatSinematik(renderer, scene, camera){
   const composer = new EffectComposer(renderer);
-  composer.addPass(new RenderPass(scene, camera));
-  // batasi terang maksimum sebelum bloom: efek jurus aditif yang bertumpuk tidak membuat layar putih total
-  const batas = new ShaderPass({
-    uniforms:{ tDiffuse:{ value:null }, uMax:{ value:1.5 } },
-    vertexShader:'varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}',
-    fragmentShader:'uniform sampler2D tDiffuse;uniform float uMax;varying vec2 vUv;void main(){vec4 c=texture2D(tDiffuse,vUv);gl_FragColor=vec4(min(c.rgb,vec3(uMax)),c.a);}'
-  });
-  composer.addPass(batas);
-  const bloom = new UnrealBloomPass(new THREE.Vector2(512, 512), .6, .6, .8);
+  const adegan = new PassAdegan(scene, camera, renderer.capabilities.isWebGL2 ? 4 : 0);
+  composer.addPass(adegan);
+  const kilau = new PassKilau();
+  composer.addPass(kilau);
+  const bloom = new UnrealBloomPass(new THREE.Vector2(512, 512), .6, .55, .8);
   composer.addPass(bloom);
-  const grade = new ShaderPass({
-    uniforms:{ tDiffuse:{ value:null }, uShadow:{ value:new THREE.Color() }, uHigh:{ value:new THREE.Color() },
-      uContrast:{ value:1.1 }, uSat:{ value:1.05 }, uVig:{ value:.4 }, uFlash:{ value:0 } },
-    vertexShader:'varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}',
+  const akhir = new ShaderPass({
+    uniforms:{ tDiffuse:{ value:null }, uRes:{ value:new THREE.Vector2(1, 1) }, uSeed:{ value:0 }, uExposure:{ value:1 },
+      uShadow:{ value:new THREE.Color() }, uHigh:{ value:new THREE.Color() }, uContrast:{ value:1.1 }, uSat:{ value:1.05 }, uVig:{ value:.4 },
+      uFlash:{ value:0 }, uPutih:{ value:0 }, uCA:{ value:.0012 }, uRadial:{ value:0 }, uGrain:{ value:.014 }, uTajam:{ value:.2 } },
+    vertexShader:VERT_LAYAR,
     fragmentShader:[
-      'uniform sampler2D tDiffuse;uniform vec3 uShadow;uniform vec3 uHigh;uniform float uContrast;uniform float uSat;uniform float uVig;uniform float uFlash;varying vec2 vUv;',
+      'uniform sampler2D tDiffuse;uniform vec2 uRes;uniform float uSeed;uniform float uExposure;uniform vec3 uShadow;uniform vec3 uHigh;',
+      'uniform float uContrast;uniform float uSat;uniform float uVig;uniform float uFlash;uniform float uPutih;uniform float uCA;uniform float uRadial;uniform float uGrain;uniform float uTajam;',
+      'varying vec2 vUv;', GLSL_HASH,
       'vec3 toSRGB(vec3 c){return mix(c*12.92,1.055*pow(c,vec3(1.0/2.4))-0.055,step(vec3(0.0031308),c));}',
-      'void main(){vec3 c=toSRGB(max(texture2D(tDiffuse,vUv).rgb,0.0));',
-      'float l=dot(c,vec3(0.299,0.587,0.114));c=mix(vec3(l),c,uSat);c=(c-0.5)*uContrast+0.5;',
-      'c=mix(c,c*uShadow*1.7,(1.0-smoothstep(0.0,0.55,l))*0.38);c=mix(c,c*uHigh*1.12,smoothstep(0.5,1.0,l)*0.3);',
-      'c+=uFlash*vec3(0.55,0.6,0.75);float v=distance(vUv,vec2(0.5));c*=1.0-uVig*smoothstep(0.3,0.86,v);',
-      'gl_FragColor=vec4(clamp(c,0.0,1.0),1.0);}'
+      // tone mapping ACES (pendekatan RRT+ODT Stephen Hill, konstanta standar)
+      'vec3 rrtOdt(vec3 v){vec3 a=v*(v+.0245786)-.000090537;vec3 b=v*(.983729*v+.4329510)+.238081;return a/b;}',
+      'vec3 aces(vec3 c){mat3 mi=mat3(.59719,.07600,.02840,.35458,.90834,.13383,.04823,.01566,.83777);',
+      '  mat3 mo=mat3(1.60475,-.10208,-.00327,-.53108,1.10813,-.07276,-.07367,-.00605,1.07602);return clamp(mo*rrtOdt(mi*c),0.,1.);}',
+      'vec3 ambil(vec2 uv,vec2 d,float ca){return vec3(texture2D(tDiffuse,uv+d*ca).r,texture2D(tDiffuse,uv).g,texture2D(tDiffuse,uv-d*ca).b);}',
+      'void main(){vec2 d=vUv-.5;float r2=dot(d,d);float ca=uCA*(.3+r2*2.6);vec3 c;',
+      '  if(uRadial>.002){c=vec3(0.);float j=hash3(vec3(gl_FragCoord.xy,uSeed));',
+      '    for(int i=0;i<8;i++){float t=(float(i)+j)/8.;c+=ambil(vUv-d*t*uRadial*.2,d,ca*(1.+t));}c*=.125;}',
+      '  else{c=ambil(vUv,d,ca);',
+      // penajaman halus (unsharp 4 tetangga) supaya detail tetap renyah setelah bloom
+      '    vec2 px=1./uRes;vec3 n=texture2D(tDiffuse,vUv+vec2(px.x,0.)).rgb+texture2D(tDiffuse,vUv-vec2(px.x,0.)).rgb+texture2D(tDiffuse,vUv+vec2(0.,px.y)).rgb+texture2D(tDiffuse,vUv-vec2(0.,px.y)).rgb;',
+      '    c=max(c+(c-n*.25)*uTajam,0.);}',
+      '  c=max(c,0.)*uExposure;',
+      '  float v=1.-uVig*smoothstep(.3,.86,length(d));c*=v*v;',
+      '  c=toSRGB(aces(c/.6));',
+      '  float l=dot(c,vec3(.299,.587,.114));c=mix(vec3(l),c,uSat);c=(c-.5)*uContrast+.5;',
+      '  c=mix(c,c*uShadow*1.7,(1.-smoothstep(0.,.55,l))*.38);c=mix(c,c*uHigh*1.12,smoothstep(.5,1.,l)*.3);',
+      '  c+=uFlash*vec3(.55,.6,.75)+uPutih;',
+      '  float g=hash3(vec3(gl_FragCoord.xy,uSeed))+hash3(vec3(gl_FragCoord.yx+19.,uSeed*1.3+5.))-1.;',
+      '  c+=g*uGrain*(.35+.65*(1.-abs(l*2.-1.)));',
+      '  c+=(hash3(vec3(gl_FragCoord.xy,uSeed+71.))-hash3(vec3(gl_FragCoord.yx,uSeed+137.)))/255.;',
+      '  gl_FragColor=vec4(clamp(c,0.,1.),1.);}'
     ].join('\n')
   });
-  composer.addPass(grade);
+  composer.addPass(akhir);
+  const U = akhir.uniforms;
+  let kuatBloom = .6, kuatKilau = .05, denyutNilai = 0, putihNilai = 0, frame = 0;
   function atur(env){
     const gr = env?.grade ?? {};
-    grade.uniforms.uShadow.value.setStyle(gr.shadow ?? '#404060', THREE.NoColorSpace);
-    grade.uniforms.uHigh.value.setStyle(gr.highlight ?? '#fff0d0', THREE.NoColorSpace);
-    grade.uniforms.uContrast.value = gr.contrast ?? 1.1; grade.uniforms.uSat.value = gr.saturation ?? 1.05; grade.uniforms.uVig.value = gr.vignette ?? .4;
-    kuatBloom = gr.bloom ?? .6; bloom.threshold = gr.bloomThreshold ?? .8;
+    U.uShadow.value.setStyle(gr.shadow ?? '#404060', THREE.NoColorSpace);
+    U.uHigh.value.setStyle(gr.highlight ?? '#fff0d0', THREE.NoColorSpace);
+    U.uContrast.value = gr.contrast ?? 1.1; U.uSat.value = (gr.saturation ?? 1.05) * 1.04; U.uVig.value = gr.vignette ?? .4;
+    kuatBloom = (gr.bloom ?? .6) * .85; bloom.threshold = gr.bloomThreshold ?? .8;
+    // arena malam punya lebih banyak lampu: kilaunya sedikit lebih kuat
+    kuatKilau = (gr.bloomThreshold ?? .8) < .7 ? .07 : .045;
+    U.uExposure.value = gr.paparan ?? 1;
   }
-  let kuatBloom = .6;
   atur(null);
   return {
-    composer, bloom, grade, atur,
-    /** kilat: kilat petir 0..1. redup: pengali cahaya game (saat adegan jurus pamungkas bloom ikut diredam). */
-    render(kilat = 0, redup = 1){ grade.uniforms.uFlash.value = kilat * .22; bloom.strength = kuatBloom * (.45 + .55 * redup); composer.render(); },
-    setSize(w, h){ composer.setSize(w, h); }
+    composer, adegan, bloom, kilau, akhir, atur,
+    denyut(k){ denyutNilai = Math.max(denyutNilai, k); },
+    putih(k){ putihNilai = Math.max(putihNilai, k); },
+    render(kilat = 0, redup = 1, dt = 1 / 60){
+      denyutNilai *= Math.exp(-7 * dt); putihNilai *= Math.exp(-9 * dt);
+      if(denyutNilai < .003) denyutNilai = 0; if(putihNilai < .003) putihNilai = 0;
+      U.uFlash.value = kilat * .22; U.uPutih.value = putihNilai;
+      U.uRadial.value = denyutNilai; U.uCA.value = .0011 + denyutNilai * .006;
+      U.uSeed.value = (frame++ % 997) + .5;
+      bloom.strength = kuatBloom * (.45 + .55 * redup);
+      kilau.gabung.uniforms.uKuat.value = kuatKilau;
+      composer.render(dt);
+    },
+    setSize(w, h){ composer.setSize(w, h); const pr = renderer.getPixelRatio(); U.uRes.value.set(w * pr, h * pr); },
+    setPixelRatio(pr){ composer.setPixelRatio(pr); const s = renderer.getSize(new THREE.Vector2()); U.uRes.value.set(s.x * pr, s.y * pr); }
   };
 }
 

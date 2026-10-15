@@ -50,6 +50,20 @@ function denganPosisiObjek(m, frag){
 const gradien = arr => { const t = new THREE.DataTexture(new Uint8Array(arr.flatMap(v => [v, v, v, 255])), arr.length, 1); t.minFilter = t.magFilter = THREE.NearestFilter; t.generateMipmaps = false; t.needsUpdate = true; return t; };
 let gradToon = null;
 
+/** Cahaya tepi (rim light) bersama untuk semua petarung. Warna dan kekuatannya diatur game sesuai arena. */
+export const cahayaTepi = { uRimColor:{ value:new THREE.Color(1, .9, .75) }, uRimKuat:{ value:.3 } };
+function denganTepi(m){
+  const lama = m.onBeforeCompile, k0 = m.customProgramCacheKey ? m.customProgramCacheKey() : '';
+  m.onBeforeCompile = (sh, r) => {
+    if(lama) lama(sh, r);
+    sh.uniforms.uRimColor = cahayaTepi.uRimColor; sh.uniforms.uRimKuat = cahayaTepi.uRimKuat;
+    sh.fragmentShader = 'uniform vec3 uRimColor;\nuniform float uRimKuat;\n' + sh.fragmentShader.replace('#include <opaque_fragment>',
+      '{ float rimF = 1.0 - clamp(dot(normal, normalize(vViewPosition)), 0.0, 1.0); outgoingLight += uRimColor * (rimF * rimF * rimF) * uRimKuat; }\n#include <opaque_fragment>');
+  };
+  m.customProgramCacheKey = () => k0 + '-tepi';
+  return m;
+}
+
 /** satu set material baru (dibuat per petarung; program shader tetap dipakai bersama) */
 function bahan(gaya, env){
   let b;
@@ -77,6 +91,7 @@ function bahan(gaya, env){
           diffuseColor.rgb *= mix(1., .9 + .07 * g + .05 * g2, step(.001, vH.x + vH.y)); }`);
     };
     b.rambut.customProgramCacheKey = () => 'bs-rambut';
+    denganTepi(b.kain); denganTepi(b.kulit); denganTepi(b.rambut);
     b.wajah = map => new THREE.MeshPhysicalMaterial({ map, transparent:true, depthWrite:false, polygonOffset:true, polygonOffsetFactor:-4, polygonOffsetUnits:-4, roughness:.45, specularIntensity:.35, sheen:.35, sheenRoughness:.5, sheenColor:new THREE.Color(1, .72, .62), envMapIntensity:.45, ...e });
   }
   b.cahaya = new THREE.MeshBasicMaterial({ vertexColors:true, toneMapped:false });
@@ -137,7 +152,11 @@ export function buatPetarung(cetakan, opsi = {}){
   objek.traverse(o => {
     if(!o.isMesh) return;
     const nama = (o.material && o.material.name) || '';
-    if(nama.startsWith('wajah')){ o.material = B.wajah(o.material.map); o.renderOrder = 2; }
+    if(nama.startsWith('wajah')){
+      const map = o.material.map;
+      if(map && opsi.renderer) map.anisotropy = opsi.renderer.capabilities.getMaxAnisotropy();
+      o.material = B.wajah(map); o.renderOrder = 2;
+    }
     else if(nama === 'cahaya') o.material = B.cahaya;
     else if(B[nama]) o.material = B[nama];
     if(nama === 'sayap') o.renderOrder = 1;

@@ -109,7 +109,7 @@ button { font-family: inherit; }
 .touch-note { position: absolute; left: 16px; right: 16px; bottom: 12px; margin: 0; padding: 8px 12px; text-align: center; font-size: .82rem; background: var(--scrim); border: 1px solid var(--line); border-radius: 3px; }
 
 /* HUD */
-.hud { position: absolute; inset: 0; pointer-events: none; color: var(--paper); }
+.hud { position: absolute; inset: 0; pointer-events: none; color: var(--paper); text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
 .hud-top { position: absolute; left: 0; right: 0; top: 0; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: start; gap: 1.4cqi; padding: 1.6cqi 2cqi 3cqi; background: linear-gradient(var(--hud-shade), transparent); }
 .side { display: flex; align-items: flex-start; gap: 1cqi; min-width: 0; }
 .side.s1 { flex-direction: row-reverse; }
@@ -127,10 +127,12 @@ button { font-family: inherit; }
 .hpbar .lag { background: var(--hp-lag); }
 .hpbar .fill { background: linear-gradient(var(--hp-a), var(--hp-b)); }
 .hpbar.low .fill { background: linear-gradient(var(--hp-low-a), var(--hp-low-b)); }
+.hpbar::after, .ckbar::after { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 45%; background: linear-gradient(rgba(255, 255, 255, .26), rgba(255, 255, 255, 0)); pointer-events: none; }
 .ckbar { position: relative; height: 1cqi; width: 80%; background: var(--hud-shade); transform: skewX(-18deg); overflow: hidden; box-shadow: 0 0 0 .12cqi var(--line); }
 .s1 .ckbar { margin-left: auto; transform: skewX(18deg); }
 .ckbar .fill { background: var(--chakra); }
 .ckbar.full .fill { background: var(--chakra-hot); }
+.ckbar.full { box-shadow: 0 0 0 .12cqi var(--line), 0 0 1.1cqi rgba(166, 230, 255, .55); }
 .ckbar .seg { position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 calc(25% - .2cqi), var(--void) calc(25% - .2cqi) 25%); }
 .meta { display: flex; align-items: center; gap: 1cqi; flex-wrap: wrap; font-size: 1cqi; min-height: 2.2cqi; }
 .s1 .meta { flex-direction: row-reverse; }
@@ -384,7 +386,7 @@ if (location.protocol === 'file:') setTimeout(window.__bsGagal, 1500);
 import * as THREE from './lib/three/three.module.js';
 import { unduhArena, bangunArena, buatSinematik, dorongKeluar, diDalamCollider } from './js/arena.js';
 import { muatPaketPenonton, pasangPenonton } from './js/penonton.js';
-import { unduhPetarung, siapkanCetakan, buatPetarung } from './js/petarung.js';
+import { unduhPetarung, siapkanCetakan, buatPetarung, cahayaTepi } from './js/petarung.js';
 window.__bsJalan = true;
 document.querySelectorAll('.load-error').forEach(e => e.remove());
 (() => {
@@ -486,7 +488,17 @@ const Sound = {
       const AC = window.AudioContext || window.webkitAudioContext;
       if (!AC) return;
       try { this.ctx = new AC(); } catch (e) { return; }
-      this.master = this.ctx.createGain(); this.master.gain.value = this.muted ? 0 : .5; this.master.connect(this.ctx.destination);
+      this.master = this.ctx.createGain(); this.master.gain.value = this.muted ? 0 : .5;
+      // kompresor lembut supaya pukulan beruntun tidak pecah, ditambah gema ruang pendek untuk kedalaman suara
+      const c = this.ctx, comp = c.createDynamicsCompressor();
+      comp.threshold.value = -16; comp.knee.value = 12; comp.ratio.value = 4; comp.attack.value = .004; comp.release.value = .2;
+      this.master.connect(comp); comp.connect(c.destination);
+      try {
+        const len = Math.round(c.sampleRate * 1.3), ir = c.createBuffer(2, len, c.sampleRate);
+        for (let ch = 0; ch < 2; ch++) { const d = ir.getChannelData(ch); let lp = 0; for (let i = 0; i < len; i++) { const t = i / c.sampleRate; lp += ((Math.random() * 2 - 1) - lp) * .35; d[i] = t < .012 ? 0 : lp * Math.exp(-t * 3.6); } }
+        const conv = c.createConvolver(), wet = c.createGain(); conv.buffer = ir; wet.gain.value = .14;
+        this.master.connect(wet); wet.connect(conv); conv.connect(comp);
+      } catch (e) {}
       const len = this.ctx.sampleRate, b = this.ctx.createBuffer(1, len, len), d = b.getChannelData(0);
       for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
       this.buf = b;
@@ -672,9 +684,14 @@ class Controller {
 // ---------- renderer & scene ----------
 const canvas = $('#game');
 let renderer;
-try { renderer = new T.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' }); }
+// anti-aliasing dikerjakan oleh buffer HDR MSAA 4x di pipeline sinematik, jadi kanvas sendiri tidak perlu MSAA
+try { renderer = new T.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance' }); }
 catch (e) { fatal('Browser ini tidak bisa menjalankan WebGL. Coba Safari atau Chrome versi terbaru.'); return; }
-renderer.setPixelRatio(Math.min(1.75, window.devicePixelRatio || 1));
+// resolusi adaptif: mulai tajam, naik sampai 2x di layar Retina, turun sendiri kalau frame mulai berat
+const PR_MAX = Math.min(2, window.devicePixelRatio || 1), PR_STEPS = [1, 1.25, 1.5, 1.75, 2].filter(v => v <= PR_MAX + .01);
+if (!PR_STEPS.length || PR_STEPS[PR_STEPS.length - 1] < PR_MAX - .01) PR_STEPS.push(PR_MAX);
+const perf = { i: Math.max(0, PR_STEPS.findIndex(v => v >= Math.min(PR_MAX, 1.5))), ema: 1 / 60, slow: 0, fast: 0, locked: false };
+renderer.setPixelRatio(PR_STEPS[perf.i]);
 renderer.shadowMap.enabled = true; renderer.shadowMap.type = T.PCFSoftShadowMap;
 const scene = new T.Scene();
 scene.background = new T.Color('#0e1122');
@@ -682,7 +699,8 @@ const camera = new T.PerspectiveCamera(45, 16 / 9, .1, 2000);
 // three r160 memakai satuan cahaya fisik: intensitas lama dikali PI supaya terangnya sama
 const hemi = new T.HemisphereLight(0xffffff, 0x444444, .8 * Math.PI); scene.add(hemi);
 const sun = new T.DirectionalLight(0xffffff, .9 * Math.PI);
-sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048);
+const SHADOW_RES = renderer.capabilities.maxTextureSize >= 16384 ? 4096 : 2048;
+sun.castShadow = true; sun.shadow.mapSize.set(SHADOW_RES, SHADOW_RES);
 Object.assign(sun.shadow.camera, { left: -26, right: 26, top: 26, bottom: -26, near: 1, far: 150 });
 sun.shadow.bias = -.0004; sun.shadow.normalBias = .03; scene.add(sun); scene.add(sun.target);
 // fxLight dipakai kode efek seperti lampu biasa; nilainya disalin ke lampu sungguhan sebelum render
@@ -696,12 +714,54 @@ const sinema = buatSinematik(renderer, scene, camera);
 
 // ---------- textures ----------
 function canvasTex(w, h, draw) { const c = document.createElement('canvas'); c.width = w; c.height = h; draw(c.getContext('2d'), w, h); const t = new T.CanvasTexture(c); t.colorSpace = T.SRGBColorSpace; return t; }
+// tekstur efek resolusi tinggi; asap dan api diberi tekstur noise supaya tidak tampak seperti bulatan polos
+function valueNoise(seed) {
+  const R = rng(seed), P = new Float32Array(256 * 256); for (let i = 0; i < P.length; i++) P[i] = R();
+  const at = (x, y) => P[(y & 255) * 256 + (x & 255)];
+  const n = (x, y) => { const xi = Math.floor(x), yi = Math.floor(y), xf = x - xi, yf = y - yi, u = xf * xf * (3 - 2 * xf), v = yf * yf * (3 - 2 * yf);
+    return lerp(lerp(at(xi, yi), at(xi + 1, yi), u), lerp(at(xi, yi + 1), at(xi + 1, yi + 1), u), v); };
+  return (x, y, oct = 4) => { let s = 0, a = .5, f = 1, t = 0; for (let o = 0; o < oct; o++) { s += n(x * f, y * f) * a; t += a; a *= .5; f *= 2.03; } return s / t; };
+}
+function pixelTex(size, shade) {
+  return canvasTex(size, size, g => {
+    const img = g.createImageData(size, size), d = img.data;
+    for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
+      const [r, gg, b, a] = shade((x + .5) / size * 2 - 1, (y + .5) / size * 2 - 1), i = (y * size + x) * 4;
+      d[i] = r; d[i + 1] = gg; d[i + 2] = b; d[i + 3] = a;
+    }
+    g.putImageData(img, 0, 0);
+  });
+}
+const smoothFall = (r, k) => { const t = clamp(1 - r, 0, 1); return Math.pow(t * t * (3 - 2 * t), k); };
+const NZ = valueNoise(7), NZ2 = valueNoise(19);
 const TEX = {
-  glow: canvasTex(64, 64, g => { const gr = g.createRadialGradient(32, 32, 0, 32, 32, 32); gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(.35, 'rgba(255,255,255,.5)'); gr.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = gr; g.fillRect(0, 0, 64, 64); }),
-  star: canvasTex(128, 128, g => { g.translate(64, 64); g.fillStyle = '#fff'; g.beginPath(); for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4, r = i % 2 ? 8 : 62; g.lineTo(Math.cos(a) * r, Math.sin(a) * r); } g.closePath(); g.fill(); const gr = g.createRadialGradient(0, 0, 0, 0, 0, 36); gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = gr; g.beginPath(); g.arc(0, 0, 36, 0, 7); g.fill(); }),
-  smoke: canvasTex(64, 64, g => { const gr = g.createRadialGradient(32, 32, 4, 32, 32, 32); gr.addColorStop(0, 'rgba(255,255,255,.95)'); gr.addColorStop(.6, 'rgba(255,255,255,.45)'); gr.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = gr; g.fillRect(0, 0, 64, 64); }),
-  fire: canvasTex(64, 64, g => { const gr = g.createRadialGradient(32, 32, 0, 32, 32, 32); gr.addColorStop(0, 'rgba(255,250,220,1)'); gr.addColorStop(.3, 'rgba(255,200,80,1)'); gr.addColorStop(.62, 'rgba(255,100,40,.7)'); gr.addColorStop(1, 'rgba(200,30,10,0)'); g.fillStyle = gr; g.fillRect(0, 0, 64, 64); }),
-  stripes: canvasTex(256, 64, g => { for (let i = 0; i < 24; i++) { const x = Math.random() * 256, w = 4 + Math.random() * 18, gr = g.createLinearGradient(0, 0, 0, 64); gr.addColorStop(0, 'rgba(255,255,255,0)'); gr.addColorStop(.5, `rgba(255,255,255,${.3 + Math.random() * .6})`); gr.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = gr; g.fillRect(x, 0, w, 64); } }),
+  glow: pixelTex(128, (x, y) => { const r = Math.hypot(x, y), a = Math.exp(-r * r * 5.5) * .85 + smoothFall(r, 1.6) * .15; return [255, 255, 255, Math.round(clamp(a, 0, 1) * 255)]; }),
+  star: pixelTex(256, (x, y) => {
+    const r = Math.hypot(x, y), ang = Math.atan2(y, x);
+    const spikes = Math.pow(Math.abs(Math.cos(ang * 2)), 60) * Math.exp(-r * 2.2) + Math.pow(Math.abs(Math.cos(ang * 2 + Math.PI / 4 * 2)), 90) * Math.exp(-r * 3.6) * .7;
+    const core = Math.exp(-r * r * 40), halo = Math.exp(-r * r * 6) * .35;
+    return [255, 255, 255, Math.round(clamp(spikes + core + halo, 0, 1) * 255)];
+  }),
+  smoke: pixelTex(256, (x, y) => {
+    const r = Math.hypot(x, y), n = NZ(x * 2.2 + 3, y * 2.2 + 7, 5), n2 = NZ2(x * 5 + 1, y * 5 + 2, 3);
+    const a = smoothFall(r * (.82 + (n - .5) * .55), 1.3) * (.55 + n * .6) * (.85 + n2 * .3);
+    const shade = 215 + n * 40;
+    return [shade, shade, shade, Math.round(clamp(a, 0, 1) * 255)];
+  }),
+  fire: pixelTex(256, (x, y) => {
+    const n = NZ(x * 2.6 + 11, y * 2.6 - 5, 5), r = Math.hypot(x, y) * (.85 + (n - .5) * .5);
+    const t = clamp(1 - r, 0, 1);
+    const col = t > .72 ? [255, 250, 225] : t > .45 ? [255, Math.round(170 + (t - .45) / .27 * 80), Math.round(60 + (t - .45) / .27 * 160)] : t > .2 ? [255, Math.round(80 + (t - .2) / .25 * 90), 30] : [200, 40, 12];
+    return [col[0], col[1], col[2], Math.round(clamp(Math.pow(t, .9) * (.7 + n * .5), 0, 1) * 255)];
+  }),
+  stripes: canvasTex(512, 128, g => {
+    const R = rng(23);
+    for (let i = 0; i < 46; i++) {
+      const x = R() * 512, w = 2 + R() * 26, a = .2 + R() * .7, gr = g.createLinearGradient(0, 0, 0, 128);
+      gr.addColorStop(0, 'rgba(255,255,255,0)'); gr.addColorStop(.35 + R() * .1, `rgba(255,255,255,${a})`); gr.addColorStop(.6 + R() * .1, `rgba(255,255,255,${a * .8})`); gr.addColorStop(1, 'rgba(255,255,255,0)');
+      g.fillStyle = gr; g.fillRect(x, 0, w, 128); if (x + w > 512) g.fillRect(x - 512, 0, w, 128);
+    }
+  }),
 };
 TEX.stripes.wrapS = TEX.stripes.wrapT = T.RepeatWrapping;
 // tekstur cahaya Mado: bintang kilau empat sudut, bulu peri, sinar pilar (pudar ke atas), lingkaran Taman Bulan
@@ -921,6 +981,9 @@ function setCharEnv(env) {
     k = clamp(amb / .3, .32, 1);
   }
   charEnvK = k;
+  // cahaya tepi: warna sorot arena, lebih kuat di arena gelap supaya petarung tetap terpisah dari latar
+  cahayaTepi.uRimColor.value.set(env && env.grade && env.grade.highlight ? env.grade.highlight : '#d6e4ff');
+  cahayaTepi.uRimKuat.value = .22 + .32 * (1 - k);
   const all = [];
   F.forEach(f => { all.push(f.model); f.sups.forEach(sp => all.push(sp.model)); });
   all.forEach(m => { if (m && m.rig) m.rig.inst.aturPantulan(k); });
@@ -1379,7 +1442,7 @@ function applyHit(att, def, h, at) {
     def.vel.set(dir.x * (h.kb || 4), up, dir.z * (h.kb || 4));
     if (def.pos.y <= 0 && up > 0) def.pos.y = .01;
     hitstop = h.heavy ? .1 : .06; shake(h.heavy ? 10 : 5);
-    if (h.heavy) { sfx.heavy(); cheer('sorak', 1.6); } else sfx.hit();
+    if (h.heavy) { sfx.heavy(); cheer('sorak', 1.6); sinema.denyut(.3 * motionK); } else sfx.hit();
     sparks(at, att.def.fx, 16, true);
   }
   if (def.hp <= 0) onKO(def, att);
@@ -1415,7 +1478,7 @@ function startJutsu(f, o) {
 function startUlt(f, o) { f.chakra -= ULT_COST; f.setState('ult'); f.yaw = yawTo(f.pos, o.pos); sfx.jutsu(f.def.element); ringAt(f.chest(_e), f.def.fx, .6, 3, false, .4); }
 function startAwake(f) {
   f.awakeUsed = true; f.awake = AWAKE_TIME; f.setState('awaken'); f.invuln = 1; f.chakra = 100;
-  sfx.awaken(); Musik.kebangkitan(f.def.element); shake(8); ringAt(f.chest(_e), f.def.fx, .5, 6, false, .6); ringAt(new V3(f.pos.x, .05, f.pos.z), f.def.fx, .5, 5, true, .6);
+  sfx.awaken(); Musik.kebangkitan(f.def.element); shake(8); sinema.denyut(.5 * motionK); ringAt(f.chest(_e), f.def.fx, .5, 6, false, .6); ringAt(new V3(f.pos.x, .05, f.pos.z), f.def.fx, .5, 5, true, .6);
   floatText(f, 'Kebangkitan!', f.def.fx); showCall('Kebangkitan', f.def.name, 1.2, f.def.scarf);
 }
 function throwShur(f, o, charged) {
@@ -1679,7 +1742,7 @@ function updateCine(dt) {
   cineFX(c, dt);
   if (c.t >= 1.7) $('#ultban').classList.add('out');
   if (c.t >= 2.75 && !c.boom) {
-    c.boom = true; shake(c.awk ? 30 : 22); sfx.heavy(); hideQTE();
+    c.boom = true; shake(c.awk ? 30 : 22); sfx.heavy(); hideQTE(); sinema.denyut((c.awk ? 1.25 : 1) * motionK); sinema.putih((c.awk ? .45 : .35) * motionK);
     ringAt(_c, fx, .5, 9, false, .6); ringAt(_d.set(def.pos.x, .05, def.pos.z), fx, .5, 8, true, .7); starAt(_c, 4); sparks(_c, fx, 30, true);
     if (c.awk) { ringAt(_c, att.def.scarf, .6, 11, false, .7); starAt(_c, 5); sparks(_c, att.def.scarf, 24, true); }
     fxLight.color.set(0xffffff); fxLight.intensity = c.awk ? 7 : 6;
@@ -2740,7 +2803,7 @@ function resetRound() {
 function onKO(def, att) {
   if (!match || match.mode === 'demo' || match.phase !== 'fight') return;
   match.phase = 'ko'; match.phaseT = 0; match.winner = att.side; match.loser = def.side; cam.snap = true;
-  showCall('K.O.', '', 1.8, 'var(--ember-soft)'); sfx.ko(); shake(14); cheer('sorak', 3, true);
+  showCall('K.O.', '', 1.8, 'var(--ember-soft)'); sfx.ko(); shake(14); cheer('sorak', 3, true); sinema.denyut(.85 * motionK); sinema.putih(.18 * motionK);
 }
 function timeUp() {
   const [a, b] = F;
@@ -2922,8 +2985,24 @@ function frame(now) {
   pollPadMenus();
   if (match && !(state.scene === 'fight' && state.paused)) step(rdt);
   fxReal.intensity = fxLight.intensity * Math.PI * .75; fxReal.color.copy(fxLight.color); fxReal.position.copy(fxLight.position);
-  sinema.render(flash, lightK);
+  sinema.render(flash, lightK, rdt || 1 / 60);
+  adaptQuality(now);
   requestAnimationFrame(frame);
+}
+// turunkan resolusi kalau rata-rata frame di bawah ~48 fps selama 1,5 detik; naikkan lagi kalau lega selama 4 detik
+let lastFrameT = 0;
+function adaptQuality(now) {
+  const dt = (now - lastFrameT) / 1000; lastFrameT = now;
+  if (!(dt > 0) || dt > .1 || document.hidden) return;
+  perf.ema += (dt - perf.ema) * .05;
+  if (perf.ema > 1 / 48) { perf.slow += dt; perf.fast = 0; } else if (perf.ema < 1 / 57) { perf.fast += dt; perf.slow = 0; } else { perf.slow = perf.fast = 0; }
+  let next = perf.i;
+  if (perf.slow > 1.5 && perf.i > 0) { next = perf.i - 1; if (perf.raised) perf.locked = true; }
+  else if (perf.fast > 4 && !perf.locked && perf.i < PR_STEPS.length - 1) { next = perf.i + 1; perf.raised = true; }
+  if (next !== perf.i) {
+    perf.i = next; perf.slow = perf.fast = 0; perf.ema = 1 / 60;
+    renderer.setPixelRatio(PR_STEPS[next]); sinema.setPixelRatio(PR_STEPS[next]); resize();
+  }
 }
 function boot(data) {
   try { if (data && Array.isArray(data.picks) && data.picks.length === 2) state.picks = data.picks.map(v => clamp(v | 0, 0, CHARS.length - 1)); if (data && LEVELS[data.level]) state.level = data.level; } catch (e) {}
@@ -2941,6 +3020,7 @@ if (hot && hot.snapshot) { try { hot.snapshot(() => ({ picks: state.picks, level
 if (hot && hot.ready) hot.ready(boot); else boot((hot && hot.data) || {});
 })();
 </script>
+
 
 
 </body></html>
