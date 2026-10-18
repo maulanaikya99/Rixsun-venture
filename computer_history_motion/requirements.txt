@@ -1,0 +1,6 @@
+edge-tts>=7.0
+pycairo>=1.25
+numpy>=1.26
+Pillow>=10.1
+pytest>=8
+# Dibutuhkan juga (bukan paket pip): FFmpeg + FFprobe 5.0+ dengan libx264, aac, loudnorm, sidechaincompress

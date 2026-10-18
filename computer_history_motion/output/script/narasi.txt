@@ -1,0 +1,90 @@
+[s01_pembuka] Hasrat untuk Menghitung
+
+Benda kecil di saku Anda mampu melakukan miliaran perhitungan setiap detik.
+Tapi kisahnya dimulai jauh sebelum ada listrik, dari satu pertanyaan sederhana: bagaimana caranya menghitung lebih cepat?
+Inilah perjalanan panjang komputer. Dari manik-manik kayu, hingga mesin yang belajar.
+
+[s02_alat_hitung] Abakus dan Alat Hitung Mekanis
+
+Awalnya, manusia menghitung dengan apa saja yang ada di dekatnya. Jari tangan. Kerikil. Goresan pada tulang dan tanah liat.
+Lalu lahirlah abakus. Manik-manik yang digeser di atas batang ini dipakai di banyak peradaban, dari Romawi hingga Tiongkok, untuk menghitung dengan cepat dan rapi.
+Tapi abakus hanya membantu. Yang berhitung tetaplah otak manusia.
+Tahun 1642, seorang pemuda Prancis bernama Blaise Pascal membuat mesin hitung beroda gigi, untuk meringankan pekerjaan ayahnya yang mengurus pajak.
+Beberapa dekade kemudian, Gottfried Wilhelm Leibniz merancang mesin yang tidak hanya bisa menjumlahkan, tetapi juga mengalikan.
+Untuk pertama kalinya, sebagian pekerjaan berpikir dipindahkan ke dalam roda gigi.
+
+[s03_babbage] Charles Babbage dan Analytical Engine
+
+Memasuki abad ke-19, dunia dipenuhi tabel angka. Tabel navigasi, tabel astronomi, tabel keuangan. Semuanya dihitung dan disalin dengan tangan, dan satu kesalahan kecil bisa berakibat besar.
+Charles Babbage, seorang matematikawan Inggris, membayangkan mesin yang bisa menghitung tanpa lelah dan tanpa salah.
+Tahun 1822, ia mengusulkan Difference Engine, mesin untuk menyusun tabel secara otomatis.
+Lalu ia melangkah lebih jauh. Sejak 1834, Babbage merancang Analytical Engine: mesin serba guna yang bisa diprogram dengan kartu berlubang.
+Rancangannya punya bagian untuk mengolah angka, yang ia sebut mill, dan bagian untuk menyimpan angka, yang ia sebut store. Mirip prosesor dan memori pada komputer masa kini.
+Sayangnya, mesin itu tidak pernah selesai dibangun semasa hidupnya. Ia adalah gagasan yang lahir terlalu cepat, menunggu teknologi menyusul.
+
+[s04_ada_lovelace] Ada Lovelace dan Gagasan Program
+
+Di antara sedikit orang yang benar-benar memahami gagasan Babbage, ada seorang perempuan muda yang luar biasa: Ada Lovelace.
+Tahun 1843, ia menerjemahkan sebuah artikel tentang Analytical Engine, lalu menambahkan catatannya sendiri, yang panjangnya hampir tiga kali lipat artikel aslinya.
+Dalam salah satu catatan itu, ia menjabarkan langkah demi langkah cara mesin tersebut menghitung bilangan Bernoulli. Banyak sejarawan menyebutnya sebagai salah satu program komputer pertama yang pernah diterbitkan.
+Tapi yang paling visioner adalah pemikirannya: mesin seperti ini mungkin bisa mengolah lebih dari sekadar angka. Simbol. Bahkan musik.
+Sekitar seratus tahun sebelum komputer elektronik pertama menyala, Ada sudah membayangkan apa yang bisa dilakukannya.
+
+[s05_elektronik] Komputer Elektronik Pertama
+
+Abad ke-20 membawa sesuatu yang tidak dimiliki Babbage: listrik.
+Tahun 1936, Alan Turing menulis makalah tentang mesin abstrak yang, secara teori, bisa menjalankan perhitungan apa pun yang dapat dijabarkan langkah demi langkah.
+Perang Dunia Kedua lalu mempercepat segalanya. Di Jerman, Konrad Zuse menyelesaikan Z3 pada 1941, mesin hitung elektromekanis yang dapat diprogram. Di Inggris, mesin elektronik Colossus membantu memecahkan sandi militer Jerman.
+Dan di Amerika Serikat, lahirlah ENIAC. Diselesaikan pada 1945 dan diperkenalkan ke publik pada 1946, mesin raksasa ini memakai sekitar delapan belas ribu tabung vakum, dengan berat sekitar dua puluh tujuh ton.
+Ia mampu melakukan sekitar lima ribu penjumlahan per detik. Sangat cepat untuk zamannya.
+Untuk memprogramnya, enam perempuan harus menata ulang kabel dan sakelar secara manual. Nama mereka lama terlupakan, padahal merekalah programmer pertama ENIAC.
+Beberapa tahun kemudian, sebuah gagasan penting menjadi kenyataan: menyimpan program di dalam memori, bersama datanya. Prinsip inilah yang masih dipakai hampir semua komputer hari ini.
+
+[s06_transistor] Transistor dan Generasi Berikutnya
+
+Tapi tabung vakum punya masalah. Ia besar, panas, boros listrik, dan mudah putus.
+Desember 1947, di Bell Labs, John Bardeen dan Walter Brattain mendemonstrasikan transistor pertama, dalam kelompok riset yang dipimpin William Shockley.
+Komponen kecil ini bisa melakukan tugas tabung vakum, yaitu menguatkan sinyal dan menyalakan atau memutus arus listrik, dengan ukuran jauh lebih kecil, lebih hemat daya, dan lebih awet.
+Pada akhir 1950-an, komputer transistor mulai menggantikan komputer tabung. Era ini kemudian dikenal sebagai generasi kedua komputer.
+Bersamaan dengan itu, cara kita berbicara dengan mesin juga berubah. Bahasa pemrograman seperti FORTRAN dan COBOL membuat instruksi komputer jauh lebih mudah ditulis dan dibaca manusia.
+
+[s07_chip] Integrated Circuit dan Mikroprosesor
+
+Masalah berikutnya: menyambungkan ribuan transistor satu per satu itu rumit dan rawan salah.
+Tahun 1958, Jack Kilby di Texas Instruments membuat rangkaian terpadu pertama. Tak lama kemudian, Robert Noyce di Fairchild Semiconductor mengembangkan versi berbahan silikon yang lebih praktis untuk diproduksi massal.
+Banyak komponen kini bisa dibuat sekaligus di atas satu keping kecil. Itulah chip.
+Tahun 1965, Gordon Moore mengamati bahwa jumlah komponen dalam satu chip terus berlipat ganda secara berkala. Pengamatan ini kemudian dikenal sebagai Hukum Moore.
+Lalu pada 1971, Intel merilis 4004, mikroprosesor komersial pertama. Seluruh unit pemroses komputer, dalam satu chip, dengan sekitar dua ribu tiga ratus transistor.
+
+[s08_komputer_personal] Revolusi Komputer Personal
+
+Begitu otak komputer bisa dibuat sekecil itu, muncul pertanyaan baru: bagaimana jika setiap orang punya komputernya sendiri?
+Tahun 1975, Altair 8800 memicu antusiasme para penghobi. Dari klub-klub komputer dan bengkel rumahan, lahirlah perusahaan-perusahaan baru.
+Apple II pada 1977, lalu IBM PC pada 1981, membawa komputer ke meja kantor, sekolah, dan rumah.
+Kemudian antarmuka grafis, dengan jendela, ikon, dan mouse, yang dikembangkan di Xerox PARC dan dipopulerkan oleh Apple Macintosh pada 1984, membuat komputer bisa dipakai tanpa harus menghafal perintah.
+Komputer bukan lagi mesin para ilmuwan. Ia menjadi alat semua orang.
+
+[s09_internet_mobile] Internet, Laptop, dan Mobile
+
+Lalu, komputer-komputer itu mulai saling terhubung.
+Berawal dari ARPANET pada 1969, jaringan tumbuh menjadi internet. Tahun 1989, Tim Berners-Lee di CERN mengusulkan World Wide Web, cara sederhana untuk menautkan dokumen di seluruh dunia.
+Komputer pun ikut bergerak bersama kita. Laptop membuatnya bisa dibawa ke mana saja.
+Dan pada 2007, peluncuran iPhone ikut mendorong era ponsel pintar: komputer lengkap dengan layar sentuh, kamera, dan internet, di dalam genggaman.
+Dalam beberapa dekade saja, miliaran orang menjadi terhubung.
+
+[s10_kecerdasan_buatan] Machine Learning dan Kecerdasan Buatan
+
+Selama puluhan tahun, komputer hanya melakukan persis apa yang diperintahkan. Tapi para peneliti bertanya: bisakah mesin belajar?
+Istilah kecerdasan buatan dipopulerkan lewat sebuah lokakarya di Dartmouth pada 1956. Perjalanannya tidak mulus. Ada masa penuh harapan, ada juga masa ketika dana dan minat merosot.
+Machine learning mengubah pendekatannya. Alih-alih menulis setiap aturan, kita memberi mesin banyak contoh, lalu membiarkannya menemukan pola sendiri.
+Tahun 2012, sebuah jaringan saraf tiruan yang dilatih dengan kartu grafis membuat lompatan besar dalam mengenali gambar. Era deep learning pun dimulai.
+Tahun 2016, AlphaGo mengalahkan Lee Sedol, salah satu pemain Go terbaik dunia. Setahun kemudian, arsitektur bernama Transformer diperkenalkan, dan menjadi fondasi model bahasa besar yang kini bisa menulis, menerjemahkan, dan bercakap-cakap dengan kita.
+Namun kecerdasan buatan tetaplah alat buatan manusia. Ia bisa keliru, dan cara kita menggunakannya tetap menjadi tanggung jawab kita.
+
+[s11_penutup] Kisah yang Belum Selesai
+
+Dari manik-manik abakus hingga jaringan saraf tiruan, setiap lompatan selalu berdiri di atas lompatan sebelumnya.
+Roda gigi Pascal. Kartu berlubang Babbage. Catatan Ada. Tabung vakum ENIAC. Transistor. Chip.
+Semuanya lahir dari hasrat yang sama: memahami dunia sedikit lebih cepat, dan sedikit lebih baik.
+Lalu, apa babak berikutnya? Mungkin komputer kuantum. Mungkin sesuatu yang belum bisa kita bayangkan.
+Yang pasti, kisah ini belum selesai. Dan kita semua ikut menulisnya.

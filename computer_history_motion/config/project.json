@@ -1,0 +1,93 @@
+{
+  "project": {
+    "title": "Sejarah Komputer",
+    "subtitle": "Dari Mesin Mekanis hingga Era Kecerdasan Buatan",
+    "language": "id-ID",
+    "output_basename": "sejarah_komputer"
+  },
+  "video": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "final": { "scale": 1.0, "fps": 30, "crf": 18, "preset": "medium", "grain": true },
+    "preview": { "scale": 0.5, "fps": 15, "crf": 28, "preset": "ultrafast", "grain": false },
+    "pixel_format": "yuv420p"
+  },
+  "timeline": {
+    "lead_in": 0.9,
+    "tail": 1.1,
+    "transition_duration": 0.7,
+    "min_scene_duration": 4.0,
+    "first_scene_lead_in": 0.6
+  },
+  "tts": {
+    "preset": "warm_documentary",
+    "concurrency": 3,
+    "retries": 4,
+    "timeout_s": 60,
+    "backoff_s": 2.0,
+    "sample_rate": 48000,
+    "trim_tail_s": 0.28,
+    "edge_fade_ms": 8,
+    "crossfade_ms": 0
+  },
+  "audio": {
+    "sample_rate": 48000,
+    "voice_lufs": -18.0,
+    "master_lufs": -16.0,
+    "true_peak": -1.5,
+    "lra": 11.0,
+    "music_gain_db": -21.0,
+    "ambience_gain_db": -31.0,
+    "sfx_gain_db": -14.0,
+    "music_file": null,
+    "music_fade_in_s": 2.5,
+    "music_fade_out_s": 4.0,
+    "duck": { "threshold": 0.03, "ratio": 6, "attack_ms": 40, "release_ms": 600, "makeup": 1.0 },
+    "clip_peak_dbfs": -0.5
+  },
+  "subtitles": {
+    "burn_in": true,
+    "max_chars_per_line": 42,
+    "max_lines": 2,
+    "max_cue_duration": 5.5,
+    "min_cue_duration": 1.0,
+    "lead_s": 0.05,
+    "hold_s": 0.2,
+    "font": "Inter Medium",
+    "font_size": 38,
+    "margin_bottom": 58,
+    "box_alpha": 0.62
+  },
+  "theme": {
+    "colors": {
+      "bg_top": "#07090f",
+      "bg_bottom": "#0b1424",
+      "panel": "#0e1726",
+      "grid": "#1b2a40",
+      "text": "#eef2f7",
+      "muted": "#8a98ad",
+      "dim": "#4a5a72",
+      "cyan": "#4fd8eb",
+      "amber": "#f2b45a",
+      "white": "#ffffff",
+      "subtitle_box": "#05080e"
+    },
+    "fonts": {
+      "display": "Inter Display SemiBold",
+      "display_light": "Inter Display Light",
+      "heading": "Inter SemiBold",
+      "body": "Inter",
+      "light": "Inter Light",
+      "medium": "Inter Medium",
+      "mono": "DejaVu Sans Mono"
+    },
+    "stroke_width": 2.4,
+    "glow": 0.18,
+    "grid_spacing": 80,
+    "particles": 70,
+    "safe_bottom": 860,
+    "show_chapter_tag": true,
+    "show_progress": true
+  }
+}

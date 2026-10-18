@@ -1,0 +1,919 @@
+{
+  "meta": {
+    "title": "Sejarah Komputer",
+    "subtitle": "Dari Mesin Mekanis hingga Era Kecerdasan Buatan",
+    "language": "id-ID",
+    "notes": "Fakta diverifikasi terhadap sumber di field historical_sources. Tidak ada kutipan langsung tokoh; gagasan tokoh diparafrasekan. Angka perkiraan diberi kata 'sekitar'."
+  },
+  "scenes": [
+    {
+      "scene_id": "s01_pembuka",
+      "chapter": "Prolog",
+      "title": "Hasrat untuk Menghitung",
+      "era": "HARI INI → RIBUAN TAHUN LALU",
+      "accent": "cyan",
+      "ambience": "digital",
+      "estimated_duration": 22,
+      "narration": [
+        "Benda kecil di saku Anda mampu melakukan miliaran perhitungan setiap detik.",
+        "Tapi kisahnya dimulai jauh sebelum ada listrik, dari satu pertanyaan sederhana: bagaimana caranya menghitung lebih cepat?",
+        {
+          "text": "Inilah perjalanan panjang komputer. Dari manik-manik kayu, hingga mesin yang belajar.",
+          "rate": "-8%"
+        }
+      ],
+      "timing": {
+        "tail": 3.4
+      },
+      "visual_description": "Ponsel line-art di tengah dikelilingi medan digit yang berkedip (miliaran perhitungan). Saat narasi mundur ke masa lalu, ponsel tergulung dan berubah menjadi abakus. Lalu ikon berevolusi cepat: roda gigi Pascal, tabung vakum, chip, laptop, hingga jaringan saraf, sebelum judul utama muncul.",
+      "animation_style": "Morph line-art (draw-on/draw-off), kinetic typography judul dengan tracking yang merapat, camera push-in lambat.",
+      "camera": {
+        "type": "push_in",
+        "zoom": [
+          1.0,
+          1.07
+        ]
+      },
+      "transition": {
+        "in": {
+          "type": "fade",
+          "dur": 0.6
+        },
+        "out": {
+          "type": "iris",
+          "dur": 0.8
+        }
+      },
+      "sfx": [
+        {
+          "name": "blip",
+          "at": {
+            "word": "miliaran"
+          },
+          "gain_db": -6
+        },
+        {
+          "name": "riser",
+          "at": {
+            "word": "Inilah",
+            "offset": -0.6
+          },
+          "gain_db": -4
+        },
+        {
+          "name": "impact",
+          "at": {
+            "word": "belajar",
+            "offset": 0.3
+          },
+          "gain_db": -2
+        },
+        {
+          "name": "whoosh",
+          "at": "transition_out",
+          "gain_db": -6
+        }
+      ],
+      "elements": [
+        {
+          "type": "number_field",
+          "at": "start",
+          "until": {
+            "word": "dimulai"
+          },
+          "pos": [
+            960,
+            430
+          ],
+          "size": [
+            1500,
+            640
+          ],
+          "density": 0.42,
+          "font_size": 17,
+          "highlight_every": 14
+        },
+        {
+          "type": "morph",
+          "pos": [
+            960,
+            400
+          ],
+          "size": 330,
+          "until": "end",
+          "items": [
+            {
+              "icon": "phone",
+              "at": "start",
+              "label": "hari ini"
+            },
+            {
+              "icon": "abacus",
+              "at": {
+                "word": "sederhana"
+              },
+              "label": "ribuan tahun lalu"
+            },
+            {
+              "icon": "pascaline",
+              "at": {
+                "word": "Inilah"
+              },
+              "label": "roda gigi"
+            },
+            {
+              "icon": "vacuum_tube",
+              "at": {
+                "word": "panjang"
+              },
+              "label": "tabung vakum"
+            },
+            {
+              "icon": "chip",
+              "at": {
+                "word": "komputer"
+              },
+              "label": "chip"
+            },
+            {
+              "icon": "laptop",
+              "at": {
+                "word": "komputer",
+                "edge": "end",
+                "offset": 0.45
+              },
+              "label": "komputer personal"
+            },
+            {
+              "icon": "abacus",
+              "at": {
+                "word": "Dari",
+                "n": 2
+              },
+              "label": "manik-manik kayu"
+            },
+            {
+              "icon": "neural_net",
+              "at": {
+                "word": "mesin"
+              },
+              "label": "mesin yang belajar"
+            }
+          ],
+          "path": [
+            {
+              "at": {
+                "word": "pertanyaan"
+              },
+              "pos": [
+                600,
+                410
+              ],
+              "dur": 1.2
+            },
+            {
+              "at": {
+                "word": "Inilah",
+                "offset": -0.3
+              },
+              "pos": [
+                960,
+                400
+              ],
+              "dur": 1.0
+            }
+          ]
+        },
+        {
+          "type": "counter",
+          "at": {
+            "word": "miliaran",
+            "offset": -0.2
+          },
+          "until": {
+            "word": "dimulai"
+          },
+          "pos": [
+            1330,
+            420
+          ],
+          "from": 0,
+          "to": 1000000000,
+          "dur": 2.2,
+          "size": 64,
+          "label": "perhitungan / detik",
+          "label_size": 17
+        },
+        {
+          "type": "kicker",
+          "at": {
+            "word": "pertanyaan"
+          },
+          "until": {
+            "word": "Inilah"
+          },
+          "pos": [
+            1010,
+            350
+          ],
+          "text": "Pertanyaan pertama"
+        },
+        {
+          "type": "headline",
+          "at": {
+            "word": "bagaimana"
+          },
+          "until": {
+            "word": "Inilah"
+          },
+          "pos": [
+            1010,
+            440
+          ],
+          "size": 58,
+          "max_width": 640,
+          "text": "Bagaimana menghitung lebih cepat?"
+        },
+        {
+          "type": "title",
+          "at": {
+            "word": "belajar",
+            "offset": 0.35
+          },
+          "pos": [
+            960,
+            735
+          ],
+          "text": "SEJARAH KOMPUTER",
+          "sub": "Dari Mesin Mekanis hingga Era Kecerdasan Buatan",
+          "size": 92
+        }
+      ],
+      "historical_sources": [
+        {
+          "title": "Computer History Museum — Timeline of Computer History",
+          "url": "https://www.computerhistory.org/timeline/"
+        }
+      ]
+    },
+    {
+      "scene_id": "s02_alat_hitung",
+      "chapter": "Bab 1",
+      "title": "Abakus dan Alat Hitung Mekanis",
+      "era": "KUNO — 1694",
+      "accent": "amber",
+      "ambience": "mechanical",
+      "estimated_duration": 50,
+      "narration": [
+        "Awalnya, manusia menghitung dengan apa saja yang ada di dekatnya. Jari tangan. Kerikil. Goresan pada tulang dan tanah liat.",
+        "Lalu lahirlah abakus. Manik-manik yang digeser di atas batang ini dipakai di banyak peradaban, dari Romawi hingga Tiongkok, untuk menghitung dengan cepat dan rapi.",
+        "Tapi abakus hanya membantu. Yang berhitung tetaplah otak manusia.",
+        "Tahun 1642, seorang pemuda Prancis bernama Blaise Pascal membuat mesin hitung beroda gigi, untuk meringankan pekerjaan ayahnya yang mengurus pajak.",
+        "Beberapa dekade kemudian, Gottfried Wilhelm Leibniz merancang mesin yang tidak hanya bisa menjumlahkan, tetapi juga mengalikan.",
+        {
+          "text": "Untuk pertama kalinya, sebagian pekerjaan berpikir dipindahkan ke dalam roda gigi.",
+          "rate": "-7%"
+        }
+      ],
+      "visual_description": "Turus dan kerikil, lalu abakus dengan manik bergerak. Tahun 1642 berputar besar saat Pascaline muncul; nama Leibniz beserta label 'bisa mengalikan'. Penutup: roda gigi yang saling mengunci berputar.",
+      "animation_style": "Line-art amber hangat, counter tahun bergulir, tipografi editorial di sisi kanan.",
+      "transition": {
+        "out": {
+          "type": "bars",
+          "dur": 0.8
+        }
+      },
+      "sfx": [
+        {
+          "name": "tick",
+          "at": {
+            "word": "abakus"
+          },
+          "gain_db": -6
+        },
+        {
+          "name": "clunk",
+          "at": {
+            "word": "1642"
+          },
+          "gain_db": -4
+        },
+        {
+          "name": "clunk",
+          "at": {
+            "word": "roda",
+            "n": 2
+          },
+          "gain_db": -6
+        },
+        {
+          "name": "whoosh",
+          "at": "transition_out",
+          "gain_db": -6
+        }
+      ],
+      "historical_sources": [
+        {
+          "title": "Britannica — Abacus",
+          "url": "https://www.britannica.com/technology/abacus-calculating-device"
+        },
+        {
+          "title": "Britannica — Blaise Pascal",
+          "url": "https://www.britannica.com/biography/Blaise-Pascal"
+        },
+        {
+          "title": "Britannica — Gottfried Wilhelm Leibniz",
+          "url": "https://www.britannica.com/biography/Gottfried-Wilhelm-Leibniz"
+        },
+        {
+          "title": "Computer History Museum — Timeline of Computer History",
+          "url": "https://www.computerhistory.org/timeline/"
+        }
+      ]
+    },
+    {
+      "scene_id": "s03_babbage",
+      "chapter": "Bab 2",
+      "title": "Charles Babbage dan Analytical Engine",
+      "era": "1822 — 1871",
+      "accent": "amber",
+      "ambience": "mechanical",
+      "estimated_duration": 55,
+      "narration": [
+        "Memasuki abad ke-19, dunia dipenuhi tabel angka. Tabel navigasi, tabel astronomi, tabel keuangan. Semuanya dihitung dan disalin dengan tangan, dan satu kesalahan kecil bisa berakibat besar.",
+        "Charles Babbage, seorang matematikawan Inggris, membayangkan mesin yang bisa menghitung tanpa lelah dan tanpa salah.",
+        "Tahun 1822, ia mengusulkan Difference Engine, mesin untuk menyusun tabel secara otomatis.",
+        "Lalu ia melangkah lebih jauh. Sejak 1834, Babbage merancang Analytical Engine: mesin serba guna yang bisa diprogram dengan kartu berlubang.",
+        "Rancangannya punya bagian untuk mengolah angka, yang ia sebut mill, dan bagian untuk menyimpan angka, yang ia sebut store. Mirip prosesor dan memori pada komputer masa kini.",
+        {
+          "text": "Sayangnya, mesin itu tidak pernah selesai dibangun semasa hidupnya. Ia adalah gagasan yang lahir terlalu cepat, menunggu teknologi menyusul.",
+          "rate": "-7%"
+        }
+      ],
+      "visual_description": "Tabel angka dengan sel yang berkedip amber (kesalahan). Nama Babbage dan tahun hidupnya. Difference Engine (kolom roda angka) pada 1822, lalu Analytical Engine dengan kartu berlubang pada 1834. Diagram MILL→prosesor dan STORE→memori. Catatan: Difference Engine No. 2 dibangun Science Museum London pada 1991.",
+      "animation_style": "Diagram editorial, counter tahun, kartu berlubang dipindai.",
+      "transition": {
+        "out": {
+          "type": "line_wipe",
+          "dur": 0.8
+        }
+      },
+      "sfx": [
+        {
+          "name": "clunk",
+          "at": {
+            "word": "1822"
+          },
+          "gain_db": -5
+        },
+        {
+          "name": "tick",
+          "at": {
+            "word": "kartu"
+          },
+          "gain_db": -6
+        },
+        {
+          "name": "whoosh",
+          "at": "transition_out",
+          "gain_db": -7
+        }
+      ],
+      "historical_sources": [
+        {
+          "title": "Computer History Museum — The Babbage Engine",
+          "url": "https://www.computerhistory.org/babbage/"
+        },
+        {
+          "title": "Britannica — Analytical Engine",
+          "url": "https://www.britannica.com/technology/Analytical-Engine"
+        },
+        {
+          "title": "Britannica — Difference Engine",
+          "url": "https://www.britannica.com/technology/Difference-Engine"
+        },
+        {
+          "title": "Science Museum Group — Difference Engine No. 2 (dibangun 1991 dari rancangan Babbage)"
+        }
+      ]
+    },
+    {
+      "scene_id": "s04_ada_lovelace",
+      "chapter": "Bab 3",
+      "title": "Ada Lovelace dan Gagasan Program",
+      "era": "1843",
+      "accent": "amber",
+      "ambience": "mechanical",
+      "estimated_duration": 45,
+      "narration": [
+        "Di antara sedikit orang yang benar-benar memahami gagasan Babbage, ada seorang perempuan muda yang luar biasa: Ada Lovelace.",
+        "Tahun 1843, ia menerjemahkan sebuah artikel tentang Analytical Engine, lalu menambahkan catatannya sendiri, yang panjangnya hampir tiga kali lipat artikel aslinya.",
+        "Dalam salah satu catatan itu, ia menjabarkan langkah demi langkah cara mesin tersebut menghitung bilangan Bernoulli. Banyak sejarawan menyebutnya sebagai salah satu program komputer pertama yang pernah diterbitkan.",
+        "Tapi yang paling visioner adalah pemikirannya: mesin seperti ini mungkin bisa mengolah lebih dari sekadar angka. Simbol. Bahkan musik.",
+        {
+          "text": "Sekitar seratus tahun sebelum komputer elektronik pertama menyala, Ada sudah membayangkan apa yang bisa dilakukannya.",
+          "rate": "-7%"
+        }
+      ],
+      "visual_description": "Nama Ada Lovelace (1815–1852). Halaman catatan bergaya 'Note G' tergambar. Counter 1843 dan label 'catatan A–G'. Saat menyebut musik, garis paranada berubah menjadi gelombang. Garis waktu 1843 → 1945 menunjukkan jarak sekitar seratus tahun.",
+      "animation_style": "Halaman catatan draw-on, tipografi serif-less elegan, morph not balok → gelombang.",
+      "transition": {
+        "out": {
+          "type": "fade",
+          "dur": 0.8
+        }
+      },
+      "sfx": [
+        {
+          "name": "chime",
+          "at": {
+            "word": "musik"
+          },
+          "gain_db": -6
+        },
+        {
+          "name": "whoosh",
+          "at": "transition_out",
+          "gain_db": -9
+        }
+      ],
+      "historical_sources": [
+        {
+          "title": "Britannica — Ada Lovelace",
+          "url": "https://www.britannica.com/biography/Ada-Lovelace"
+        },
+        {
+          "title": "L. F. Menabrea, 'Sketch of the Analytical Engine…', terjemahan dan catatan A–G oleh A. A. Lovelace, Scientific Memoirs vol. 3 (1843)"
+        },
+        {
+          "title": "Computer History Museum — Ada Lovelace",
+          "url": "https://www.computerhistory.org/babbage/adalovelace/"
+        }
+      ]
+    },
+    {
+      "scene_id": "s05_elektronik",
+      "chapter": "Bab 4",
+      "title": "Komputer Elektronik Pertama",
+      "era": "1936 — 1948",
+      "accent": "cyan",
+      "ambience": "electric",
+      "estimated_duration": 80,
+      "narration": [
+        "Abad ke-20 membawa sesuatu yang tidak dimiliki Babbage: listrik.",
+        "Tahun 1936, Alan Turing menulis makalah tentang mesin abstrak yang, secara teori, bisa menjalankan perhitungan apa pun yang dapat dijabarkan langkah demi langkah.",
+        "Perang Dunia Kedua lalu mempercepat segalanya. Di Jerman, Konrad Zuse menyelesaikan Z3 pada 1941, mesin hitung elektromekanis yang dapat diprogram. Di Inggris, mesin elektronik Colossus membantu memecahkan sandi militer Jerman.",
+        "Dan di Amerika Serikat, lahirlah ENIAC. Diselesaikan pada 1945 dan diperkenalkan ke publik pada 1946, mesin raksasa ini memakai sekitar delapan belas ribu tabung vakum, dengan berat sekitar dua puluh tujuh ton.",
+        "Ia mampu melakukan sekitar lima ribu penjumlahan per detik. Sangat cepat untuk zamannya.",
+        "Untuk memprogramnya, enam perempuan harus menata ulang kabel dan sakelar secara manual. Nama mereka lama terlupakan, padahal merekalah programmer pertama ENIAC.",
+        "Beberapa tahun kemudian, sebuah gagasan penting menjadi kenyataan: menyimpan program di dalam memori, bersama datanya. Prinsip inilah yang masih dipakai hampir semua komputer hari ini."
+      ],
+      "visual_description": "Simbol listrik; pita mesin Turing (1936); label Z3 1941 dan Colossus 1944. Panel-panel ENIAC dengan lampu berkedip dan statistik: sekitar 17.468 tabung, sekitar 27 ton, sekitar 5.000 penjumlahan per detik. Chip nama enam programmer ENIAC. Diagram program + data → memori (Manchester Baby, 1948).",
+      "animation_style": "Lampu panel berkedip, statistik counter, chip nama bertahap, diagram alur.",
+      "transition": {
+        "out": {
+          "type": "bars",
+          "dur": 0.8
+        }
+      },
+      "sfx": [
+        {
+          "name": "relay",
+          "at": {
+            "word": "listrik"
+          },
+          "gain_db": -4
+        },
+        {
+          "name": "clunk",
+          "at": {
+            "word": "ENIAC"
+          },
+          "gain_db": -5
+        },
+        {
+          "name": "tick",
+          "at": {
+            "word": "enam"
+          },
+          "gain_db": -8
+        },
+        {
+          "name": "whoosh",
+          "at": "transition_out",
+          "gain_db": -6
+        }
+      ],
+      "historical_sources": [
+        {
+          "title": "A. M. Turing, 'On Computable Numbers, with an Application to the Entscheidungsproblem', Proceedings of the London Mathematical Society (1936)"
+        },
+        {
+          "title": "Britannica — ENIAC",
+          "url": "https://www.britannica.com/technology/ENIAC"
+        },
+        {
+          "title": "Britannica — Alan Turing",
+          "url": "https://www.britannica.com/biography/Alan-Turing"
+        },
+        {
+          "title": "Computer History Museum — Timeline of Computer History (Z3 1941, Colossus 1944, Manchester Baby 1948)",
+          "url": "https://www.computerhistory.org/timeline/"
+        },
+        {
+          "title": "Kathy Kleiman, 'Proving Ground: The Untold Story of the Six Women Who Programmed the World's First Modern Computer' (2022)"
+        }
+      ]
+    },
+    {
+      "scene_id": "s06_transistor",
+      "chapter": "Bab 5",
+      "title": "Transistor dan Generasi Berikutnya",
+      "era": "1947 — 1959",
+      "accent": "cyan",
+      "ambience": "electric",
+      "estimated_duration": 50,
+      "narration": [
+        "Tapi tabung vakum punya masalah. Ia besar, panas, boros listrik, dan mudah putus.",
+        "Desember 1947, di Bell Labs, John Bardeen dan Walter Brattain mendemonstrasikan transistor pertama, dalam kelompok riset yang dipimpin William Shockley.",
+        "Komponen kecil ini bisa melakukan tugas tabung vakum, yaitu menguatkan sinyal dan menyalakan atau memutus arus listrik, dengan ukuran jauh lebih kecil, lebih hemat daya, dan lebih awet.",
+        "Pada akhir 1950-an, komputer transistor mulai menggantikan komputer tabung. Era ini kemudian dikenal sebagai generasi kedua komputer.",
+        "Bersamaan dengan itu, cara kita berbicara dengan mesin juga berubah. Bahasa pemrograman seperti FORTRAN dan COBOL membuat instruksi komputer jauh lebih mudah ditulis dan dibaca manusia."
+      ],
+      "visual_description": "Tabung vakum dengan label masalah: besar, panas, boros, mudah putus. Transistor muncul pada 1947 dengan nama tiga penemunya dan catatan Nobel Fisika 1956. Perbandingan ukuran. Garis waktu generasi komputer. Potongan kode bergaya FORTRAN.",
+      "animation_style": "Perbandingan berdampingan, timeline generasi dengan fokus bergeser, kode mono diketik.",
+      "transition": {
+        "out": {
+          "type": "line_wipe",
+          "dur": 0.8
+        }
+      },
+      "sfx": [
+        {
+          "name": "blip",
+          "at": {
+            "word": "1947"
+          },
+          "gain_db": -5
+        },
+        {
+          "name": "keys",
+          "at": {
+            "word": "FORTRAN"
+          },
+          "gain_db": -8
+        },
+        {
+          "name": "whoosh",
+          "at": "transition_out",
+          "gain_db": -7
+        }
+      ],
+      "historical_sources": [
+        {
+          "title": "Nobel Prize — Physics 1956 (Shockley, Bardeen, Brattain)",
+          "url": "https://www.nobelprize.org/prizes/physics/1956/summary/"
+        },
+        {
+          "title": "Britannica — Transistor",
+          "url": "https://www.britannica.com/technology/transistor"
+        },
+        {
+          "title": "Computer History Museum — Timeline of Computer History (FORTRAN 1957, COBOL 1959)",
+          "url": "https://www.computerhistory.org/timeline/"
+        }
+      ]
+    },
+    {
+      "scene_id": "s07_chip",
+      "chapter": "Bab 6",
+      "title": "Integrated Circuit dan Mikroprosesor",
+      "era": "1958 — 1971",
+      "accent": "cyan",
+      "ambience": "digital",
+      "estimated_duration": 55,
+      "narration": [
+        "Masalah berikutnya: menyambungkan ribuan transistor satu per satu itu rumit dan rawan salah.",
+        "Tahun 1958, Jack Kilby di Texas Instruments membuat rangkaian terpadu pertama. Tak lama kemudian, Robert Noyce di Fairchild Semiconductor mengembangkan versi berbahan silikon yang lebih praktis untuk diproduksi massal.",
+        "Banyak komponen kini bisa dibuat sekaligus di atas satu keping kecil. Itulah chip.",
+        "Tahun 1965, Gordon Moore mengamati bahwa jumlah komponen dalam satu chip terus berlipat ganda secara berkala. Pengamatan ini kemudian dikenal sebagai Hukum Moore.",
+        "Lalu pada 1971, Intel merilis 4004, mikroprosesor komersial pertama. Seluruh unit pemroses komputer, dalam satu chip, dengan sekitar dua ribu tiga ratus transistor."
+      ],
+      "visual_description": "Kabel kusut antara banyak komponen. Kilby 1958 dan Noyce (silikon). Chip dengan sirkuit yang menyala. Grafik Hukum Moore berskala logaritmik dari 4004 hingga chip modern. Die Intel 4004 dan statistik sekitar 2.300 transistor.",
+      "animation_style": "Kekacauan → keteraturan, grafik log draw-on, push-in ke chip.",
+      "camera": {
+        "type": "push_in",
+        "zoom": [
+          1.0,
+          1.05
+        ]
+      },
+      "transition": {
+        "out": {
+          "type": "zoom",
+          "dur": 0.8
+        }
+      },
+      "sfx": [
+        {
+          "name": "blip",
+          "at": {
+            "word": "1958"
+          },
+          "gain_db": -6
+        },
+        {
+          "name": "data",
+          "at": {
+            "word": "1971"
+          },
+          "gain_db": -8
+        },
+        {
+          "name": "whoosh",
+          "at": "transition_out",
+          "gain_db": -6
+        }
+      ],
+      "historical_sources": [
+        {
+          "title": "Britannica — Integrated circuit",
+          "url": "https://www.britannica.com/technology/integrated-circuit"
+        },
+        {
+          "title": "G. E. Moore, 'Cramming more components onto integrated circuits', Electronics, 19 April 1965"
+        },
+        {
+          "title": "Intel — The Story of the Intel 4004",
+          "url": "https://www.intel.com/content/www/us/en/history/museum-story-of-intel-4004.html"
+        },
+        {
+          "title": "Computer History Museum — The Silicon Engine (timeline semikonduktor)",
+          "url": "https://www.computerhistory.org/siliconengine/"
+        }
+      ]
+    },
+    {
+      "scene_id": "s08_komputer_personal",
+      "chapter": "Bab 7",
+      "title": "Revolusi Komputer Personal",
+      "era": "1975 — 1984",
+      "accent": "amber",
+      "ambience": "digital",
+      "music_pulse": true,
+      "estimated_duration": 45,
+      "narration": [
+        "Begitu otak komputer bisa dibuat sekecil itu, muncul pertanyaan baru: bagaimana jika setiap orang punya komputernya sendiri?",
+        "Tahun 1975, Altair 8800 memicu antusiasme para penghobi. Dari klub-klub komputer dan bengkel rumahan, lahirlah perusahaan-perusahaan baru.",
+        "Apple II pada 1977, lalu IBM PC pada 1981, membawa komputer ke meja kantor, sekolah, dan rumah.",
+        "Kemudian antarmuka grafis, dengan jendela, ikon, dan mouse, yang dikembangkan di Xerox PARC dan dipopulerkan oleh Apple Macintosh pada 1984, membuat komputer bisa dipakai tanpa harus menghafal perintah.",
+        {
+          "text": "Komputer bukan lagi mesin para ilmuwan. Ia menjadi alat semua orang.",
+          "rate": "-7%"
+        }
+      ],
+      "visual_description": "Pertanyaan besar sebagai headline. Panel Altair 8800 dengan sakelar dan lampu. Komputer desktop dengan prompt teks; timeline 1977 Apple II dan 1981 IBM PC. Jendela GUI dengan kursor mouse bergerak. Klimaks: grid ikon orang yang muncul bertahap.",
+      "animation_style": "Energi meningkat, denyut musik lembut, grid stagger sebagai klimaks.",
+      "transition": {
+        "out": {
+          "type": "bars",
+          "dur": 0.8
+        }
+      },
+      "sfx": [
+        {
+          "name": "relay",
+          "at": {
+            "word": "1975"
+          },
+          "gain_db": -6
+        },
+        {
+          "name": "keys",
+          "at": {
+            "word": "IBM"
+          },
+          "gain_db": -8
+        },
+        {
+          "name": "riser",
+          "at": {
+            "word": "Komputer",
+            "n": 3,
+            "offset": -1.2
+          },
+          "gain_db": -6
+        },
+        {
+          "name": "whoosh",
+          "at": "transition_out",
+          "gain_db": -6
+        }
+      ],
+      "historical_sources": [
+        {
+          "title": "Computer History Museum — Timeline of Computer History (Altair 1975, Apple II 1977, IBM PC 1981, Macintosh 1984)",
+          "url": "https://www.computerhistory.org/timeline/"
+        },
+        {
+          "title": "Britannica — Personal computer",
+          "url": "https://www.britannica.com/technology/personal-computer"
+        },
+        {
+          "title": "Britannica — Xerox PARC",
+          "url": "https://www.britannica.com/topic/Xerox-PARC"
+        }
+      ]
+    },
+    {
+      "scene_id": "s09_internet_mobile",
+      "chapter": "Bab 8",
+      "title": "Internet, Laptop, dan Mobile",
+      "era": "1969 — 2007",
+      "accent": "cyan",
+      "ambience": "digital",
+      "music_pulse": true,
+      "estimated_duration": 42,
+      "narration": [
+        "Lalu, komputer-komputer itu mulai saling terhubung.",
+        "Berawal dari ARPANET pada 1969, jaringan tumbuh menjadi internet. Tahun 1989, Tim Berners-Lee di CERN mengusulkan World Wide Web, cara sederhana untuk menautkan dokumen di seluruh dunia.",
+        "Komputer pun ikut bergerak bersama kita. Laptop membuatnya bisa dibawa ke mana saja.",
+        "Dan pada 2007, peluncuran iPhone ikut mendorong era ponsel pintar: komputer lengkap dengan layar sentuh, kamera, dan internet, di dalam genggaman.",
+        "Dalam beberapa dekade saja, miliaran orang menjadi terhubung."
+      ],
+      "visual_description": "Jaringan node yang tumbuh. ARPANET 1969. Globe dengan busur koneksi untuk World Wide Web 1989. Laptop, lalu ponsel pintar 2007. Penutup: globe penuh koneksi dengan label miliaran orang terhubung.",
+      "animation_style": "Graf jaringan tumbuh, globe berputar, morph laptop → ponsel.",
+      "transition": {
+        "out": {
+          "type": "line_wipe",
+          "dur": 0.8
+        }
+      },
+      "sfx": [
+        {
+          "name": "data",
+          "at": {
+            "word": "ARPANET"
+          },
+          "gain_db": -8
+        },
+        {
+          "name": "blip",
+          "at": {
+            "word": "2007"
+          },
+          "gain_db": -6
+        },
+        {
+          "name": "whoosh",
+          "at": "transition_out",
+          "gain_db": -7
+        }
+      ],
+      "historical_sources": [
+        {
+          "title": "Internet Society — Brief History of the Internet",
+          "url": "https://www.internetsociety.org/internet/history-internet/brief-history-internet/"
+        },
+        {
+          "title": "CERN — The birth of the Web",
+          "url": "https://home.cern/science/computing/birth-web"
+        },
+        {
+          "title": "Computer History Museum — Timeline of Computer History (iPhone 2007)",
+          "url": "https://www.computerhistory.org/timeline/"
+        }
+      ]
+    },
+    {
+      "scene_id": "s10_kecerdasan_buatan",
+      "chapter": "Bab 9",
+      "title": "Machine Learning dan Kecerdasan Buatan",
+      "era": "1956 — KINI",
+      "accent": "cyan",
+      "ambience": "digital",
+      "music_pulse": true,
+      "estimated_duration": 70,
+      "narration": [
+        "Selama puluhan tahun, komputer hanya melakukan persis apa yang diperintahkan. Tapi para peneliti bertanya: bisakah mesin belajar?",
+        "Istilah kecerdasan buatan dipopulerkan lewat sebuah lokakarya di Dartmouth pada 1956. Perjalanannya tidak mulus. Ada masa penuh harapan, ada juga masa ketika dana dan minat merosot.",
+        "Machine learning mengubah pendekatannya. Alih-alih menulis setiap aturan, kita memberi mesin banyak contoh, lalu membiarkannya menemukan pola sendiri.",
+        "Tahun 2012, sebuah jaringan saraf tiruan yang dilatih dengan kartu grafis membuat lompatan besar dalam mengenali gambar. Era deep learning pun dimulai.",
+        "Tahun 2016, AlphaGo mengalahkan Lee Sedol, salah satu pemain Go terbaik dunia. Setahun kemudian, arsitektur bernama Transformer diperkenalkan, dan menjadi fondasi model bahasa besar yang kini bisa menulis, menerjemahkan, dan bercakap-cakap dengan kita.",
+        {
+          "text": "Namun kecerdasan buatan tetaplah alat buatan manusia. Ia bisa keliru, dan cara kita menggunakannya tetap menjadi tanggung jawab kita.",
+          "rate": "-7%"
+        }
+      ],
+      "visual_description": "Kode berbasis aturan diketik. Lokakarya Dartmouth 1956. Diagram contoh → model → pola. Jaringan saraf dengan pulsa (2012, deep learning). Papan Go terisi batu (2016). Transformer 2017 → model bahasa besar. Penutup: kartu reflektif tentang tanggung jawab manusia.",
+      "animation_style": "Diagram alur, jaringan saraf berdenyut, kartu reflektif yang tenang.",
+      "transition": {
+        "out": {
+          "type": "fade",
+          "dur": 0.9
+        }
+      },
+      "sfx": [
+        {
+          "name": "keys",
+          "at": "voice_start",
+          "gain_db": -9
+        },
+        {
+          "name": "data",
+          "at": {
+            "word": "2012"
+          },
+          "gain_db": -8
+        },
+        {
+          "name": "clunk",
+          "at": {
+            "word": "AlphaGo"
+          },
+          "gain_db": -8
+        },
+        {
+          "name": "whoosh",
+          "at": "transition_out",
+          "gain_db": -9
+        }
+      ],
+      "historical_sources": [
+        {
+          "title": "J. McCarthy, M. Minsky, N. Rochester, C. Shannon, 'A Proposal for the Dartmouth Summer Research Project on Artificial Intelligence' (1955)"
+        },
+        {
+          "title": "A. Krizhevsky, I. Sutskever, G. Hinton, 'ImageNet Classification with Deep Convolutional Neural Networks', NeurIPS (2012)"
+        },
+        {
+          "title": "D. Silver dkk., 'Mastering the game of Go with deep neural networks and tree search', Nature (2016); pertandingan AlphaGo vs Lee Sedol, Maret 2016"
+        },
+        {
+          "title": "A. Vaswani dkk., 'Attention Is All You Need', NeurIPS (2017)"
+        },
+        {
+          "title": "Britannica — Artificial intelligence",
+          "url": "https://www.britannica.com/technology/artificial-intelligence"
+        }
+      ]
+    },
+    {
+      "scene_id": "s11_penutup",
+      "chapter": "Epilog",
+      "title": "Kisah yang Belum Selesai",
+      "era": "MASA DEPAN",
+      "accent": "amber",
+      "ambience": "none",
+      "estimated_duration": 38,
+      "narration": [
+        "Dari manik-manik abakus hingga jaringan saraf tiruan, setiap lompatan selalu berdiri di atas lompatan sebelumnya.",
+        {
+          "text": "Roda gigi Pascal. Kartu berlubang Babbage. Catatan Ada. Tabung vakum ENIAC. Transistor. Chip.",
+          "rate": "-8%"
+        },
+        "Semuanya lahir dari hasrat yang sama: memahami dunia sedikit lebih cepat, dan sedikit lebih baik.",
+        "Lalu, apa babak berikutnya? Mungkin komputer kuantum. Mungkin sesuatu yang belum bisa kita bayangkan.",
+        {
+          "text": "Yang pasti, kisah ini belum selesai. Dan kita semua ikut menulisnya.",
+          "rate": "-9%",
+          "pause_after": 0.0
+        }
+      ],
+      "timing": {
+        "tail": 4.5
+      },
+      "visual_description": "Deretan ikon evolusi muncul satu per satu sesuai yang disebut narasi. Bola Bloch (qubit) untuk komputer kuantum. Judul penutup dan fade ke hitam.",
+      "animation_style": "Rangkuman visual yang tenang, judul penutup, fade to black.",
+      "transition": {
+        "out": {
+          "type": "fade_black",
+          "dur": 2.2
+        }
+      },
+      "sfx": [
+        {
+          "name": "chime",
+          "at": {
+            "word": "kuantum"
+          },
+          "gain_db": -7
+        },
+        {
+          "name": "impact",
+          "at": {
+            "word": "menulisnya",
+            "offset": 0.4
+          },
+          "gain_db": -4
+        }
+      ],
+      "historical_sources": [
+        {
+          "title": "Computer History Museum — Timeline of Computer History",
+          "url": "https://www.computerhistory.org/timeline/"
+        }
+      ]
+    }
+  ]
+}

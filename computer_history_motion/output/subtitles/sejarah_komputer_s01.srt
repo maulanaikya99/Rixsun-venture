@@ -1,0 +1,23 @@
+1
+00:00:00,650 --> 00:00:05,861
+Benda kecil di saku Anda mampu melakukan
+miliaran perhitungan setiap detik.
+
+2
+00:00:06,490 --> 00:00:09,964
+Tapi kisahnya dimulai
+jauh sebelum ada listrik,
+
+3
+00:00:10,069 --> 00:00:15,214
+dari satu pertanyaan sederhana:
+bagaimana caranya menghitung lebih cepat?
+
+4
+00:00:15,844 --> 00:00:18,907
+Inilah perjalanan panjang komputer.
+
+5
+00:00:19,571 --> 00:00:23,884
+Dari manik-manik kayu,
+hingga mesin yang belajar.

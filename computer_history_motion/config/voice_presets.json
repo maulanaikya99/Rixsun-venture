@@ -1,0 +1,60 @@
+{
+  "default": "warm_documentary",
+  "presets": {
+    "natural": {
+      "voice": "id-ID-GadisNeural",
+      "rate": "+0%",
+      "pitch": "+0Hz",
+      "volume": "+0%",
+      "language": "id-ID",
+      "unit_pause": 0.4,
+      "description": "Tempo bicara normal, jeda pendek. Cocok untuk penjelasan yang ringan."
+    },
+    "warm_documentary": {
+      "voice": "id-ID-GadisNeural",
+      "rate": "-5%",
+      "pitch": "+0Hz",
+      "volume": "+0%",
+      "language": "id-ID",
+      "unit_pause": 0.5,
+      "description": "Baseline. Sedikit lebih lambat dan jeda antarparagraf lebih lapang."
+    },
+    "dramatic_subtle": {
+      "voice": "id-ID-GadisNeural",
+      "rate": "-9%",
+      "pitch": "-2Hz",
+      "volume": "+0%",
+      "language": "id-ID",
+      "unit_pause": 0.65,
+      "description": "Lebih lambat, pitch sedikit turun, jeda lebih panjang. Untuk pembuka atau penutup."
+    }
+  },
+  "limits": {
+    "rate_pct": [
+      -20,
+      15
+    ],
+    "pitch_hz": [
+      -8,
+      8
+    ],
+    "volume_pct": [
+      -20,
+      10
+    ],
+    "unit_pause_s": [
+      0.1,
+      1.5
+    ]
+  },
+  "pronunciation": {
+    "_note": "Pengganti hanya untuk teks yang dikirim ke TTS. Subtitle tetap memakai ejaan aslinya. Kunci dicocokkan per kata (tanpa tanda baca, peka huruf besar).",
+    "4004": "empat nol nol empat",
+    "ENIAC": "Eniak",
+    "ARPANET": "Arpanet",
+    "CERN": "Sern",
+    "PARC": "Park",
+    "FORTRAN": "Fortran",
+    "COBOL": "Kobol"
+  }
+}

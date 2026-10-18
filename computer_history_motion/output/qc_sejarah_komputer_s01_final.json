@@ -1,0 +1,56 @@
+[
+  {
+    "status": "ok",
+    "check": "Resolusi",
+    "message": "1920x1080 (target 1920x1080)",
+    "fix": ""
+  },
+  {
+    "status": "ok",
+    "check": "Frame rate",
+    "message": "30.000 fps (target 30)",
+    "fix": ""
+  },
+  {
+    "status": "ok",
+    "check": "Durasi video",
+    "message": "27.367s vs timeline 27.367s",
+    "fix": "Render ulang; jangan memotong file secara manual."
+  },
+  {
+    "status": "ok",
+    "check": "Sinkronisasi A/V",
+    "message": "audio 27.367s, video 27.367s, selisih 0 ms",
+    "fix": "Bangun ulang master audio dan mux ulang."
+  },
+  {
+    "status": "ok",
+    "check": "Frame hitam",
+    "message": "tidak ada frame hitam tak disengaja",
+    "fix": "Periksa transisi scene atau elemen yang belum muncul."
+  },
+  {
+    "status": "ok",
+    "check": "Clipping audio",
+    "message": "puncak -3.45 dBFS, 0 sampel clipping",
+    "fix": "Turunkan audio.sfx_gain_db / music_gain_db atau target master_lufs."
+  },
+  {
+    "status": "ok",
+    "check": "Loudness master",
+    "message": "-15.97 LUFS (target -16.0)",
+    "fix": "Loudnorm tidak mencapai target; periksa dinamika stem."
+  },
+  {
+    "status": "ok",
+    "check": "Normalisasi linear",
+    "message": "mode linear",
+    "fix": "Mode dynamic berarti ada kompresi; turunkan gain SFX atau longgarkan true_peak."
+  },
+  {
+    "status": "ok",
+    "check": "Durasi audio master",
+    "message": "27.367s vs timeline 27.367s",
+    "fix": "Bangun ulang mix: python main.py --preview-audio"
+  }
+]

@@ -1,0 +1,13 @@
+# cache yang bisa dibuat ulang
+cache/
+__pycache__/
+*.pyc
+.pytest_cache/
+# aset generatif (dibuat otomatis dari kode)
+assets/music/generated/
+assets/sfx/generated/
+# media besar hasil render (dibuat ulang dengan main.py)
+output/audio/
+output/previews/
+output/final/*.mp4
+!output/final/.gitkeep

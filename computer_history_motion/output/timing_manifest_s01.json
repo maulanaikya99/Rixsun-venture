@@ -1,0 +1,504 @@
+{
+  "version": 1,
+  "fps": 30,
+  "total_frames": 821,
+  "total_duration": 27.3667,
+  "scenes": [
+    {
+      "index": 0,
+      "scene_id": "s01_pembuka",
+      "title": "Hasrat untuk Menghitung",
+      "chapter": "Prolog",
+      "era": "HARI INI → RIBUAN TAHUN LALU",
+      "accent": "cyan",
+      "ambience": "digital",
+      "start": 0.0,
+      "end": 27.3667,
+      "duration": 27.3667,
+      "start_frame": 0,
+      "n_frames": 821,
+      "lead_in": 0.6,
+      "tail_planned": 3.4,
+      "voice_start": 0.6,
+      "voice_end": 23.9639,
+      "audio_duration": 23.3639,
+      "audio_file": "output/audio/scenes/s01_pembuka.wav",
+      "audio_hash": "d473d5768decbccd",
+      "transition": {
+        "in": {
+          "type": "fade",
+          "dur": 0.6
+        },
+        "out": {
+          "type": "iris",
+          "dur": 0.8
+        }
+      },
+      "camera": {
+        "type": "push_in",
+        "zoom": [
+          1.0,
+          1.07
+        ]
+      },
+      "elements": [
+        {
+          "type": "number_field",
+          "at": "start",
+          "until": {
+            "word": "dimulai"
+          },
+          "pos": [
+            960,
+            430
+          ],
+          "size": [
+            1500,
+            640
+          ],
+          "density": 0.42,
+          "font_size": 17,
+          "highlight_every": 14,
+          "id": "number_field_1",
+          "t_in": 0.0,
+          "t_out": 7.5537
+        },
+        {
+          "type": "morph",
+          "pos": [
+            960,
+            400
+          ],
+          "size": 330,
+          "until": "end",
+          "items": [
+            {
+              "icon": "phone",
+              "at": "start",
+              "label": "hari ini",
+              "t_in": 0.0
+            },
+            {
+              "icon": "abacus",
+              "at": {
+                "word": "sederhana"
+              },
+              "label": "ribuan tahun lalu",
+              "t_in": 11.4089
+            },
+            {
+              "icon": "pascaline",
+              "at": {
+                "word": "Inilah"
+              },
+              "label": "roda gigi",
+              "t_in": 15.8942
+            },
+            {
+              "icon": "vacuum_tube",
+              "at": {
+                "word": "panjang"
+              },
+              "label": "tabung vakum",
+              "t_in": 17.1442
+            },
+            {
+              "icon": "chip",
+              "at": {
+                "word": "komputer"
+              },
+              "label": "chip",
+              "t_in": 17.7692
+            },
+            {
+              "icon": "laptop",
+              "at": {
+                "word": "komputer",
+                "edge": "end",
+                "offset": 0.45
+              },
+              "label": "komputer personal",
+              "t_in": 19.1567
+            },
+            {
+              "icon": "abacus",
+              "at": {
+                "word": "Dari",
+                "n": 2
+              },
+              "label": "manik-manik kayu",
+              "t_in": 19.6214
+            },
+            {
+              "icon": "neural_net",
+              "at": {
+                "word": "mesin"
+              },
+              "label": "mesin yang belajar",
+              "t_in": 22.1078
+            }
+          ],
+          "path": [
+            {
+              "at": {
+                "word": "pertanyaan"
+              },
+              "pos": [
+                600,
+                410
+              ],
+              "dur": 1.2,
+              "t_in": 10.7642
+            },
+            {
+              "at": {
+                "word": "Inilah",
+                "offset": -0.3
+              },
+              "pos": [
+                960,
+                400
+              ],
+              "dur": 1.0,
+              "t_in": 15.5942
+            }
+          ],
+          "id": "morph_2",
+          "t_in": 0.0,
+          "t_out": 27.3667
+        },
+        {
+          "type": "counter",
+          "at": {
+            "word": "miliaran",
+            "offset": -0.2
+          },
+          "until": {
+            "word": "dimulai"
+          },
+          "pos": [
+            1330,
+            420
+          ],
+          "from": 0,
+          "to": 1000000000,
+          "dur": 2.2,
+          "size": 64,
+          "label": "perhitungan / detik",
+          "label_size": 17,
+          "id": "counter_3",
+          "t_in": 3.3552,
+          "t_out": 7.5537
+        },
+        {
+          "type": "kicker",
+          "at": {
+            "word": "pertanyaan"
+          },
+          "until": {
+            "word": "Inilah"
+          },
+          "pos": [
+            1010,
+            350
+          ],
+          "text": "Pertanyaan pertama",
+          "id": "kicker_4",
+          "t_in": 10.7642,
+          "t_out": 15.8942
+        },
+        {
+          "type": "headline",
+          "at": {
+            "word": "bagaimana"
+          },
+          "until": {
+            "word": "Inilah"
+          },
+          "pos": [
+            1010,
+            440
+          ],
+          "size": 58,
+          "max_width": 640,
+          "text": "Bagaimana menghitung lebih cepat?",
+          "id": "headline_5",
+          "t_in": 12.6326,
+          "t_out": 15.8942
+        },
+        {
+          "type": "title",
+          "at": {
+            "word": "belajar",
+            "offset": 0.35
+          },
+          "pos": [
+            960,
+            735
+          ],
+          "text": "SEJARAH KOMPUTER",
+          "sub": "Dari Mesin Mekanis hingga Era Kecerdasan Buatan",
+          "size": 92,
+          "id": "title_6",
+          "t_in": 23.2594,
+          "t_out": null
+        }
+      ],
+      "text_appearances": [
+        {
+          "id": "number_field_1",
+          "type": "number_field",
+          "t_in": 0.0,
+          "t_out": 7.554,
+          "text": null
+        },
+        {
+          "id": "morph_2",
+          "type": "morph",
+          "t_in": 0.0,
+          "t_out": 27.367,
+          "text": null
+        },
+        {
+          "id": "counter_3",
+          "type": "counter",
+          "t_in": 3.355,
+          "t_out": 7.554,
+          "text": "perhitungan / detik"
+        },
+        {
+          "id": "kicker_4",
+          "type": "kicker",
+          "t_in": 10.764,
+          "t_out": 15.894,
+          "text": "Pertanyaan pertama"
+        },
+        {
+          "id": "headline_5",
+          "type": "headline",
+          "t_in": 12.633,
+          "t_out": 15.894,
+          "text": "Bagaimana menghitung lebih cepat?"
+        },
+        {
+          "id": "title_6",
+          "type": "title",
+          "t_in": 23.259,
+          "t_out": null,
+          "text": "SEJARAH KOMPUTER"
+        }
+      ],
+      "units": [
+        {
+          "index": 0,
+          "start": 0.6,
+          "end": 5.9405,
+          "text": "Benda kecil di saku Anda mampu melakukan miliaran perhitungan setiap detik."
+        },
+        {
+          "index": 1,
+          "start": 6.4405,
+          "end": 15.2942,
+          "text": "Tapi kisahnya dimulai jauh sebelum ada listrik, dari satu pertanyaan sederhana: bagaimana caranya menghitung lebih cepat?"
+        },
+        {
+          "index": 2,
+          "start": 15.7942,
+          "end": 23.9639,
+          "text": "Inilah perjalanan panjang komputer. Dari manik-manik kayu, hingga mesin yang belajar."
+        }
+      ],
+      "sfx_events": [
+        {
+          "name": "blip",
+          "time": 3.5552,
+          "gain_db": -6
+        },
+        {
+          "name": "riser",
+          "time": 15.2942,
+          "gain_db": -4
+        },
+        {
+          "name": "impact",
+          "time": 23.2094,
+          "gain_db": -2
+        },
+        {
+          "name": "whoosh",
+          "time": 26.5667,
+          "gain_db": -6
+        }
+      ],
+      "subtitles": [
+        {
+          "start": 0.65,
+          "end": 5.861,
+          "text": "Benda kecil di saku Anda mampu melakukan miliaran perhitungan setiap detik.",
+          "lines": [
+            "Benda kecil di saku Anda mampu melakukan",
+            "miliaran perhitungan setiap detik."
+          ],
+          "approx": false,
+          "scene_id": "s01_pembuka",
+          "position": {
+            "align": "bottom_center",
+            "margin_bottom": 58
+          }
+        },
+        {
+          "start": 6.49,
+          "end": 9.964,
+          "text": "Tapi kisahnya dimulai jauh sebelum ada listrik,",
+          "lines": [
+            "Tapi kisahnya dimulai",
+            "jauh sebelum ada listrik,"
+          ],
+          "approx": false,
+          "scene_id": "s01_pembuka",
+          "position": {
+            "align": "bottom_center",
+            "margin_bottom": 58
+          }
+        },
+        {
+          "start": 10.069,
+          "end": 15.214,
+          "text": "dari satu pertanyaan sederhana: bagaimana caranya menghitung lebih cepat?",
+          "lines": [
+            "dari satu pertanyaan sederhana:",
+            "bagaimana caranya menghitung lebih cepat?"
+          ],
+          "approx": false,
+          "scene_id": "s01_pembuka",
+          "position": {
+            "align": "bottom_center",
+            "margin_bottom": 58
+          }
+        },
+        {
+          "start": 15.844,
+          "end": 18.907,
+          "text": "Inilah perjalanan panjang komputer.",
+          "lines": [
+            "Inilah perjalanan panjang komputer."
+          ],
+          "approx": false,
+          "scene_id": "s01_pembuka",
+          "position": {
+            "align": "bottom_center",
+            "margin_bottom": 58
+          }
+        },
+        {
+          "start": 19.571,
+          "end": 23.884,
+          "text": "Dari manik-manik kayu, hingga mesin yang belajar.",
+          "lines": [
+            "Dari manik-manik kayu,",
+            "hingga mesin yang belajar."
+          ],
+          "approx": false,
+          "scene_id": "s01_pembuka",
+          "position": {
+            "align": "bottom_center",
+            "margin_bottom": 58
+          }
+        }
+      ],
+      "music_pulse": false,
+      "render_hash": "7ed87012e4abf915"
+    }
+  ],
+  "subtitles": [
+    {
+      "start": 0.65,
+      "end": 5.861,
+      "text": "Benda kecil di saku Anda mampu melakukan miliaran perhitungan setiap detik.",
+      "lines": [
+        "Benda kecil di saku Anda mampu melakukan",
+        "miliaran perhitungan setiap detik."
+      ],
+      "approx": false,
+      "scene_id": "s01_pembuka",
+      "position": {
+        "align": "bottom_center",
+        "margin_bottom": 58
+      }
+    },
+    {
+      "start": 6.49,
+      "end": 9.964,
+      "text": "Tapi kisahnya dimulai jauh sebelum ada listrik,",
+      "lines": [
+        "Tapi kisahnya dimulai",
+        "jauh sebelum ada listrik,"
+      ],
+      "approx": false,
+      "scene_id": "s01_pembuka",
+      "position": {
+        "align": "bottom_center",
+        "margin_bottom": 58
+      }
+    },
+    {
+      "start": 10.069,
+      "end": 15.214,
+      "text": "dari satu pertanyaan sederhana: bagaimana caranya menghitung lebih cepat?",
+      "lines": [
+        "dari satu pertanyaan sederhana:",
+        "bagaimana caranya menghitung lebih cepat?"
+      ],
+      "approx": false,
+      "scene_id": "s01_pembuka",
+      "position": {
+        "align": "bottom_center",
+        "margin_bottom": 58
+      }
+    },
+    {
+      "start": 15.844,
+      "end": 18.907,
+      "text": "Inilah perjalanan panjang komputer.",
+      "lines": [
+        "Inilah perjalanan panjang komputer."
+      ],
+      "approx": false,
+      "scene_id": "s01_pembuka",
+      "position": {
+        "align": "bottom_center",
+        "margin_bottom": 58
+      }
+    },
+    {
+      "start": 19.571,
+      "end": 23.884,
+      "text": "Dari manik-manik kayu, hingga mesin yang belajar.",
+      "lines": [
+        "Dari manik-manik kayu,",
+        "hingga mesin yang belajar."
+      ],
+      "approx": false,
+      "scene_id": "s01_pembuka",
+      "position": {
+        "align": "bottom_center",
+        "margin_bottom": 58
+      }
+    }
+  ],
+  "chapter_markers": [
+    0.0
+  ],
+  "music_pulse_regions": [],
+  "voice": {
+    "voice": "id-ID-GadisNeural",
+    "rate": "-5%",
+    "pitch": "+0Hz",
+    "volume": "+0%",
+    "language": "id-ID",
+    "unit_pause": 0.5,
+    "preset": "warm_documentary"
+  },
+  "selection": "s01",
+  "hash": "b45835349549af33"
+}

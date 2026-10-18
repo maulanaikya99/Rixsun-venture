@@ -1,0 +1,18 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Inter Medium,38,&H00F7F2EE,&H000000FF,&H600E0805,&H600E0805,0,0,0,0,100,100,0,0,3,10,0,2,120,120,58,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.65,0:00:05.86,Default,,0,0,0,,{\fad(120,120)}Benda kecil di saku Anda mampu melakukan\Nmiliaran perhitungan setiap detik.
+Dialogue: 0,0:00:06.49,0:00:09.96,Default,,0,0,0,,{\fad(120,120)}Tapi kisahnya dimulai\Njauh sebelum ada listrik,
+Dialogue: 0,0:00:10.07,0:00:15.21,Default,,0,0,0,,{\fad(120,120)}dari satu pertanyaan sederhana:\Nbagaimana caranya menghitung lebih cepat?
+Dialogue: 0,0:00:15.84,0:00:18.91,Default,,0,0,0,,{\fad(120,120)}Inilah perjalanan panjang komputer.
+Dialogue: 0,0:00:19.57,0:00:23.88,Default,,0,0,0,,{\fad(120,120)}Dari manik-manik kayu,\Nhingga mesin yang belajar.
