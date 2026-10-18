@@ -9,7 +9,7 @@ from .utils import PipelineError, Paths, load_json
 REQUIRED_FIELDS = ("scene_id", "title", "narration", "estimated_duration", "visual_description",
                    "animation_style", "transition", "sfx", "historical_sources")
 
-WORDS_PER_SECOND = 2.3  # perkiraan awal Edge-TTS id-ID pada rate -5%; durasi final selalu diukur
+WORDS_PER_SECOND = 1.5  # terukur: id-ID-GadisNeural, rate -5%, termasuk jeda alami (859 kata ≈ 575 s)
 
 
 def load_script(paths: Paths, name: str = "documentary_id.json") -> dict:
@@ -92,7 +92,7 @@ def selection_tag(selected: list[dict], all_scenes: list[dict]) -> str:
     return ids[0] if len(ids) == 1 else f"{ids[0]}-{ids[-1]}"
 
 
-def estimate_duration(scene: dict, wps: float = WORDS_PER_SECOND, unit_pause: float = 0.5) -> float:
+def estimate_duration(scene: dict, wps: float = WORDS_PER_SECOND, unit_pause: float = 0.0) -> float:
     words = sum(len(t.split()) for t in narration_units(scene))
     return round(words / wps + unit_pause * (len(scene["narration"]) - 1), 1)
 

@@ -6,18 +6,18 @@ Durasi aktual ditentukan oleh audio TTS. Kolom 'perkiraan' hanya estimasi dari j
 
 | # | Scene | Kata | Perkiraan (naskah) | Estimasi kata/detik |
 |---|---|---|---|---|
-| 1 | s01_pembuka — Hasrat untuk Menghitung | 38 | 25 s | 17.5 s |
-| 2 | s02_alat_hitung — Abakus dan Alat Hitung Mekanis | 76 | 51 s | 35.5 s |
-| 3 | s03_babbage — Charles Babbage dan Analytical Engine | 92 | 62 s | 42.0 s |
-| 4 | s04_ada_lovelace — Ada Lovelace dan Gagasan Program | 78 | 53 s | 35.9 s |
-| 5 | s05_elektronik — Komputer Elektronik Pertama | 127 | 85 s | 57.7 s |
-| 6 | s06_transistor — Transistor dan Generasi Berikutnya | 62 | 42 s | 28.5 s |
-| 7 | s07_chip — Integrated Circuit dan Mikroprosesor | 77 | 52 s | 35.0 s |
-| 8 | s08_komputer_personal — Revolusi Komputer Personal | 77 | 51 s | 35.5 s |
-| 9 | s09_internet_mobile — Internet, Laptop, dan Mobile | 59 | 41 s | 27.2 s |
-| 10 | s10_kecerdasan_buatan — Machine Learning dan Kecerdasan Buatan | 110 | 73 s | 50.3 s |
-| 11 | s11_penutup — Kisah yang Belum Selesai | 63 | 42 s | 29.4 s |
-| | **Total** | **859** | | **394 s ≈ 6.6 menit** |
+| 1 | s01_pembuka — Hasrat untuk Menghitung | 38 | 25 s | 25.3 s |
+| 2 | s02_alat_hitung — Abakus dan Alat Hitung Mekanis | 76 | 51 s | 50.7 s |
+| 3 | s03_babbage — Charles Babbage dan Analytical Engine | 92 | 62 s | 61.3 s |
+| 4 | s04_ada_lovelace — Ada Lovelace dan Gagasan Program | 78 | 53 s | 52.0 s |
+| 5 | s05_elektronik — Komputer Elektronik Pertama | 127 | 85 s | 84.7 s |
+| 6 | s06_transistor — Transistor dan Generasi Berikutnya | 62 | 42 s | 41.3 s |
+| 7 | s07_chip — Integrated Circuit dan Mikroprosesor | 77 | 52 s | 51.3 s |
+| 8 | s08_komputer_personal — Revolusi Komputer Personal | 77 | 51 s | 51.3 s |
+| 9 | s09_internet_mobile — Internet, Laptop, dan Mobile | 59 | 41 s | 39.3 s |
+| 10 | s10_kecerdasan_buatan — Machine Learning dan Kecerdasan Buatan | 110 | 73 s | 73.3 s |
+| 11 | s11_penutup — Kisah yang Belum Selesai | 63 | 42 s | 42.0 s |
+| | **Total** | **859** | | **572 s ≈ 9.5 menit** |
 
 ## s01_pembuka — Hasrat untuk Menghitung
 
