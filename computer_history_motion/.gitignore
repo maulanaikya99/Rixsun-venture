@@ -11,3 +11,4 @@ output/audio/
 output/previews/
 output/final/*.mp4
 !output/final/.gitkeep
+!output/final/sejarah_komputer_720p.mp4
