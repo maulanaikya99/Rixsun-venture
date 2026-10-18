@@ -7,6 +7,7 @@ dan tidak pernah melintasi batas unit narasi (karena di sana ada jeda).
 """
 from __future__ import annotations
 
+import math
 from pathlib import Path
 
 WEAK_ENDINGS = {"dan", "yang", "di", "ke", "dari", "untuk", "dengan", "atau", "sebuah", "seorang", "para",
@@ -24,18 +25,18 @@ def wrap_lines(text: str, max_chars: int, max_lines: int = 2) -> list[str]:
     if len(text) <= max_chars or max_lines < 2:
         return [text]
     words = text.split()
-    best, best_score = None, None
-    for i in range(1, len(words)):
-        a, b = " ".join(words[:i]), " ".join(words[i:])
-        if len(a) > max_chars or len(b) > max_chars:
-            continue
-        score = abs(len(a) - len(b)) - (8 if a.endswith(CLAUSE_END + SENTENCE_END) else 0) \
-            + (6 if words[i - 1].lower() in WEAK_ENDINGS else 0)
-        if best_score is None or score < best_score:
-            best, best_score = [a, b], score
-    if best:
-        return best
-    # fallback: potong rakus
+    for limit in (max_chars, max_chars + 6):
+        best, best_score = None, None
+        for i in range(1, len(words)):
+            a, b = " ".join(words[:i]), " ".join(words[i:])
+            if len(a) > limit or len(b) > limit:
+                continue
+            score = abs(len(a) - len(b)) - (8 if a.endswith(CLAUSE_END + SENTENCE_END) else 0) \
+                + (6 if words[i - 1].lower() in WEAK_ENDINGS else 0)
+            if best_score is None or score < best_score:
+                best, best_score = [a, b], score
+        if best:
+            return best
     lines, cur = [], ""
     for w in words:
         if cur and len(cur) + 1 + len(w) > max_chars:
@@ -47,45 +48,72 @@ def wrap_lines(text: str, max_chars: int, max_lines: int = 2) -> list[str]:
     return lines
 
 
+def _segment_cost(tokens: list[dict], i: int, j: int, max_total: int, max_dur: float) -> float:
+    """Biaya menjadikan tokens[i:j] satu cue. Semakin kecil semakin baik."""
+    text = _join(tokens[i:j])
+    n = len(text)
+    if n > max_total and j - i > 1:
+        return math.inf
+    dur = tokens[j - 1]["end"] - tokens[i]["start"]
+    cost = abs(n - 58) * 0.15
+    if dur > max_dur:
+        cost += (dur - max_dur) * 20
+    if n < 20:
+        cost += 25 + (20 - n) * 3          # cue yatim/terlalu pendek
+    last = tokens[j - 1]["text"]
+    if j < len(tokens):                   # bukan akhir unit: nilai titik potongnya
+        nxt = tokens[j]["text"]
+        if last.endswith(SENTENCE_END):
+            cost -= 12
+        elif last.endswith(CLAUSE_END):
+            cost -= 6
+        else:
+            cost += 4
+            if last.lower() in WEAK_ENDINGS:
+                cost += 10
+            if last[:1].isupper() and nxt[:1].isupper():
+                cost += 10                 # jangan pisahkan nama diri ("Ada | Lovelace")
+    cost += 6 * sum(t["text"].endswith(SENTENCE_END) for t in tokens[i:j - 1])  # cue melintasi kalimat
+    return cost
+
+
+def split_unit(tokens: list[dict], max_total: int, max_dur: float) -> list[list[dict]]:
+    """Pemenggalan optimal (dynamic programming) satu unit narasi menjadi cue."""
+    n = len(tokens)
+    best = [0.0] + [math.inf] * n
+    prev = [0] * (n + 1)
+    for j in range(1, n + 1):
+        for i in range(max(0, j - 40), j):
+            if best[i] == math.inf:
+                continue
+            c = best[i] + _segment_cost(tokens, i, j, max_total, max_dur)
+            if c < best[j]:
+                best[j], prev[j] = c, i
+    groups, j = [], n
+    while j > 0:
+        groups.append(tokens[prev[j]:j])
+        j = prev[j]
+    return groups[::-1]
+
+
 def build_cues(tokens: list[dict], cfg: dict) -> list[dict]:
     """tokens: [{text, start, end, unit}] dalam detik global, berurutan."""
     max_line = cfg.get("max_chars_per_line", 42)
-    max_total = max_line * cfg.get("max_lines", 2)
+    max_total = int(max_line * cfg.get("max_lines", 2) * 0.92)
     max_dur = cfg.get("max_cue_duration", 5.5)
-    groups: list[list[dict]] = []
-    cur: list[dict] = []
-
-    def flush(adjust_weak: bool = False):
-        nonlocal cur
-        if not cur:
-            return
-        carry = []
-        if adjust_weak and len(cur) > 2 and cur[-1]["text"].lower().strip(",.") in WEAK_ENDINGS:
-            carry = [cur.pop()]
-        groups.append(cur)
-        cur = carry
-
+    units: list[list[dict]] = []
     for tok in tokens:
-        if cur and tok.get("unit") != cur[-1].get("unit"):
-            flush()
-        if cur:
-            too_long = len(_join(cur + [tok])) > max_total
-            too_slow = tok["end"] - cur[0]["start"] > max_dur
-            if too_long or too_slow:
-                flush(adjust_weak=True)
-        cur.append(tok)
-        text = _join(cur)
-        if tok["text"].endswith(SENTENCE_END) and len(text) >= 14:
-            flush()
-        elif tok["text"].endswith(CLAUSE_END) and len(text) >= max_total * 0.55:
-            flush()
-    flush()
+        if units and units[-1][-1].get("unit") == tok.get("unit"):
+            units[-1].append(tok)
+        else:
+            units.append([tok])
+    groups = [g for u in units for g in split_unit(u, max_total, max_dur)]
 
     cues = []
     lead, hold, min_dur = cfg.get("lead_s", 0.05), cfg.get("hold_s", 0.2), cfg.get("min_cue_duration", 1.0)
     for g in groups:
         text = _join(g)
-        cues.append({"start": g[0]["start"] - lead, "end": g[-1]["end"] + hold, "text": text,
+        cues.append({"start": max(0.0, g[0]["start"] - lead), "end": g[-1]["end"] + hold, "text": text,
                      "lines": wrap_lines(text, max_line, cfg.get("max_lines", 2)),
                      "approx": any(t.get("approx") for t in g)})
     gap = 0.04

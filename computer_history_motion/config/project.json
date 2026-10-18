@@ -9,13 +9,25 @@
     "width": 1920,
     "height": 1080,
     "fps": 30,
-    "final": { "scale": 1.0, "fps": 30, "crf": 18, "preset": "medium", "grain": true },
-    "preview": { "scale": 0.5, "fps": 15, "crf": 28, "preset": "ultrafast", "grain": false },
+    "final": {
+      "scale": 1.0,
+      "fps": 30,
+      "crf": 18,
+      "preset": "medium",
+      "grain": true
+    },
+    "preview": {
+      "scale": 0.5,
+      "fps": 15,
+      "crf": 28,
+      "preset": "ultrafast",
+      "grain": false
+    },
     "pixel_format": "yuv420p"
   },
   "timeline": {
-    "lead_in": 0.9,
-    "tail": 1.1,
+    "lead_in": 0.8,
+    "tail": 1.0,
     "transition_duration": 0.7,
     "min_scene_duration": 4.0,
     "first_scene_lead_in": 0.6
@@ -43,7 +55,13 @@
     "music_file": null,
     "music_fade_in_s": 2.5,
     "music_fade_out_s": 4.0,
-    "duck": { "threshold": 0.03, "ratio": 6, "attack_ms": 40, "release_ms": 600, "makeup": 1.0 },
+    "duck": {
+      "threshold": 0.03,
+      "ratio": 6,
+      "attack_ms": 40,
+      "release_ms": 600,
+      "makeup": 1.0
+    },
     "clip_peak_dbfs": -0.5
   },
   "subtitles": {

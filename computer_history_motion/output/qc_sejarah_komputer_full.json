@@ -1,0 +1,272 @@
+[
+  {
+    "status": "ok",
+    "check": "Python",
+    "message": "3.13.16",
+    "fix": "Gunakan Python 3.10 atau lebih baru."
+  },
+  {
+    "status": "ok",
+    "check": "ffmpeg",
+    "message": "/usr/bin/ffmpeg",
+    "fix": "Instal FFmpeg dan pastikan ada di PATH (lihat README)."
+  },
+  {
+    "status": "ok",
+    "check": "ffprobe",
+    "message": "/usr/bin/ffprobe",
+    "fix": "Instal FFmpeg dan pastikan ada di PATH (lihat README)."
+  },
+  {
+    "status": "ok",
+    "check": "FFmpeg libx264",
+    "message": "tersedia",
+    "fix": "Instal build FFmpeg lengkap (mis. paket ffmpeg dari distro atau gyan.dev untuk Windows)."
+  },
+  {
+    "status": "ok",
+    "check": "FFmpeg aac",
+    "message": "tersedia",
+    "fix": "Instal build FFmpeg lengkap (mis. paket ffmpeg dari distro atau gyan.dev untuk Windows)."
+  },
+  {
+    "status": "ok",
+    "check": "FFmpeg loudnorm",
+    "message": "tersedia",
+    "fix": "Instal build FFmpeg lengkap (mis. paket ffmpeg dari distro atau gyan.dev untuk Windows)."
+  },
+  {
+    "status": "ok",
+    "check": "FFmpeg sidechaincompress",
+    "message": "tersedia",
+    "fix": "Instal build FFmpeg lengkap (mis. paket ffmpeg dari distro atau gyan.dev untuk Windows)."
+  },
+  {
+    "status": "ok",
+    "check": "FFmpeg blackdetect",
+    "message": "tersedia",
+    "fix": "Instal build FFmpeg lengkap (mis. paket ffmpeg dari distro atau gyan.dev untuk Windows)."
+  },
+  {
+    "status": "ok",
+    "check": "modul edge_tts",
+    "message": "7.3.1",
+    "fix": ""
+  },
+  {
+    "status": "ok",
+    "check": "modul cairo",
+    "message": "1.29.2",
+    "fix": ""
+  },
+  {
+    "status": "ok",
+    "check": "modul numpy",
+    "message": "2.5.3",
+    "fix": ""
+  },
+  {
+    "status": "ok",
+    "check": "modul PIL",
+    "message": "12.3.0",
+    "fix": ""
+  },
+  {
+    "status": "ok",
+    "check": "font display",
+    "message": "'Inter Display SemiBold' → Inter Display",
+    "fix": "Instal font 'Inter Display SemiBold' (Inter: https://rsms.me/inter/) atau ganti theme.fonts di project.json."
+  },
+  {
+    "status": "ok",
+    "check": "font display_light",
+    "message": "'Inter Display Light' → Inter Display",
+    "fix": "Instal font 'Inter Display Light' (Inter: https://rsms.me/inter/) atau ganti theme.fonts di project.json."
+  },
+  {
+    "status": "ok",
+    "check": "font heading",
+    "message": "'Inter SemiBold' → Inter",
+    "fix": "Instal font 'Inter SemiBold' (Inter: https://rsms.me/inter/) atau ganti theme.fonts di project.json."
+  },
+  {
+    "status": "ok",
+    "check": "font body",
+    "message": "'Inter' → Inter",
+    "fix": "Instal font 'Inter' (Inter: https://rsms.me/inter/) atau ganti theme.fonts di project.json."
+  },
+  {
+    "status": "ok",
+    "check": "font light",
+    "message": "'Inter Light' → Inter",
+    "fix": "Instal font 'Inter Light' (Inter: https://rsms.me/inter/) atau ganti theme.fonts di project.json."
+  },
+  {
+    "status": "ok",
+    "check": "font medium",
+    "message": "'Inter Medium' → Inter",
+    "fix": "Instal font 'Inter Medium' (Inter: https://rsms.me/inter/) atau ganti theme.fonts di project.json."
+  },
+  {
+    "status": "ok",
+    "check": "font mono",
+    "message": "'DejaVu Sans Mono' → DejaVu Sans Mono",
+    "fix": "Instal font 'DejaVu Sans Mono' (Inter: https://rsms.me/inter/) atau ganti theme.fonts di project.json."
+  },
+  {
+    "status": "ok",
+    "check": "Voice Edge-TTS",
+    "message": "id-ID-GadisNeural tersedia",
+    "fix": "Pilih voice lain dari: id-ID-ArdiNeural, id-ID-GadisNeural"
+  },
+  {
+    "status": "ok",
+    "check": "audio s01_pembuka",
+    "message": "23.36s, 38 kata",
+    "fix": "Hapus output/audio/scenes lalu generate ulang."
+  },
+  {
+    "status": "ok",
+    "check": "audio s02_alat_hitung",
+    "message": "49.28s, 76 kata",
+    "fix": "Hapus output/audio/scenes lalu generate ulang."
+  },
+  {
+    "status": "ok",
+    "check": "audio s03_babbage",
+    "message": "62.21s, 92 kata",
+    "fix": "Hapus output/audio/scenes lalu generate ulang."
+  },
+  {
+    "status": "ok",
+    "check": "audio s04_ada_lovelace",
+    "message": "48.71s, 78 kata",
+    "fix": "Hapus output/audio/scenes lalu generate ulang."
+  },
+  {
+    "status": "ok",
+    "check": "audio s05_elektronik",
+    "message": "78.58s, 127 kata",
+    "fix": "Hapus output/audio/scenes lalu generate ulang."
+  },
+  {
+    "status": "ok",
+    "check": "audio s06_transistor",
+    "message": "41.65s, 62 kata",
+    "fix": "Hapus output/audio/scenes lalu generate ulang."
+  },
+  {
+    "status": "ok",
+    "check": "audio s07_chip",
+    "message": "51.43s, 77 kata",
+    "fix": "Hapus output/audio/scenes lalu generate ulang."
+  },
+  {
+    "status": "ok",
+    "check": "audio s08_komputer_personal",
+    "message": "55.89s, 77 kata",
+    "fix": "Hapus output/audio/scenes lalu generate ulang."
+  },
+  {
+    "status": "ok",
+    "check": "audio s09_internet_mobile",
+    "message": "40.67s, 59 kata",
+    "fix": "Hapus output/audio/scenes lalu generate ulang."
+  },
+  {
+    "status": "ok",
+    "check": "audio s10_kecerdasan_buatan",
+    "message": "75.93s, 110 kata",
+    "fix": "Hapus output/audio/scenes lalu generate ulang."
+  },
+  {
+    "status": "ok",
+    "check": "audio s11_penutup",
+    "message": "47.11s, 63 kata",
+    "fix": "Hapus output/audio/scenes lalu generate ulang."
+  },
+  {
+    "status": "ok",
+    "check": "Timeline",
+    "message": "11 scene, 599.00s, 17970 frame",
+    "fix": "Naikkan timeline.tail/lead_in atau perpendek transisi di naskah."
+  },
+  {
+    "status": "ok",
+    "check": "Subtitle",
+    "message": "136 cue, maks 77 karakter",
+    "fix": "Periksa pengaturan subtitles di project.json."
+  },
+  {
+    "status": "ok",
+    "check": "Clipping audio",
+    "message": "puncak -2.61 dBFS, 0 sampel clipping",
+    "fix": "Turunkan audio.sfx_gain_db / music_gain_db atau target master_lufs."
+  },
+  {
+    "status": "ok",
+    "check": "Loudness master",
+    "message": "-15.97 LUFS (target -16.0)",
+    "fix": "Loudnorm tidak mencapai target; periksa dinamika stem."
+  },
+  {
+    "status": "ok",
+    "check": "Normalisasi linear",
+    "message": "mode linear",
+    "fix": "Mode dynamic berarti ada kompresi; turunkan gain SFX atau longgarkan true_peak."
+  },
+  {
+    "status": "ok",
+    "check": "Durasi audio master",
+    "message": "599.000s vs timeline 599.000s",
+    "fix": "Bangun ulang mix: python main.py --preview-audio"
+  },
+  {
+    "status": "ok",
+    "check": "Resolusi",
+    "message": "1920x1080 (target 1920x1080)",
+    "fix": ""
+  },
+  {
+    "status": "ok",
+    "check": "Frame rate",
+    "message": "30.000 fps (target 30)",
+    "fix": ""
+  },
+  {
+    "status": "ok",
+    "check": "Durasi video",
+    "message": "599.000s vs timeline 599.000s",
+    "fix": "Render ulang; jangan memotong file secara manual."
+  },
+  {
+    "status": "ok",
+    "check": "Sinkronisasi A/V",
+    "message": "audio 599.000s, video 599.000s, selisih 0 ms",
+    "fix": "Bangun ulang master audio dan mux ulang."
+  },
+  {
+    "status": "ok",
+    "check": "Resolusi",
+    "message": "960x540 (target 960x540)",
+    "fix": ""
+  },
+  {
+    "status": "ok",
+    "check": "Frame rate",
+    "message": "15.000 fps (target 15)",
+    "fix": ""
+  },
+  {
+    "status": "ok",
+    "check": "Durasi video",
+    "message": "599.000s vs timeline 599.000s",
+    "fix": "Render ulang; jangan memotong file secara manual."
+  },
+  {
+    "status": "ok",
+    "check": "Sinkronisasi A/V",
+    "message": "audio 599.000s, video 599.000s, selisih 0 ms",
+    "fix": "Bangun ulang master audio dan mux ulang."
+  }
+]

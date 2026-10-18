@@ -1,0 +1,615 @@
+1
+00:00:00,650 --> 00:00:05,861
+Benda kecil di saku Anda mampu melakukan
+miliaran perhitungan setiap detik.
+
+2
+00:00:06,490 --> 00:00:09,964
+Tapi kisahnya dimulai
+jauh sebelum ada listrik,
+
+3
+00:00:10,069 --> 00:00:12,477
+dari satu pertanyaan sederhana:
+
+4
+00:00:12,583 --> 00:00:15,214
+bagaimana caranya menghitung lebih cepat?
+
+5
+00:00:15,844 --> 00:00:18,907
+Inilah perjalanan panjang komputer.
+
+6
+00:00:19,571 --> 00:00:23,884
+Dari manik-manik kayu,
+hingga mesin yang belajar.
+
+7
+00:00:27,617 --> 00:00:31,617
+Awalnya, manusia
+menghitung dengan apa saja:
+
+8
+00:00:31,735 --> 00:00:36,735
+jari tangan, kerikil, goresan
+pada tulang dan tanah liat.
+
+9
+00:00:37,365 --> 00:00:39,733
+Lalu lahirlah abakus.
+
+10
+00:00:40,368 --> 00:00:42,723
+Dari Romawi hingga Tiongkok,
+
+11
+00:00:42,815 --> 00:00:46,947
+manik-manik di atas batang
+membuat hitungan cepat dan rapi.
+
+12
+00:00:47,577 --> 00:00:50,919
+Tapi yang berhitung tetaplah otak manusia.
+
+13
+00:00:51,549 --> 00:00:56,904
+Tahun 1642, pemuda Prancis
+Blaise Pascal membuat
+
+14
+00:00:56,944 --> 00:01:02,009
+mesin hitung beroda gigi,
+untuk membantu pekerjaan pajak ayahnya.
+
+15
+00:01:02,639 --> 00:01:04,718
+Beberapa dekade kemudian,
+
+16
+00:01:04,942 --> 00:01:09,626
+Gottfried Wilhelm Leibniz merancang
+mesin yang juga bisa mengalikan.
+
+17
+00:01:10,256 --> 00:01:12,065
+Untuk pertama kalinya,
+
+18
+00:01:12,178 --> 00:01:16,770
+sebagian pekerjaan berpikir
+dipindahkan ke dalam roda gigi.
+
+19
+00:01:18,717 --> 00:01:22,901
+Abad ke-19 dipenuhi tabel
+angka untuk navigasi,
+
+20
+00:01:23,019 --> 00:01:28,269
+astronomi, dan keuangan,
+semuanya dihitung dengan tangan.
+
+21
+00:01:28,904 --> 00:01:32,522
+Satu kesalahan kecil bisa berakibat besar.
+
+22
+00:01:33,152 --> 00:01:36,322
+Matematikawan Inggris
+Charles Babbage membayangkan
+
+23
+00:01:36,362 --> 00:01:39,942
+mesin yang menghitung tanpa
+lelah dan tanpa salah.
+
+24
+00:01:40,572 --> 00:01:44,637
+Tahun 1822, ia mengusulkan
+
+25
+00:01:44,677 --> 00:01:49,282
+Difference Engine untuk menyusun
+tabel secara otomatis.
+
+26
+00:01:49,916 --> 00:01:55,627
+Sejak 1834, ia merancang
+yang lebih ambisius:
+
+27
+00:01:55,758 --> 00:02:01,219
+Analytical Engine, mesin serba guna
+yang diprogram dengan kartu berlubang.
+
+28
+00:02:01,849 --> 00:02:07,191
+Rancangannya punya mill untuk mengolah
+angka dan store untuk menyimpannya.
+
+29
+00:02:07,825 --> 00:02:10,930
+Mirip prosesor dan memori masa kini.
+
+30
+00:02:11,560 --> 00:02:17,093
+Sayangnya, mesin itu tidak pernah
+selesai dibangun semasa hidupnya.
+
+31
+00:02:17,747 --> 00:02:20,793
+Sebuah gagasan yang lahir terlalu cepat.
+
+32
+00:02:22,750 --> 00:02:24,605
+Salah satu dari sedikit orang
+
+33
+00:02:24,645 --> 00:02:29,171
+yang benar-benar memahami
+gagasan itu adalah Ada Lovelace.
+
+34
+00:02:29,801 --> 00:02:34,919
+Tahun 1843,
+ia menerjemahkan sebuah artikel
+
+35
+00:02:34,959 --> 00:02:38,590
+tentang Analytical Engine,
+lalu menambahkan catatan
+
+36
+00:02:38,630 --> 00:02:42,775
+yang panjangnya hampir tiga
+kali lipat artikel aslinya.
+
+37
+00:02:43,405 --> 00:02:46,773
+Di sana, ia menjabarkan
+langkah demi langkah
+
+38
+00:02:46,813 --> 00:02:50,010
+cara mesin itu menghitung
+bilangan Bernoulli.
+
+39
+00:02:50,644 --> 00:02:52,380
+Banyak sejarawan menyebutnya
+
+40
+00:02:52,420 --> 00:02:56,131
+salah satu program komputer
+pertama yang diterbitkan.
+
+41
+00:02:56,761 --> 00:03:01,511
+Ia juga membayangkan mesin seperti
+ini mengolah lebih dari angka.
+
+42
+00:03:02,145 --> 00:03:05,316
+Simbol. Bahkan musik.
+
+43
+00:03:05,946 --> 00:03:11,331
+Itu sekitar seratus tahun sebelum
+komputer elektronik pertama menyala.
+
+44
+00:03:13,283 --> 00:03:18,770
+Abad ke-20 membawa sesuatu yang
+tidak dimiliki Babbage: listrik.
+
+45
+00:03:19,400 --> 00:03:23,742
+Tahun 1936, Alan Turing menjelaskan
+
+46
+00:03:23,782 --> 00:03:27,611
+mesin abstrak yang secara
+teori bisa menghitung apa pun,
+
+47
+00:03:27,716 --> 00:03:31,137
+asalkan bisa dijabarkan
+langkah demi langkah.
+
+48
+00:03:31,769 --> 00:03:35,388
+Perang Dunia Kedua lalu
+mempercepat segalanya.
+
+49
+00:03:36,019 --> 00:03:42,191
+Konrad Zuse menyelesaikan
+Z3 di Jerman pada 1941.
+
+50
+00:03:42,822 --> 00:03:46,190
+Di Inggris, mesin
+elektronik Colossus membantu
+
+51
+00:03:46,230 --> 00:03:48,941
+memecahkan sandi militer Jerman.
+
+52
+00:03:49,571 --> 00:03:52,571
+Di Amerika Serikat, lahirlah ENIAC,
+
+53
+00:03:52,676 --> 00:03:57,228
+yang diperkenalkan ke publik pada 1946.
+
+54
+00:03:57,863 --> 00:04:01,428
+Ia memakai sekitar delapan
+belas ribu tabung vakum,
+
+55
+00:04:01,534 --> 00:04:04,099
+beratnya sekitar dua puluh tujuh ton,
+
+56
+00:04:04,244 --> 00:04:08,113
+dan mampu melakukan sekitar
+lima ribu penjumlahan per detik.
+
+57
+00:04:08,743 --> 00:04:10,453
+Untuk memprogramnya,
+
+58
+00:04:10,572 --> 00:04:15,072
+enam perempuan menata ulang
+kabel dan sakelar secara manual.
+
+59
+00:04:15,706 --> 00:04:18,272
+Merekalah programmer pertama ENIAC,
+
+60
+00:04:18,377 --> 00:04:21,180
+meski nama mereka lama terlupakan.
+
+61
+00:04:21,810 --> 00:04:27,415
+Tak lama kemudian, program mulai
+disimpan di dalam memori bersama datanya,
+
+62
+00:04:27,494 --> 00:04:31,731
+prinsip yang masih dipakai
+hampir semua komputer hari ini.
+
+63
+00:04:33,683 --> 00:04:35,815
+Tapi tabung vakum besar,
+
+64
+00:04:35,907 --> 00:04:40,012
+panas, boros listrik, dan mudah putus.
+
+65
+00:04:40,642 --> 00:04:44,445
+Desember 1947, di Bell Labs,
+
+66
+00:04:44,550 --> 00:04:49,076
+John Bardeen dan Walter Brattain
+mendemonstrasikan transistor pertama,
+
+67
+00:04:49,221 --> 00:04:52,392
+dalam kelompok riset
+pimpinan William Shockley.
+
+68
+00:04:53,022 --> 00:04:57,733
+Komponen kecil ini menguatkan sinyal
+dan menyambung atau memutus arus,
+
+69
+00:04:57,812 --> 00:04:59,562
+seperti tabung vakum,
+
+70
+00:04:59,641 --> 00:05:04,114
+tetapi jauh lebih kecil,
+hemat daya, dan awet.
+
+71
+00:05:04,744 --> 00:05:08,981
+Akhir 1950-an, komputer transistor
+
+72
+00:05:09,021 --> 00:05:11,705
+mulai menggantikan komputer tabung.
+
+73
+00:05:12,339 --> 00:05:15,207
+Inilah generasi kedua komputer.
+
+74
+00:05:17,150 --> 00:05:20,057
+Masalah berikutnya: menyambungkan ribuan
+
+75
+00:05:20,097 --> 00:05:24,045
+transistor satu per satu
+itu rumit dan rawan salah.
+
+76
+00:05:24,675 --> 00:05:28,727
+Tahun 1958, Jack Kilby
+
+77
+00:05:28,767 --> 00:05:32,767
+di Texas Instruments membuat
+rangkaian terpadu pertama.
+
+78
+00:05:33,401 --> 00:05:37,150
+Tak lama kemudian, Robert Noyce
+di Fairchild mengembangkan
+
+79
+00:05:37,190 --> 00:05:42,283
+versi silikon yang mudah
+diproduksi massal. Itulah chip.
+
+80
+00:05:42,913 --> 00:05:46,820
+Tahun 1965, Gordon Moore
+
+81
+00:05:46,860 --> 00:05:49,517
+mengamati bahwa jumlah komponen dalam satu
+
+82
+00:05:49,557 --> 00:05:54,981
+chip berlipat ganda secara
+berkala. Inilah Hukum Moore.
+
+83
+00:05:55,611 --> 00:06:01,637
+Lalu pada 1971, Intel merilis 4004,
+
+84
+00:06:01,716 --> 00:06:04,190
+mikroprosesor komersial pertama,
+
+85
+00:06:04,269 --> 00:06:08,453
+dengan sekitar dua ribu tiga
+ratus transistor dalam satu chip.
+
+86
+00:06:10,383 --> 00:06:15,581
+Begitu otak komputer bisa sekecil
+itu, muncul pertanyaan baru:
+
+87
+00:06:15,686 --> 00:06:19,238
+bagaimana jika setiap orang
+punya komputer sendiri?
+
+88
+00:06:19,868 --> 00:06:25,131
+Tahun 1975, Altair 8800
+
+89
+00:06:25,171 --> 00:06:30,474
+memicu antusiasme para penghobi,
+dan perusahaan baru bermunculan.
+
+90
+00:06:31,104 --> 00:06:35,327
+Apple II pada 1977, lalu
+
+91
+00:06:35,367 --> 00:06:39,787
+IBM PC pada 1981, membawa
+
+92
+00:06:39,827 --> 00:06:43,696
+komputer ke kantor, sekolah, dan rumah.
+
+93
+00:06:44,326 --> 00:06:49,155
+Antarmuka grafis dengan
+jendela, ikon, dan mouse,
+
+94
+00:06:49,260 --> 00:06:54,852
+dari Xerox PARC lalu
+dipopulerkan Macintosh pada 1984,
+
+95
+00:06:54,971 --> 00:06:58,878
+membuat komputer bisa dipakai
+tanpa menghafal perintah.
+
+96
+00:06:59,508 --> 00:07:02,850
+Komputer bukan lagi mesin para ilmuwan.
+
+97
+00:07:03,504 --> 00:07:06,147
+Ia menjadi alat semua orang.
+
+98
+00:07:08,083 --> 00:07:12,465
+Lalu, komputer-komputer
+itu mulai saling terhubung.
+
+99
+00:07:13,095 --> 00:07:17,555
+Berawal dari ARPANET pada 1969,
+
+100
+00:07:17,726 --> 00:07:20,292
+jaringan tumbuh menjadi internet.
+
+101
+00:07:20,926 --> 00:07:26,163
+Tahun 1989, Tim Berners-Lee
+di CERN mengusulkan
+
+102
+00:07:26,203 --> 00:07:30,137
+World Wide Web untuk menautkan
+dokumen di seluruh dunia.
+
+103
+00:07:30,767 --> 00:07:34,701
+Laptop membuat komputer
+bisa dibawa ke mana saja.
+
+104
+00:07:35,337 --> 00:07:40,351
+Pada 2007, iPhone ikut
+mendorong era ponsel pintar:
+
+105
+00:07:40,416 --> 00:07:42,995
+komputer lengkap dalam genggaman.
+
+106
+00:07:43,625 --> 00:07:48,625
+Dalam beberapa dekade saja,
+miliaran orang menjadi terhubung.
+
+107
+00:07:50,583 --> 00:07:52,425
+Selama puluhan tahun,
+
+108
+00:07:52,544 --> 00:07:56,188
+komputer hanya melakukan
+apa yang diperintahkan.
+
+109
+00:07:56,823 --> 00:08:01,046
+Lalu muncul pertanyaan:
+bisakah mesin belajar?
+
+110
+00:08:01,676 --> 00:08:04,110
+Istilah kecerdasan buatan dipopulerkan
+
+111
+00:08:04,150 --> 00:08:09,229
+lewat lokakarya di Dartmouth pada 1956.
+
+112
+00:08:09,865 --> 00:08:12,273
+Perjalanannya naik turun.
+
+113
+00:08:12,903 --> 00:08:16,048
+Machine learning mengubah pendekatannya.
+
+114
+00:08:16,682 --> 00:08:21,761
+Alih-alih menulis setiap aturan,
+kita memberi mesin banyak contoh,
+
+115
+00:08:21,840 --> 00:08:24,985
+lalu membiarkannya menemukan pola sendiri.
+
+116
+00:08:25,615 --> 00:08:30,469
+Tahun 2012, jaringan saraf
+tiruan yang dilatih dengan kartu
+
+117
+00:08:30,510 --> 00:08:34,417
+grafis membuat lompatan
+besar dalam mengenali gambar.
+
+118
+00:08:35,052 --> 00:08:37,394
+Era deep learning dimulai.
+
+119
+00:08:38,024 --> 00:08:41,839
+Tahun 2016, AlphaGo mengalahkan pemain
+
+120
+00:08:41,879 --> 00:08:44,458
+Go kelas dunia, Lee Sedol.
+
+121
+00:08:45,092 --> 00:08:49,632
+Setahun kemudian, arsitektur
+Transformer diperkenalkan,
+
+122
+00:08:49,737 --> 00:08:55,132
+menjadi fondasi model bahasa besar
+yang kini bisa menulis dan bercakap-cakap.
+
+123
+00:08:55,762 --> 00:08:59,896
+Namun kecerdasan buatan
+tetap alat buatan manusia.
+
+124
+00:09:00,550 --> 00:09:06,378
+Ia bisa keliru, dan cara kita
+menggunakannya tetap tanggung jawab kita.
+
+125
+00:09:08,317 --> 00:09:11,567
+Dari abakus hingga jaringan saraf tiruan,
+
+126
+00:09:11,685 --> 00:09:15,501
+setiap lompatan berdiri
+di atas lompatan sebelumnya.
+
+127
+00:09:16,131 --> 00:09:19,465
+Roda gigi Pascal. Kartu
+
+128
+00:09:19,505 --> 00:09:23,777
+berlubang Babbage. Catatan Ada.
+
+129
+00:09:24,437 --> 00:09:29,891
+Tabung vakum ENIAC. Transistor. Chip.
+
+130
+00:09:30,521 --> 00:09:33,455
+Semuanya lahir dari hasrat yang sama:
+
+131
+00:09:33,587 --> 00:09:38,218
+memahami dunia sedikit lebih cepat,
+dan sedikit lebih baik.
+
+132
+00:09:38,848 --> 00:09:40,796
+Apa babak berikutnya?
+
+133
+00:09:41,430 --> 00:09:43,785
+Mungkin komputer kuantum.
+
+134
+00:09:44,417 --> 00:09:47,417
+Mungkin sesuatu yang belum terbayangkan.
+
+135
+00:09:48,047 --> 00:09:51,676
+Yang pasti, kisah ini belum selesai.
+
+136
+00:09:52,351 --> 00:09:55,293
+Dan kita semua ikut menulisnya.

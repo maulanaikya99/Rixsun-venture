@@ -13,7 +13,7 @@
       "era": "HARI INI → RIBUAN TAHUN LALU",
       "accent": "cyan",
       "ambience": "digital",
-      "estimated_duration": 22,
+      "estimated_duration": 25,
       "narration": [
         "Benda kecil di saku Anda mampu melakukan miliaran perhitungan setiap detik.",
         "Tapi kisahnya dimulai jauh sebelum ada listrik, dari satu pertanyaan sederhana: bagaimana caranya menghitung lebih cepat?",
@@ -23,7 +23,7 @@
         }
       ],
       "timing": {
-        "tail": 3.4
+        "tail": 2.8
       },
       "visual_description": "Ponsel line-art di tengah dikelilingi medan digit yang berkedip (miliaran perhitungan). Saat narasi mundur ke masa lalu, ponsel tergulung dan berubah menjadi abakus. Lalu ikon berevolusi cepat: roda gigi Pascal, tabung vakum, chip, laptop, hingga jaringan saraf, sebelum judul utama muncul.",
       "animation_style": "Morph line-art (draw-on/draw-off), kinetic typography judul dengan tracking yang merapat, camera push-in lambat.",
@@ -263,13 +263,13 @@
       "era": "KUNO — 1694",
       "accent": "amber",
       "ambience": "mechanical",
-      "estimated_duration": 50,
+      "estimated_duration": 51,
       "narration": [
-        "Awalnya, manusia menghitung dengan apa saja yang ada di dekatnya. Jari tangan. Kerikil. Goresan pada tulang dan tanah liat.",
-        "Lalu lahirlah abakus. Manik-manik yang digeser di atas batang ini dipakai di banyak peradaban, dari Romawi hingga Tiongkok, untuk menghitung dengan cepat dan rapi.",
-        "Tapi abakus hanya membantu. Yang berhitung tetaplah otak manusia.",
-        "Tahun 1642, seorang pemuda Prancis bernama Blaise Pascal membuat mesin hitung beroda gigi, untuk meringankan pekerjaan ayahnya yang mengurus pajak.",
-        "Beberapa dekade kemudian, Gottfried Wilhelm Leibniz merancang mesin yang tidak hanya bisa menjumlahkan, tetapi juga mengalikan.",
+        "Awalnya, manusia menghitung dengan apa saja: jari tangan, kerikil, goresan pada tulang dan tanah liat.",
+        "Lalu lahirlah abakus. Dari Romawi hingga Tiongkok, manik-manik di atas batang membuat hitungan cepat dan rapi.",
+        "Tapi yang berhitung tetaplah otak manusia.",
+        "Tahun 1642, pemuda Prancis Blaise Pascal membuat mesin hitung beroda gigi, untuk membantu pekerjaan pajak ayahnya.",
+        "Beberapa dekade kemudian, Gottfried Wilhelm Leibniz merancang mesin yang juga bisa mengalikan.",
         {
           "text": "Untuk pertama kalinya, sebagian pekerjaan berpikir dipindahkan ke dalam roda gigi.",
           "rate": "-7%"
@@ -301,8 +301,7 @@
         {
           "name": "clunk",
           "at": {
-            "word": "roda",
-            "n": 2
+            "word": "roda"
           },
           "gain_db": -6
         },
@@ -329,6 +328,249 @@
           "title": "Computer History Museum — Timeline of Computer History",
           "url": "https://www.computerhistory.org/timeline/"
         }
+      ],
+      "elements": [
+        {
+          "type": "icon",
+          "icon": "tally",
+          "at": "voice_start",
+          "until": {
+            "word": "abakus"
+          },
+          "pos": [
+            600,
+            470
+          ],
+          "size": 380,
+          "label": "jari · kerikil · goresan"
+        },
+        {
+          "type": "kicker",
+          "text": "Sebelum mesin",
+          "at": 0.0,
+          "until": {
+            "word": "abakus"
+          },
+          "pos": [
+            1040,
+            330
+          ]
+        },
+        {
+          "type": "headline",
+          "text": "Menghitung dengan apa saja",
+          "at": {
+            "word": "jari"
+          },
+          "until": {
+            "word": "abakus"
+          },
+          "pos": [
+            1040,
+            430
+          ],
+          "size": 58,
+          "max_width": 620
+        },
+        {
+          "type": "icon",
+          "icon": "abacus",
+          "at": {
+            "word": "abakus"
+          },
+          "until": {
+            "word": "1642"
+          },
+          "pos": [
+            600,
+            470
+          ],
+          "size": 380,
+          "label": "abakus"
+        },
+        {
+          "type": "kicker",
+          "text": "Abakus",
+          "at": {
+            "word": "abakus"
+          },
+          "until": {
+            "word": "1642"
+          },
+          "pos": [
+            1040,
+            330
+          ]
+        },
+        {
+          "type": "headline",
+          "text": "Dari Romawi hingga Tiongkok",
+          "at": {
+            "word": "Romawi"
+          },
+          "until": {
+            "word": "1642"
+          },
+          "pos": [
+            1040,
+            430
+          ],
+          "size": 58,
+          "max_width": 620
+        },
+        {
+          "type": "text",
+          "text": "Manik-manik membantu, tetapi yang berhitung tetap manusia.",
+          "at": {
+            "word": "otak"
+          },
+          "until": {
+            "word": "1642"
+          },
+          "pos": [
+            1040,
+            580
+          ],
+          "max_width": 600
+        },
+        {
+          "type": "icon",
+          "icon": "pascaline",
+          "at": {
+            "word": "1642"
+          },
+          "until": {
+            "word": "Leibniz"
+          },
+          "pos": [
+            600,
+            470
+          ],
+          "size": 380,
+          "label": "pascaline"
+        },
+        {
+          "type": "counter",
+          "at": {
+            "word": "1642",
+            "offset": -0.3
+          },
+          "until": {
+            "word": "Leibniz"
+          },
+          "pos": [
+            1040,
+            400
+          ],
+          "from": 1500,
+          "to": 1642,
+          "format": "year",
+          "size": 128,
+          "label": "Prancis",
+          "dur": 1.4
+        },
+        {
+          "type": "headline",
+          "text": "Blaise Pascal",
+          "at": {
+            "word": "Pascal"
+          },
+          "until": {
+            "word": "Leibniz"
+          },
+          "pos": [
+            1040,
+            540
+          ],
+          "size": 50
+        },
+        {
+          "type": "text",
+          "text": "Mesin hitung beroda gigi untuk pekerjaan pajak ayahnya.",
+          "at": {
+            "word": "pajak"
+          },
+          "until": {
+            "word": "Leibniz"
+          },
+          "pos": [
+            1040,
+            610
+          ],
+          "max_width": 600
+        },
+        {
+          "type": "icon",
+          "icon": "gears",
+          "at": {
+            "word": "Leibniz"
+          },
+          "until": null,
+          "pos": [
+            600,
+            470
+          ],
+          "size": 380,
+          "label": "roda gigi"
+        },
+        {
+          "type": "kicker",
+          "text": "1670-an · Stepped Reckoner",
+          "at": {
+            "word": "Leibniz"
+          },
+          "until": {
+            "unit": 6
+          },
+          "pos": [
+            1040,
+            330
+          ]
+        },
+        {
+          "type": "headline",
+          "text": "Gottfried Wilhelm Leibniz",
+          "at": {
+            "word": "Leibniz"
+          },
+          "until": {
+            "unit": 6
+          },
+          "pos": [
+            1040,
+            430
+          ],
+          "size": 58,
+          "max_width": 640
+        },
+        {
+          "type": "text",
+          "text": "Menjumlah, dan juga mengalikan.",
+          "at": {
+            "word": "mengalikan"
+          },
+          "until": {
+            "unit": 6
+          },
+          "pos": [
+            1040,
+            590
+          ]
+        },
+        {
+          "type": "headline",
+          "text": "Berpikir, dipindahkan ke roda gigi",
+          "at": {
+            "unit": 6
+          },
+          "until": null,
+          "pos": [
+            1040,
+            430
+          ],
+          "size": 64,
+          "max_width": 640
+        }
       ]
     },
     {
@@ -338,15 +580,14 @@
       "era": "1822 — 1871",
       "accent": "amber",
       "ambience": "mechanical",
-      "estimated_duration": 55,
+      "estimated_duration": 62,
       "narration": [
-        "Memasuki abad ke-19, dunia dipenuhi tabel angka. Tabel navigasi, tabel astronomi, tabel keuangan. Semuanya dihitung dan disalin dengan tangan, dan satu kesalahan kecil bisa berakibat besar.",
-        "Charles Babbage, seorang matematikawan Inggris, membayangkan mesin yang bisa menghitung tanpa lelah dan tanpa salah.",
-        "Tahun 1822, ia mengusulkan Difference Engine, mesin untuk menyusun tabel secara otomatis.",
-        "Lalu ia melangkah lebih jauh. Sejak 1834, Babbage merancang Analytical Engine: mesin serba guna yang bisa diprogram dengan kartu berlubang.",
-        "Rancangannya punya bagian untuk mengolah angka, yang ia sebut mill, dan bagian untuk menyimpan angka, yang ia sebut store. Mirip prosesor dan memori pada komputer masa kini.",
+        "Abad ke-19 dipenuhi tabel angka untuk navigasi, astronomi, dan keuangan, semuanya dihitung dengan tangan. Satu kesalahan kecil bisa berakibat besar.",
+        "Matematikawan Inggris Charles Babbage membayangkan mesin yang menghitung tanpa lelah dan tanpa salah.",
+        "Tahun 1822, ia mengusulkan Difference Engine untuk menyusun tabel secara otomatis. Sejak 1834, ia merancang yang lebih ambisius: Analytical Engine, mesin serba guna yang diprogram dengan kartu berlubang.",
+        "Rancangannya punya mill untuk mengolah angka dan store untuk menyimpannya. Mirip prosesor dan memori masa kini.",
         {
-          "text": "Sayangnya, mesin itu tidak pernah selesai dibangun semasa hidupnya. Ia adalah gagasan yang lahir terlalu cepat, menunggu teknologi menyusul.",
+          "text": "Sayangnya, mesin itu tidak pernah selesai dibangun semasa hidupnya. Sebuah gagasan yang lahir terlalu cepat.",
           "rate": "-7%"
         }
       ],
@@ -395,6 +636,299 @@
         {
           "title": "Science Museum Group — Difference Engine No. 2 (dibangun 1991 dari rancangan Babbage)"
         }
+      ],
+      "elements": [
+        {
+          "type": "number_field",
+          "at": "start",
+          "until": {
+            "word": "Babbage"
+          },
+          "pos": [
+            560,
+            470
+          ],
+          "size": [
+            780,
+            540
+          ],
+          "cell": 118,
+          "digits": 5,
+          "font_size": 20,
+          "density": 0.7,
+          "highlight_every": 18,
+          "speed": 1.5,
+          "color": "muted"
+        },
+        {
+          "type": "kicker",
+          "text": "Abad ke-19",
+          "at": 0.0,
+          "until": {
+            "word": "Babbage"
+          },
+          "pos": [
+            1040,
+            330
+          ]
+        },
+        {
+          "type": "headline",
+          "text": "Dunia penuh tabel angka",
+          "at": {
+            "word": "tabel"
+          },
+          "until": {
+            "word": "Babbage"
+          },
+          "pos": [
+            1040,
+            430
+          ],
+          "size": 58,
+          "max_width": 620
+        },
+        {
+          "type": "headline",
+          "text": "Charles Babbage",
+          "at": {
+            "word": "Babbage"
+          },
+          "until": {
+            "word": "1822"
+          },
+          "pos": [
+            1040,
+            430
+          ],
+          "size": 64
+        },
+        {
+          "type": "text",
+          "text": "Matematikawan Inggris · 1791–1871",
+          "at": {
+            "word": "Babbage"
+          },
+          "until": {
+            "word": "1822"
+          },
+          "pos": [
+            1040,
+            520
+          ]
+        },
+        {
+          "type": "icon",
+          "icon": "difference_engine",
+          "at": {
+            "word": "Babbage"
+          },
+          "until": {
+            "word": "1834"
+          },
+          "pos": [
+            600,
+            470
+          ],
+          "size": 380,
+          "label": "difference engine"
+        },
+        {
+          "type": "counter",
+          "at": {
+            "word": "1822",
+            "offset": -0.3
+          },
+          "until": {
+            "word": "1834"
+          },
+          "pos": [
+            1040,
+            400
+          ],
+          "from": 1791,
+          "to": 1822,
+          "format": "year",
+          "size": 128,
+          "label": "Difference Engine",
+          "dur": 1.4
+        },
+        {
+          "type": "text",
+          "text": "Menyusun tabel secara otomatis.",
+          "at": {
+            "word": "menyusun"
+          },
+          "until": {
+            "word": "1834"
+          },
+          "pos": [
+            1040,
+            540
+          ]
+        },
+        {
+          "type": "icon",
+          "icon": "analytical_engine",
+          "at": {
+            "word": "1834"
+          },
+          "until": {
+            "word": "mill"
+          },
+          "pos": [
+            600,
+            470
+          ],
+          "size": 420,
+          "label": "analytical engine"
+        },
+        {
+          "type": "counter",
+          "at": {
+            "word": "1834",
+            "offset": -0.3
+          },
+          "until": {
+            "word": "mill"
+          },
+          "pos": [
+            1040,
+            400
+          ],
+          "from": 1822,
+          "to": 1834,
+          "format": "year",
+          "size": 128,
+          "label": "Analytical Engine",
+          "dur": 1.4
+        },
+        {
+          "type": "text",
+          "text": "Mesin serba guna yang bisa diprogram.",
+          "at": {
+            "word": "serba"
+          },
+          "until": {
+            "word": "mill"
+          },
+          "pos": [
+            1040,
+            540
+          ],
+          "max_width": 600
+        },
+        {
+          "type": "icon",
+          "icon": "punched_card",
+          "at": {
+            "word": "kartu"
+          },
+          "until": {
+            "word": "mill"
+          },
+          "pos": [
+            1240,
+            680
+          ],
+          "size": 230
+        },
+        {
+          "type": "diagram",
+          "at": {
+            "word": "mill"
+          },
+          "until": {
+            "word": "Sayangnya"
+          },
+          "nodes": [
+            {
+              "label": "STORE",
+              "sub": "≈ memori",
+              "pos": [
+                700,
+                450
+              ]
+            },
+            {
+              "label": "MILL",
+              "sub": "≈ prosesor",
+              "pos": [
+                1220,
+                450
+              ]
+            }
+          ],
+          "edges": [
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "type": "text",
+          "text": "Rancangan Analytical Engine: penyimpan dan pengolah terpisah.",
+          "at": {
+            "word": "Mirip"
+          },
+          "until": {
+            "word": "Sayangnya"
+          },
+          "pos": [
+            960,
+            620
+          ],
+          "align": "center",
+          "max_width": 900
+        },
+        {
+          "type": "icon",
+          "icon": "analytical_engine",
+          "at": {
+            "word": "Sayangnya"
+          },
+          "until": null,
+          "pos": [
+            600,
+            470
+          ],
+          "size": 400,
+          "alpha": 0.6
+        },
+        {
+          "type": "headline",
+          "text": "Tidak pernah selesai dibangun",
+          "at": {
+            "word": "Sayangnya"
+          },
+          "until": {
+            "word": "gagasan"
+          },
+          "pos": [
+            1040,
+            430
+          ],
+          "size": 58,
+          "max_width": 640
+        },
+        {
+          "type": "card",
+          "at": {
+            "word": "gagasan"
+          },
+          "until": null,
+          "pos": [
+            1040,
+            330
+          ],
+          "size": [
+            680,
+            230
+          ],
+          "title": "Catatan sejarah",
+          "body": "Difference Engine No. 2 akhirnya dibangun Science Museum London pada 1991 dari rancangannya — dan berfungsi."
+        }
       ]
     },
     {
@@ -404,14 +938,14 @@
       "era": "1843",
       "accent": "amber",
       "ambience": "mechanical",
-      "estimated_duration": 45,
+      "estimated_duration": 53,
       "narration": [
-        "Di antara sedikit orang yang benar-benar memahami gagasan Babbage, ada seorang perempuan muda yang luar biasa: Ada Lovelace.",
-        "Tahun 1843, ia menerjemahkan sebuah artikel tentang Analytical Engine, lalu menambahkan catatannya sendiri, yang panjangnya hampir tiga kali lipat artikel aslinya.",
-        "Dalam salah satu catatan itu, ia menjabarkan langkah demi langkah cara mesin tersebut menghitung bilangan Bernoulli. Banyak sejarawan menyebutnya sebagai salah satu program komputer pertama yang pernah diterbitkan.",
-        "Tapi yang paling visioner adalah pemikirannya: mesin seperti ini mungkin bisa mengolah lebih dari sekadar angka. Simbol. Bahkan musik.",
+        "Salah satu dari sedikit orang yang benar-benar memahami gagasan itu adalah Ada Lovelace.",
+        "Tahun 1843, ia menerjemahkan sebuah artikel tentang Analytical Engine, lalu menambahkan catatan yang panjangnya hampir tiga kali lipat artikel aslinya.",
+        "Di sana, ia menjabarkan langkah demi langkah cara mesin itu menghitung bilangan Bernoulli. Banyak sejarawan menyebutnya salah satu program komputer pertama yang diterbitkan.",
+        "Ia juga membayangkan mesin seperti ini mengolah lebih dari angka. Simbol. Bahkan musik.",
         {
-          "text": "Sekitar seratus tahun sebelum komputer elektronik pertama menyala, Ada sudah membayangkan apa yang bisa dilakukannya.",
+          "text": "Itu sekitar seratus tahun sebelum komputer elektronik pertama menyala.",
           "rate": "-7%"
         }
       ],
@@ -446,8 +980,203 @@
           "title": "L. F. Menabrea, 'Sketch of the Analytical Engine…', terjemahan dan catatan A–G oleh A. A. Lovelace, Scientific Memoirs vol. 3 (1843)"
         },
         {
-          "title": "Computer History Museum — Ada Lovelace",
-          "url": "https://www.computerhistory.org/babbage/adalovelace/"
+          "title": "Computer History Museum — Ada Lovelace"
+        }
+      ],
+      "elements": [
+        {
+          "type": "icon",
+          "icon": "notes",
+          "at": {
+            "word": "Ada"
+          },
+          "until": {
+            "word": "musik"
+          },
+          "pos": [
+            600,
+            470
+          ],
+          "size": 380,
+          "label": "catatan"
+        },
+        {
+          "type": "kicker",
+          "text": "Inggris · 1815–1852",
+          "at": {
+            "word": "Ada"
+          },
+          "until": {
+            "word": "1843"
+          },
+          "pos": [
+            1040,
+            330
+          ]
+        },
+        {
+          "type": "headline",
+          "text": "Ada Lovelace",
+          "at": {
+            "word": "Ada"
+          },
+          "until": {
+            "word": "1843"
+          },
+          "pos": [
+            1040,
+            430
+          ],
+          "size": 76
+        },
+        {
+          "type": "counter",
+          "at": {
+            "word": "1843",
+            "offset": -0.3
+          },
+          "until": {
+            "word": "Bernoulli"
+          },
+          "pos": [
+            1040,
+            400
+          ],
+          "from": 1815,
+          "to": 1843,
+          "format": "year",
+          "size": 128,
+          "label": "Terjemahan + catatan A–G",
+          "dur": 1.4
+        },
+        {
+          "type": "text",
+          "text": "Catatannya hampir tiga kali lipat panjang artikel aslinya.",
+          "at": {
+            "word": "tiga"
+          },
+          "until": {
+            "word": "Bernoulli"
+          },
+          "pos": [
+            1040,
+            540
+          ],
+          "max_width": 600
+        },
+        {
+          "type": "card",
+          "at": {
+            "word": "Bernoulli"
+          },
+          "until": {
+            "unit": 4
+          },
+          "pos": [
+            1040,
+            300
+          ],
+          "size": [
+            700,
+            300
+          ],
+          "title": "Note G",
+          "body": "Langkah demi langkah menghitung bilangan Bernoulli — salah satu program komputer pertama yang diterbitkan."
+        },
+        {
+          "type": "kicker",
+          "text": "Lebih dari angka",
+          "at": {
+            "unit": 4
+          },
+          "until": {
+            "unit": 5
+          },
+          "pos": [
+            1040,
+            330
+          ]
+        },
+        {
+          "type": "chips",
+          "items": [
+            "angka",
+            "simbol",
+            "musik"
+          ],
+          "at": {
+            "word": "angka"
+          },
+          "until": {
+            "unit": 5
+          },
+          "pos": [
+            1040,
+            450
+          ],
+          "cols": 3,
+          "gap": [
+            190,
+            0
+          ],
+          "size": 30,
+          "stagger": 0.55
+        },
+        {
+          "type": "icon",
+          "icon": "music_wave",
+          "at": {
+            "word": "musik"
+          },
+          "until": null,
+          "pos": [
+            600,
+            470
+          ],
+          "size": 380,
+          "label": "simbol → musik"
+        },
+        {
+          "type": "timeline",
+          "at": {
+            "unit": 5
+          },
+          "until": null,
+          "years": [
+            1830,
+            1960
+          ],
+          "y": 790,
+          "x0": 200,
+          "x1": 1720,
+          "marks": [
+            {
+              "year": 1843,
+              "label": "Catatan Ada"
+            },
+            {
+              "year": 1945,
+              "label": "ENIAC selesai"
+            }
+          ],
+          "focus_from": 1843,
+          "focus_to": 1945,
+          "focus_at": {
+            "word": "seratus"
+          }
+        },
+        {
+          "type": "headline",
+          "text": "± 100 tahun lebih awal",
+          "at": {
+            "word": "seratus"
+          },
+          "until": null,
+          "pos": [
+            1040,
+            430
+          ],
+          "size": 56
         }
       ]
     },
@@ -458,15 +1187,14 @@
       "era": "1936 — 1948",
       "accent": "cyan",
       "ambience": "electric",
-      "estimated_duration": 80,
+      "estimated_duration": 85,
       "narration": [
         "Abad ke-20 membawa sesuatu yang tidak dimiliki Babbage: listrik.",
-        "Tahun 1936, Alan Turing menulis makalah tentang mesin abstrak yang, secara teori, bisa menjalankan perhitungan apa pun yang dapat dijabarkan langkah demi langkah.",
-        "Perang Dunia Kedua lalu mempercepat segalanya. Di Jerman, Konrad Zuse menyelesaikan Z3 pada 1941, mesin hitung elektromekanis yang dapat diprogram. Di Inggris, mesin elektronik Colossus membantu memecahkan sandi militer Jerman.",
-        "Dan di Amerika Serikat, lahirlah ENIAC. Diselesaikan pada 1945 dan diperkenalkan ke publik pada 1946, mesin raksasa ini memakai sekitar delapan belas ribu tabung vakum, dengan berat sekitar dua puluh tujuh ton.",
-        "Ia mampu melakukan sekitar lima ribu penjumlahan per detik. Sangat cepat untuk zamannya.",
-        "Untuk memprogramnya, enam perempuan harus menata ulang kabel dan sakelar secara manual. Nama mereka lama terlupakan, padahal merekalah programmer pertama ENIAC.",
-        "Beberapa tahun kemudian, sebuah gagasan penting menjadi kenyataan: menyimpan program di dalam memori, bersama datanya. Prinsip inilah yang masih dipakai hampir semua komputer hari ini."
+        "Tahun 1936, Alan Turing menjelaskan mesin abstrak yang secara teori bisa menghitung apa pun, asalkan bisa dijabarkan langkah demi langkah.",
+        "Perang Dunia Kedua lalu mempercepat segalanya. Konrad Zuse menyelesaikan Z3 di Jerman pada 1941. Di Inggris, mesin elektronik Colossus membantu memecahkan sandi militer Jerman.",
+        "Di Amerika Serikat, lahirlah ENIAC, yang diperkenalkan ke publik pada 1946. Ia memakai sekitar delapan belas ribu tabung vakum, beratnya sekitar dua puluh tujuh ton, dan mampu melakukan sekitar lima ribu penjumlahan per detik.",
+        "Untuk memprogramnya, enam perempuan menata ulang kabel dan sakelar secara manual. Merekalah programmer pertama ENIAC, meski nama mereka lama terlupakan.",
+        "Tak lama kemudian, program mulai disimpan di dalam memori bersama datanya, prinsip yang masih dipakai hampir semua komputer hari ini."
       ],
       "visual_description": "Simbol listrik; pita mesin Turing (1936); label Z3 1941 dan Colossus 1944. Panel-panel ENIAC dengan lampu berkedip dan statistik: sekitar 17.468 tabung, sekitar 27 ton, sekitar 5.000 penjumlahan per detik. Chip nama enam programmer ENIAC. Diagram program + data → memori (Manchester Baby, 1948).",
       "animation_style": "Lampu panel berkedip, statistik counter, chip nama bertahap, diagram alur.",
@@ -523,6 +1251,374 @@
         {
           "title": "Kathy Kleiman, 'Proving Ground: The Untold Story of the Six Women Who Programmed the World's First Modern Computer' (2022)"
         }
+      ],
+      "elements": [
+        {
+          "type": "icon",
+          "icon": "spark",
+          "at": 0.0,
+          "until": {
+            "word": "1936"
+          },
+          "pos": [
+            600,
+            470
+          ],
+          "size": 380,
+          "label": "listrik"
+        },
+        {
+          "type": "kicker",
+          "text": "Abad ke-20",
+          "at": 0.0,
+          "until": {
+            "word": "1936"
+          },
+          "pos": [
+            1040,
+            330
+          ]
+        },
+        {
+          "type": "headline",
+          "text": "Satu hal yang tak dimiliki Babbage",
+          "at": {
+            "word": "Babbage"
+          },
+          "until": {
+            "word": "1936"
+          },
+          "pos": [
+            1040,
+            430
+          ],
+          "size": 58,
+          "max_width": 640
+        },
+        {
+          "type": "icon",
+          "icon": "turing_tape",
+          "at": {
+            "word": "1936"
+          },
+          "until": {
+            "word": "Perang"
+          },
+          "pos": [
+            600,
+            470
+          ],
+          "size": 420
+        },
+        {
+          "type": "counter",
+          "at": {
+            "word": "1936",
+            "offset": -0.3
+          },
+          "until": {
+            "word": "Perang"
+          },
+          "pos": [
+            1040,
+            400
+          ],
+          "from": 1900,
+          "to": 1936,
+          "format": "year",
+          "size": 128,
+          "label": "Alan Turing",
+          "dur": 1.4
+        },
+        {
+          "type": "text",
+          "text": "Mesin abstrak: apa pun yang bisa dijabarkan langkah demi langkah, bisa dihitung.",
+          "at": {
+            "word": "abstrak"
+          },
+          "until": {
+            "word": "Perang"
+          },
+          "pos": [
+            1040,
+            540
+          ],
+          "max_width": 620
+        },
+        {
+          "type": "icon",
+          "icon": "vacuum_tube",
+          "at": {
+            "word": "Perang"
+          },
+          "until": {
+            "word": "Amerika"
+          },
+          "pos": [
+            600,
+            470
+          ],
+          "size": 380,
+          "label": "tabung vakum"
+        },
+        {
+          "type": "kicker",
+          "text": "Perang Dunia II",
+          "at": {
+            "word": "Perang"
+          },
+          "until": {
+            "word": "Amerika"
+          },
+          "pos": [
+            1040,
+            330
+          ]
+        },
+        {
+          "type": "chips",
+          "items": [
+            "Z3 · Jerman · 1941"
+          ],
+          "at": {
+            "word": "Zuse"
+          },
+          "until": {
+            "word": "Amerika"
+          },
+          "pos": [
+            1040,
+            450
+          ],
+          "cols": 1,
+          "gap": [
+            0,
+            76
+          ],
+          "size": 30
+        },
+        {
+          "type": "chips",
+          "items": [
+            "Colossus · Inggris · 1944"
+          ],
+          "at": {
+            "word": "Colossus"
+          },
+          "until": {
+            "word": "Amerika"
+          },
+          "pos": [
+            1040,
+            540
+          ],
+          "cols": 1,
+          "gap": [
+            0,
+            76
+          ],
+          "size": 30
+        },
+        {
+          "type": "icon",
+          "icon": "eniac",
+          "at": {
+            "word": "ENIAC"
+          },
+          "until": {
+            "word": "Tak"
+          },
+          "pos": [
+            600,
+            470
+          ],
+          "size": 440,
+          "label": "ENIAC"
+        },
+        {
+          "type": "counter",
+          "at": {
+            "word": "1946",
+            "offset": -0.3
+          },
+          "until": {
+            "word": "enam"
+          },
+          "pos": [
+            1040,
+            330
+          ],
+          "from": 1940,
+          "to": 1946,
+          "format": "year",
+          "size": 108,
+          "label": "ENIAC diperkenalkan",
+          "dur": 1.4
+        },
+        {
+          "type": "counter",
+          "at": {
+            "word": "delapan"
+          },
+          "until": {
+            "word": "enam"
+          },
+          "pos": [
+            1040,
+            470
+          ],
+          "from": 0,
+          "to": 17468,
+          "prefix": "≈ ",
+          "size": 60,
+          "label": "tabung vakum",
+          "label_size": 16
+        },
+        {
+          "type": "counter",
+          "at": {
+            "word": "tujuh"
+          },
+          "until": {
+            "word": "enam"
+          },
+          "pos": [
+            1040,
+            580
+          ],
+          "from": 0,
+          "to": 27,
+          "prefix": "≈ ",
+          "suffix": " ton",
+          "size": 60,
+          "label": "berat",
+          "label_size": 16
+        },
+        {
+          "type": "counter",
+          "at": {
+            "word": "lima"
+          },
+          "until": {
+            "word": "enam"
+          },
+          "pos": [
+            1040,
+            690
+          ],
+          "from": 0,
+          "to": 5000,
+          "prefix": "≈ ",
+          "size": 60,
+          "label": "penjumlahan per detik",
+          "label_size": 16
+        },
+        {
+          "type": "kicker",
+          "text": "Programmer pertama ENIAC",
+          "at": {
+            "word": "enam"
+          },
+          "until": {
+            "word": "Tak"
+          },
+          "pos": [
+            980,
+            300
+          ]
+        },
+        {
+          "type": "chips",
+          "items": [
+            "Kathleen McNulty",
+            "Jean Jennings",
+            "Betty Snyder",
+            "Marlyn Wescoff",
+            "Frances Bilas",
+            "Ruth Lichterman"
+          ],
+          "at": {
+            "word": "enam"
+          },
+          "until": {
+            "word": "Tak"
+          },
+          "pos": [
+            980,
+            390
+          ],
+          "cols": 2,
+          "gap": [
+            400,
+            82
+          ],
+          "size": 27
+        },
+        {
+          "type": "kicker",
+          "text": "Program tersimpan · Manchester Baby, 1948",
+          "at": {
+            "word": "Tak"
+          },
+          "until": null,
+          "pos": [
+            420,
+            300
+          ]
+        },
+        {
+          "type": "diagram",
+          "at": {
+            "word": "program"
+          },
+          "until": null,
+          "nodes": [
+            {
+              "label": "Program",
+              "pos": [
+                640,
+                430
+              ],
+              "size": [
+                240,
+                90
+              ]
+            },
+            {
+              "label": "Data",
+              "pos": [
+                640,
+                600
+              ],
+              "size": [
+                240,
+                90
+              ]
+            },
+            {
+              "label": "Memori",
+              "sub": "satu tempat",
+              "pos": [
+                1260,
+                515
+              ],
+              "size": [
+                280,
+                110
+              ]
+            }
+          ],
+          "edges": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ]
+          ]
+        }
       ]
     },
     {
@@ -532,15 +1628,14 @@
       "era": "1947 — 1959",
       "accent": "cyan",
       "ambience": "electric",
-      "estimated_duration": 50,
+      "estimated_duration": 42,
       "narration": [
-        "Tapi tabung vakum punya masalah. Ia besar, panas, boros listrik, dan mudah putus.",
-        "Desember 1947, di Bell Labs, John Bardeen dan Walter Brattain mendemonstrasikan transistor pertama, dalam kelompok riset yang dipimpin William Shockley.",
-        "Komponen kecil ini bisa melakukan tugas tabung vakum, yaitu menguatkan sinyal dan menyalakan atau memutus arus listrik, dengan ukuran jauh lebih kecil, lebih hemat daya, dan lebih awet.",
-        "Pada akhir 1950-an, komputer transistor mulai menggantikan komputer tabung. Era ini kemudian dikenal sebagai generasi kedua komputer.",
-        "Bersamaan dengan itu, cara kita berbicara dengan mesin juga berubah. Bahasa pemrograman seperti FORTRAN dan COBOL membuat instruksi komputer jauh lebih mudah ditulis dan dibaca manusia."
+        "Tapi tabung vakum besar, panas, boros listrik, dan mudah putus.",
+        "Desember 1947, di Bell Labs, John Bardeen dan Walter Brattain mendemonstrasikan transistor pertama, dalam kelompok riset pimpinan William Shockley.",
+        "Komponen kecil ini menguatkan sinyal dan menyambung atau memutus arus, seperti tabung vakum, tetapi jauh lebih kecil, hemat daya, dan awet.",
+        "Akhir 1950-an, komputer transistor mulai menggantikan komputer tabung. Inilah generasi kedua komputer."
       ],
-      "visual_description": "Tabung vakum dengan label masalah: besar, panas, boros, mudah putus. Transistor muncul pada 1947 dengan nama tiga penemunya dan catatan Nobel Fisika 1956. Perbandingan ukuran. Garis waktu generasi komputer. Potongan kode bergaya FORTRAN.",
+      "visual_description": "Tabung vakum dengan label masalah: besar, panas, boros, mudah putus. Transistor muncul pada 1947 dengan nama tiga tokoh Bell Labs dan catatan Nobel Fisika 1956. Garis waktu generasi komputer dengan fokus bergeser ke generasi kedua.",
       "animation_style": "Perbandingan berdampingan, timeline generasi dengan fokus bergeser, kode mono diketik.",
       "transition": {
         "out": {
@@ -557,13 +1652,6 @@
           "gain_db": -5
         },
         {
-          "name": "keys",
-          "at": {
-            "word": "FORTRAN"
-          },
-          "gain_db": -8
-        },
-        {
           "name": "whoosh",
           "at": "transition_out",
           "gain_db": -7
@@ -577,10 +1665,214 @@
         {
           "title": "Britannica — Transistor",
           "url": "https://www.britannica.com/technology/transistor"
+        }
+      ],
+      "elements": [
+        {
+          "type": "icon",
+          "icon": "vacuum_tube",
+          "at": 0.0,
+          "until": {
+            "word": "1947"
+          },
+          "pos": [
+            600,
+            470
+          ],
+          "size": 380,
+          "label": "tabung vakum"
         },
         {
-          "title": "Computer History Museum — Timeline of Computer History (FORTRAN 1957, COBOL 1959)",
-          "url": "https://www.computerhistory.org/timeline/"
+          "type": "kicker",
+          "text": "Masalah tabung vakum",
+          "at": 0.0,
+          "until": {
+            "word": "1947"
+          },
+          "pos": [
+            1040,
+            330
+          ]
+        },
+        {
+          "type": "chips",
+          "items": [
+            "besar",
+            "panas",
+            "boros listrik",
+            "mudah putus"
+          ],
+          "at": {
+            "word": "besar"
+          },
+          "until": {
+            "word": "1947"
+          },
+          "pos": [
+            1040,
+            440
+          ],
+          "cols": 2,
+          "gap": [
+            270,
+            84
+          ],
+          "size": 30,
+          "stagger": 0.45
+        },
+        {
+          "type": "icon",
+          "icon": "transistor",
+          "at": {
+            "word": "1947"
+          },
+          "until": null,
+          "pos": [
+            600,
+            470
+          ],
+          "size": 380,
+          "label": "transistor"
+        },
+        {
+          "type": "counter",
+          "at": {
+            "word": "1947",
+            "offset": -0.3
+          },
+          "until": {
+            "word": "Komponen"
+          },
+          "pos": [
+            1040,
+            360
+          ],
+          "from": 1920,
+          "to": 1947,
+          "format": "year",
+          "size": 128,
+          "label": "Bell Labs · Desember",
+          "dur": 1.4
+        },
+        {
+          "type": "chips",
+          "items": [
+            "John Bardeen",
+            "Walter Brattain",
+            "William Shockley"
+          ],
+          "at": {
+            "word": "Bardeen"
+          },
+          "until": {
+            "word": "Komponen"
+          },
+          "pos": [
+            1040,
+            480
+          ],
+          "cols": 1,
+          "gap": [
+            0,
+            74
+          ],
+          "size": 28,
+          "stagger": 0.6
+        },
+        {
+          "type": "text",
+          "text": "Nobel Fisika 1956",
+          "at": {
+            "word": "Shockley"
+          },
+          "until": {
+            "word": "Komponen"
+          },
+          "pos": [
+            1040,
+            730
+          ]
+        },
+        {
+          "type": "headline",
+          "text": "Lebih kecil, hemat daya, awet",
+          "at": {
+            "word": "Komponen"
+          },
+          "until": {
+            "word": "Akhir"
+          },
+          "pos": [
+            1040,
+            430
+          ],
+          "size": 58,
+          "max_width": 640
+        },
+        {
+          "type": "text",
+          "text": "Menguatkan sinyal · menyambung dan memutus arus",
+          "at": {
+            "word": "menguatkan"
+          },
+          "until": {
+            "word": "Akhir"
+          },
+          "pos": [
+            1040,
+            575
+          ],
+          "max_width": 620
+        },
+        {
+          "type": "timeline",
+          "at": {
+            "word": "Akhir"
+          },
+          "until": null,
+          "years": [
+            1942,
+            1976
+          ],
+          "y": 770,
+          "x0": 220,
+          "x1": 1700,
+          "marks": [
+            {
+              "year": 1946,
+              "label": "Gen 1 · tabung"
+            },
+            {
+              "year": 1958,
+              "label": "Gen 2 · transistor"
+            },
+            {
+              "year": 1964,
+              "label": "Gen 3 · IC"
+            },
+            {
+              "year": 1971,
+              "label": "Gen 4 · mikroprosesor"
+            }
+          ],
+          "focus_from": 1946,
+          "focus_to": 1958,
+          "focus_at": {
+            "word": "generasi"
+          }
+        },
+        {
+          "type": "headline",
+          "text": "Generasi kedua",
+          "at": {
+            "word": "generasi"
+          },
+          "until": null,
+          "pos": [
+            1040,
+            430
+          ],
+          "size": 64
         }
       ]
     },
@@ -591,13 +1883,12 @@
       "era": "1958 — 1971",
       "accent": "cyan",
       "ambience": "digital",
-      "estimated_duration": 55,
+      "estimated_duration": 52,
       "narration": [
         "Masalah berikutnya: menyambungkan ribuan transistor satu per satu itu rumit dan rawan salah.",
-        "Tahun 1958, Jack Kilby di Texas Instruments membuat rangkaian terpadu pertama. Tak lama kemudian, Robert Noyce di Fairchild Semiconductor mengembangkan versi berbahan silikon yang lebih praktis untuk diproduksi massal.",
-        "Banyak komponen kini bisa dibuat sekaligus di atas satu keping kecil. Itulah chip.",
-        "Tahun 1965, Gordon Moore mengamati bahwa jumlah komponen dalam satu chip terus berlipat ganda secara berkala. Pengamatan ini kemudian dikenal sebagai Hukum Moore.",
-        "Lalu pada 1971, Intel merilis 4004, mikroprosesor komersial pertama. Seluruh unit pemroses komputer, dalam satu chip, dengan sekitar dua ribu tiga ratus transistor."
+        "Tahun 1958, Jack Kilby di Texas Instruments membuat rangkaian terpadu pertama. Tak lama kemudian, Robert Noyce di Fairchild mengembangkan versi silikon yang mudah diproduksi massal. Itulah chip.",
+        "Tahun 1965, Gordon Moore mengamati bahwa jumlah komponen dalam satu chip berlipat ganda secara berkala. Inilah Hukum Moore.",
+        "Lalu pada 1971, Intel merilis 4004, mikroprosesor komersial pertama, dengan sekitar dua ribu tiga ratus transistor dalam satu chip."
       ],
       "visual_description": "Kabel kusut antara banyak komponen. Kilby 1958 dan Noyce (silikon). Chip dengan sirkuit yang menyala. Grafik Hukum Moore berskala logaritmik dari 4004 hingga chip modern. Die Intel 4004 dan statistik sekitar 2.300 transistor.",
       "animation_style": "Kekacauan → keteraturan, grafik log draw-on, push-in ke chip.",
@@ -605,7 +1896,26 @@
         "type": "push_in",
         "zoom": [
           1.0,
-          1.05
+          1.04
+        ],
+        "moves": [
+          {
+            "at": {
+              "word": "chip"
+            },
+            "zoom": 1.12,
+            "x": -150,
+            "dur": 1.4
+          },
+          {
+            "at": {
+              "word": "1965",
+              "offset": -0.6
+            },
+            "zoom": 0.893,
+            "x": 150,
+            "dur": 1.2
+          }
         ]
       },
       "transition": {
@@ -648,8 +1958,294 @@
           "url": "https://www.intel.com/content/www/us/en/history/museum-story-of-intel-4004.html"
         },
         {
-          "title": "Computer History Museum — The Silicon Engine (timeline semikonduktor)",
-          "url": "https://www.computerhistory.org/siliconengine/"
+          "title": "Computer History Museum — The Silicon Engine (timeline semikonduktor)"
+        }
+      ],
+      "elements": [
+        {
+          "type": "icon",
+          "icon": "tangle",
+          "at": 0.0,
+          "until": {
+            "word": "1958"
+          },
+          "pos": [
+            600,
+            470
+          ],
+          "size": 420,
+          "label": "ribuan sambungan"
+        },
+        {
+          "type": "kicker",
+          "text": "Masalah berikutnya",
+          "at": 0.0,
+          "until": {
+            "word": "1958"
+          },
+          "pos": [
+            1040,
+            330
+          ]
+        },
+        {
+          "type": "headline",
+          "text": "Rumit dan rawan salah",
+          "at": {
+            "word": "rumit"
+          },
+          "until": {
+            "word": "1958"
+          },
+          "pos": [
+            1040,
+            430
+          ],
+          "size": 58
+        },
+        {
+          "type": "icon",
+          "icon": "chip",
+          "at": {
+            "word": "1958"
+          },
+          "until": {
+            "word": "1965"
+          },
+          "pos": [
+            600,
+            470
+          ],
+          "size": 380,
+          "label": "rangkaian terpadu"
+        },
+        {
+          "type": "counter",
+          "at": {
+            "word": "1958",
+            "offset": -0.3
+          },
+          "until": {
+            "word": "chip"
+          },
+          "pos": [
+            1040,
+            370
+          ],
+          "from": 1947,
+          "to": 1958,
+          "format": "year",
+          "size": 128,
+          "label": "Rangkaian terpadu",
+          "dur": 1.4
+        },
+        {
+          "type": "chips",
+          "items": [
+            "Jack Kilby · Texas Instruments"
+          ],
+          "at": {
+            "word": "Kilby"
+          },
+          "until": {
+            "word": "chip"
+          },
+          "pos": [
+            1040,
+            500
+          ],
+          "cols": 1,
+          "gap": [
+            0,
+            76
+          ],
+          "size": 28
+        },
+        {
+          "type": "chips",
+          "items": [
+            "Robert Noyce · Fairchild · silikon"
+          ],
+          "at": {
+            "word": "Noyce"
+          },
+          "until": {
+            "word": "chip"
+          },
+          "pos": [
+            1040,
+            590
+          ],
+          "cols": 1,
+          "gap": [
+            0,
+            76
+          ],
+          "size": 28
+        },
+        {
+          "type": "kicker",
+          "text": "Hukum Moore · 1965",
+          "at": {
+            "word": "1965"
+          },
+          "until": {
+            "word": "1971"
+          },
+          "pos": [
+            900,
+            250
+          ]
+        },
+        {
+          "type": "headline",
+          "text": "Berlipat ganda secara berkala",
+          "at": {
+            "word": "berlipat"
+          },
+          "until": {
+            "word": "1971"
+          },
+          "pos": [
+            150,
+            430
+          ],
+          "size": 50,
+          "max_width": 560
+        },
+        {
+          "type": "text",
+          "text": "Gordon Moore mengamati jumlah komponen per chip.",
+          "at": {
+            "word": "Moore"
+          },
+          "until": {
+            "word": "1971"
+          },
+          "pos": [
+            150,
+            560
+          ],
+          "max_width": 520
+        },
+        {
+          "type": "moore_chart",
+          "at": {
+            "word": "1965"
+          },
+          "until": {
+            "word": "1971"
+          },
+          "pos": [
+            900,
+            290
+          ],
+          "size": [
+            820,
+            420
+          ],
+          "years": [
+            1965,
+            2025
+          ],
+          "log_range": [
+            3,
+            11
+          ],
+          "caption": "transistor per chip · skala logaritmik",
+          "points": [
+            {
+              "year": 1971,
+              "count": 2300,
+              "label": "4004"
+            },
+            {
+              "year": 1978,
+              "count": 29000,
+              "label": "8086"
+            },
+            {
+              "year": 1985,
+              "count": 275000,
+              "label": "386"
+            },
+            {
+              "year": 1993,
+              "count": 3100000,
+              "label": "Pentium"
+            },
+            {
+              "year": 2000,
+              "count": 42000000,
+              "label": "Pentium 4"
+            },
+            {
+              "year": 2020,
+              "count": 16000000000,
+              "label": "Apple M1"
+            }
+          ]
+        },
+        {
+          "type": "icon",
+          "icon": "die",
+          "at": {
+            "word": "1971"
+          },
+          "until": null,
+          "pos": [
+            600,
+            470
+          ],
+          "size": 400,
+          "label": "intel 4004"
+        },
+        {
+          "type": "counter",
+          "at": {
+            "word": "1971",
+            "offset": -0.3
+          },
+          "until": null,
+          "pos": [
+            1040,
+            360
+          ],
+          "from": 1958,
+          "to": 1971,
+          "format": "year",
+          "size": 128,
+          "label": "Intel 4004",
+          "dur": 1.4
+        },
+        {
+          "type": "text",
+          "text": "Mikroprosesor komersial pertama",
+          "at": {
+            "word": "mikroprosesor"
+          },
+          "until": null,
+          "pos": [
+            1040,
+            460
+          ]
+        },
+        {
+          "type": "counter",
+          "at": {
+            "word": "dua"
+          },
+          "until": null,
+          "pos": [
+            1040,
+            590
+          ],
+          "from": 0,
+          "to": 2300,
+          "prefix": "≈ ",
+          "size": 76,
+          "label": "transistor",
+          "label_size": 17
         }
       ]
     },
@@ -661,12 +2257,12 @@
       "accent": "amber",
       "ambience": "digital",
       "music_pulse": true,
-      "estimated_duration": 45,
+      "estimated_duration": 51,
       "narration": [
-        "Begitu otak komputer bisa dibuat sekecil itu, muncul pertanyaan baru: bagaimana jika setiap orang punya komputernya sendiri?",
-        "Tahun 1975, Altair 8800 memicu antusiasme para penghobi. Dari klub-klub komputer dan bengkel rumahan, lahirlah perusahaan-perusahaan baru.",
-        "Apple II pada 1977, lalu IBM PC pada 1981, membawa komputer ke meja kantor, sekolah, dan rumah.",
-        "Kemudian antarmuka grafis, dengan jendela, ikon, dan mouse, yang dikembangkan di Xerox PARC dan dipopulerkan oleh Apple Macintosh pada 1984, membuat komputer bisa dipakai tanpa harus menghafal perintah.",
+        "Begitu otak komputer bisa sekecil itu, muncul pertanyaan baru: bagaimana jika setiap orang punya komputer sendiri?",
+        "Tahun 1975, Altair 8800 memicu antusiasme para penghobi, dan perusahaan baru bermunculan.",
+        "Apple II pada 1977, lalu IBM PC pada 1981, membawa komputer ke kantor, sekolah, dan rumah.",
+        "Antarmuka grafis dengan jendela, ikon, dan mouse, dari Xerox PARC lalu dipopulerkan Macintosh pada 1984, membuat komputer bisa dipakai tanpa menghafal perintah.",
         {
           "text": "Komputer bukan lagi mesin para ilmuwan. Ia menjadi alat semua orang.",
           "rate": "-7%"
@@ -698,9 +2294,8 @@
         {
           "name": "riser",
           "at": {
-            "word": "Komputer",
-            "n": 3,
-            "offset": -1.2
+            "unit": 5,
+            "offset": -1.4
           },
           "gain_db": -6
         },
@@ -723,6 +2318,262 @@
           "title": "Britannica — Xerox PARC",
           "url": "https://www.britannica.com/topic/Xerox-PARC"
         }
+      ],
+      "elements": [
+        {
+          "type": "icon",
+          "icon": "die",
+          "at": 0.0,
+          "until": {
+            "word": "bagaimana"
+          },
+          "pos": [
+            960,
+            450
+          ],
+          "size": 320,
+          "label": "otak komputer"
+        },
+        {
+          "type": "kicker",
+          "text": "Pertanyaan baru",
+          "at": {
+            "word": "bagaimana"
+          },
+          "until": {
+            "word": "1975"
+          },
+          "pos": [
+            960,
+            330
+          ]
+        },
+        {
+          "type": "headline",
+          "text": "Bagaimana jika setiap orang punya komputer sendiri?",
+          "at": {
+            "word": "bagaimana"
+          },
+          "until": {
+            "word": "1975"
+          },
+          "pos": [
+            960,
+            470
+          ],
+          "size": 66,
+          "align": "center",
+          "max_width": 1200
+        },
+        {
+          "type": "icon",
+          "icon": "altair",
+          "at": {
+            "word": "1975"
+          },
+          "until": {
+            "word": "Apple"
+          },
+          "pos": [
+            600,
+            470
+          ],
+          "size": 430,
+          "label": "altair 8800"
+        },
+        {
+          "type": "counter",
+          "at": {
+            "word": "1975",
+            "offset": -0.3
+          },
+          "until": {
+            "word": "Apple"
+          },
+          "pos": [
+            1040,
+            400
+          ],
+          "from": 1971,
+          "to": 1975,
+          "format": "year",
+          "size": 128,
+          "label": "Altair 8800",
+          "dur": 1.4
+        },
+        {
+          "type": "text",
+          "text": "Para penghobi bersemangat; perusahaan baru bermunculan.",
+          "at": {
+            "word": "penghobi"
+          },
+          "until": {
+            "word": "Apple"
+          },
+          "pos": [
+            1040,
+            540
+          ],
+          "max_width": 600
+        },
+        {
+          "type": "icon",
+          "icon": "desktop_pc",
+          "at": {
+            "word": "Apple"
+          },
+          "until": {
+            "word": "Antarmuka"
+          },
+          "pos": [
+            600,
+            430
+          ],
+          "size": 340
+        },
+        {
+          "type": "headline",
+          "text": "Kantor · sekolah · rumah",
+          "at": {
+            "word": "kantor"
+          },
+          "until": {
+            "word": "Antarmuka"
+          },
+          "pos": [
+            1040,
+            400
+          ],
+          "size": 58
+        },
+        {
+          "type": "timeline",
+          "at": {
+            "word": "Apple"
+          },
+          "until": {
+            "word": "Antarmuka"
+          },
+          "years": [
+            1972,
+            1988
+          ],
+          "y": 760,
+          "x0": 220,
+          "x1": 1700,
+          "marks": [
+            {
+              "year": 1975,
+              "label": "Altair 8800"
+            },
+            {
+              "year": 1977,
+              "label": "Apple II"
+            },
+            {
+              "year": 1981,
+              "label": "IBM PC"
+            },
+            {
+              "year": 1984,
+              "label": "Macintosh"
+            }
+          ],
+          "focus_from": 1975,
+          "focus_to": 1981,
+          "focus_at": {
+            "word": "IBM"
+          }
+        },
+        {
+          "type": "icon",
+          "icon": "gui_window",
+          "at": {
+            "word": "Antarmuka"
+          },
+          "until": {
+            "unit": 5
+          },
+          "pos": [
+            600,
+            470
+          ],
+          "size": 420,
+          "label": "antarmuka grafis"
+        },
+        {
+          "type": "kicker",
+          "text": "Xerox PARC → Macintosh 1984",
+          "at": {
+            "word": "Antarmuka"
+          },
+          "until": {
+            "unit": 5
+          },
+          "pos": [
+            1040,
+            330
+          ]
+        },
+        {
+          "type": "headline",
+          "text": "Jendela, ikon, dan mouse",
+          "at": {
+            "word": "jendela"
+          },
+          "until": {
+            "unit": 5
+          },
+          "pos": [
+            1040,
+            430
+          ],
+          "size": 58
+        },
+        {
+          "type": "text",
+          "text": "Tanpa harus menghafal perintah.",
+          "at": {
+            "word": "menghafal"
+          },
+          "until": {
+            "unit": 5
+          },
+          "pos": [
+            1040,
+            540
+          ]
+        },
+        {
+          "type": "icon_grid",
+          "at": {
+            "unit": 5
+          },
+          "until": null,
+          "pos": [
+            960,
+            430
+          ],
+          "rows": 3,
+          "cols": 9,
+          "gap": 125,
+          "size": 78,
+          "stagger": 0.06
+        },
+        {
+          "type": "headline",
+          "text": "Alat semua orang",
+          "at": {
+            "word": "semua"
+          },
+          "until": null,
+          "pos": [
+            960,
+            760
+          ],
+          "size": 60,
+          "align": "center"
+        }
       ]
     },
     {
@@ -733,12 +2584,11 @@
       "accent": "cyan",
       "ambience": "digital",
       "music_pulse": true,
-      "estimated_duration": 42,
+      "estimated_duration": 41,
       "narration": [
         "Lalu, komputer-komputer itu mulai saling terhubung.",
-        "Berawal dari ARPANET pada 1969, jaringan tumbuh menjadi internet. Tahun 1989, Tim Berners-Lee di CERN mengusulkan World Wide Web, cara sederhana untuk menautkan dokumen di seluruh dunia.",
-        "Komputer pun ikut bergerak bersama kita. Laptop membuatnya bisa dibawa ke mana saja.",
-        "Dan pada 2007, peluncuran iPhone ikut mendorong era ponsel pintar: komputer lengkap dengan layar sentuh, kamera, dan internet, di dalam genggaman.",
+        "Berawal dari ARPANET pada 1969, jaringan tumbuh menjadi internet. Tahun 1989, Tim Berners-Lee di CERN mengusulkan World Wide Web untuk menautkan dokumen di seluruh dunia.",
+        "Laptop membuat komputer bisa dibawa ke mana saja. Pada 2007, iPhone ikut mendorong era ponsel pintar: komputer lengkap dalam genggaman.",
         "Dalam beberapa dekade saja, miliaran orang menjadi terhubung."
       ],
       "visual_description": "Jaringan node yang tumbuh. ARPANET 1969. Globe dengan busur koneksi untuk World Wide Web 1989. Laptop, lalu ponsel pintar 2007. Penutup: globe penuh koneksi dengan label miliaran orang terhubung.",
@@ -783,6 +2633,244 @@
           "title": "Computer History Museum — Timeline of Computer History (iPhone 2007)",
           "url": "https://www.computerhistory.org/timeline/"
         }
+      ],
+      "elements": [
+        {
+          "type": "network",
+          "at": 0.0,
+          "until": {
+            "word": "1989"
+          },
+          "pos": [
+            1180,
+            470
+          ],
+          "size": [
+            1050,
+            560
+          ],
+          "nodes": 38,
+          "grow": 5.0
+        },
+        {
+          "type": "kicker",
+          "text": "Jaringan",
+          "at": 0.0,
+          "until": {
+            "word": "1969",
+            "offset": -0.4
+          },
+          "pos": [
+            150,
+            330
+          ]
+        },
+        {
+          "type": "headline",
+          "text": "Mulai saling terhubung",
+          "at": {
+            "word": "terhubung"
+          },
+          "until": {
+            "word": "1969",
+            "offset": -0.4
+          },
+          "pos": [
+            150,
+            430
+          ],
+          "size": 56,
+          "max_width": 520
+        },
+        {
+          "type": "counter",
+          "at": {
+            "word": "1969",
+            "offset": -0.3
+          },
+          "until": {
+            "word": "1989"
+          },
+          "pos": [
+            150,
+            420
+          ],
+          "from": 1960,
+          "to": 1969,
+          "format": "year",
+          "size": 128,
+          "label": "ARPANET",
+          "dur": 1.4
+        },
+        {
+          "type": "text",
+          "text": "Jaringan yang tumbuh menjadi internet.",
+          "at": {
+            "word": "internet"
+          },
+          "until": {
+            "word": "1989"
+          },
+          "pos": [
+            150,
+            560
+          ],
+          "max_width": 480
+        },
+        {
+          "type": "icon",
+          "icon": "globe",
+          "at": {
+            "word": "1989"
+          },
+          "until": {
+            "word": "Laptop"
+          },
+          "pos": [
+            600,
+            470
+          ],
+          "size": 420,
+          "label": "world wide web"
+        },
+        {
+          "type": "counter",
+          "at": {
+            "word": "1989",
+            "offset": -0.3
+          },
+          "until": {
+            "word": "Laptop"
+          },
+          "pos": [
+            1040,
+            400
+          ],
+          "from": 1969,
+          "to": 1989,
+          "format": "year",
+          "size": 128,
+          "label": "World Wide Web",
+          "dur": 1.4
+        },
+        {
+          "type": "text",
+          "text": "Tim Berners-Lee · CERN",
+          "at": {
+            "word": "Berners-Lee"
+          },
+          "until": {
+            "word": "Laptop"
+          },
+          "pos": [
+            1040,
+            540
+          ]
+        },
+        {
+          "type": "morph",
+          "pos": [
+            600,
+            470
+          ],
+          "size": 380,
+          "until": {
+            "word": "miliaran"
+          },
+          "items": [
+            {
+              "icon": "laptop",
+              "at": {
+                "word": "Laptop"
+              },
+              "label": "laptop"
+            },
+            {
+              "icon": "phone",
+              "at": {
+                "word": "2007"
+              },
+              "label": "ponsel pintar"
+            }
+          ]
+        },
+        {
+          "type": "headline",
+          "text": "Bisa dibawa ke mana saja",
+          "at": {
+            "word": "dibawa"
+          },
+          "until": {
+            "word": "2007"
+          },
+          "pos": [
+            1040,
+            430
+          ],
+          "size": 58
+        },
+        {
+          "type": "counter",
+          "at": {
+            "word": "2007",
+            "offset": -0.3
+          },
+          "until": {
+            "word": "miliaran"
+          },
+          "pos": [
+            1040,
+            400
+          ],
+          "from": 1990,
+          "to": 2007,
+          "format": "year",
+          "size": 128,
+          "label": "iPhone · era ponsel pintar",
+          "dur": 1.4
+        },
+        {
+          "type": "text",
+          "text": "Komputer lengkap di dalam genggaman.",
+          "at": {
+            "word": "genggaman"
+          },
+          "until": {
+            "word": "miliaran"
+          },
+          "pos": [
+            1040,
+            540
+          ]
+        },
+        {
+          "type": "icon",
+          "icon": "globe",
+          "at": {
+            "word": "miliaran",
+            "offset": -0.4
+          },
+          "until": null,
+          "pos": [
+            960,
+            420
+          ],
+          "size": 440
+        },
+        {
+          "type": "headline",
+          "text": "Miliaran orang terhubung",
+          "at": {
+            "word": "miliaran"
+          },
+          "until": null,
+          "pos": [
+            960,
+            770
+          ],
+          "size": 58,
+          "align": "center"
+        }
       ]
     },
     {
@@ -793,15 +2881,15 @@
       "accent": "cyan",
       "ambience": "digital",
       "music_pulse": true,
-      "estimated_duration": 70,
+      "estimated_duration": 73,
       "narration": [
-        "Selama puluhan tahun, komputer hanya melakukan persis apa yang diperintahkan. Tapi para peneliti bertanya: bisakah mesin belajar?",
-        "Istilah kecerdasan buatan dipopulerkan lewat sebuah lokakarya di Dartmouth pada 1956. Perjalanannya tidak mulus. Ada masa penuh harapan, ada juga masa ketika dana dan minat merosot.",
+        "Selama puluhan tahun, komputer hanya melakukan apa yang diperintahkan. Lalu muncul pertanyaan: bisakah mesin belajar?",
+        "Istilah kecerdasan buatan dipopulerkan lewat lokakarya di Dartmouth pada 1956. Perjalanannya naik turun.",
         "Machine learning mengubah pendekatannya. Alih-alih menulis setiap aturan, kita memberi mesin banyak contoh, lalu membiarkannya menemukan pola sendiri.",
-        "Tahun 2012, sebuah jaringan saraf tiruan yang dilatih dengan kartu grafis membuat lompatan besar dalam mengenali gambar. Era deep learning pun dimulai.",
-        "Tahun 2016, AlphaGo mengalahkan Lee Sedol, salah satu pemain Go terbaik dunia. Setahun kemudian, arsitektur bernama Transformer diperkenalkan, dan menjadi fondasi model bahasa besar yang kini bisa menulis, menerjemahkan, dan bercakap-cakap dengan kita.",
+        "Tahun 2012, jaringan saraf tiruan yang dilatih dengan kartu grafis membuat lompatan besar dalam mengenali gambar. Era deep learning dimulai.",
+        "Tahun 2016, AlphaGo mengalahkan pemain Go kelas dunia, Lee Sedol. Setahun kemudian, arsitektur Transformer diperkenalkan, menjadi fondasi model bahasa besar yang kini bisa menulis dan bercakap-cakap.",
         {
-          "text": "Namun kecerdasan buatan tetaplah alat buatan manusia. Ia bisa keliru, dan cara kita menggunakannya tetap menjadi tanggung jawab kita.",
+          "text": "Namun kecerdasan buatan tetap alat buatan manusia. Ia bisa keliru, dan cara kita menggunakannya tetap tanggung jawab kita.",
           "rate": "-7%"
         }
       ],
@@ -856,6 +2944,339 @@
           "title": "Britannica — Artificial intelligence",
           "url": "https://www.britannica.com/technology/artificial-intelligence"
         }
+      ],
+      "elements": [
+        {
+          "type": "icon",
+          "icon": "code_rules",
+          "at": 0.0,
+          "until": {
+            "word": "Machine"
+          },
+          "pos": [
+            600,
+            470
+          ],
+          "size": 420,
+          "label": "aturan ditulis manusia"
+        },
+        {
+          "type": "kicker",
+          "text": "Komputer klasik",
+          "at": 0.0,
+          "until": {
+            "word": "Istilah"
+          },
+          "pos": [
+            1040,
+            330
+          ]
+        },
+        {
+          "type": "headline",
+          "text": "Bisakah mesin belajar?",
+          "at": {
+            "word": "bisakah"
+          },
+          "until": {
+            "word": "Istilah"
+          },
+          "pos": [
+            1040,
+            430
+          ],
+          "size": 64
+        },
+        {
+          "type": "counter",
+          "at": {
+            "word": "1956",
+            "offset": -0.3
+          },
+          "until": {
+            "word": "Machine"
+          },
+          "pos": [
+            1040,
+            400
+          ],
+          "from": 1940,
+          "to": 1956,
+          "format": "year",
+          "size": 128,
+          "label": "Lokakarya Dartmouth",
+          "dur": 1.4
+        },
+        {
+          "type": "chips",
+          "items": [
+            "masa penuh harapan",
+            "minat merosot"
+          ],
+          "at": {
+            "word": "Perjalanannya"
+          },
+          "until": {
+            "word": "Machine"
+          },
+          "pos": [
+            1040,
+            500
+          ],
+          "cols": 1,
+          "gap": [
+            0,
+            80
+          ],
+          "size": 28,
+          "stagger": 0.9
+        },
+        {
+          "type": "kicker",
+          "text": "Machine learning",
+          "at": {
+            "word": "Machine"
+          },
+          "until": {
+            "word": "2012"
+          },
+          "pos": [
+            420,
+            300
+          ]
+        },
+        {
+          "type": "diagram",
+          "at": {
+            "word": "Machine",
+            "offset": 0.3
+          },
+          "until": {
+            "word": "2012"
+          },
+          "nodes": [
+            {
+              "label": "Contoh",
+              "sub": "data",
+              "pos": [
+                520,
+                450
+              ]
+            },
+            {
+              "label": "Model",
+              "sub": "belajar",
+              "pos": [
+                960,
+                450
+              ]
+            },
+            {
+              "label": "Pola",
+              "sub": "prediksi",
+              "pos": [
+                1400,
+                450
+              ]
+            }
+          ],
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "type": "text",
+          "text": "Bukan aturan yang ditulis, melainkan pola yang dipelajari.",
+          "at": {
+            "word": "pola"
+          },
+          "until": {
+            "word": "2012"
+          },
+          "pos": [
+            960,
+            620
+          ],
+          "align": "center",
+          "max_width": 1000
+        },
+        {
+          "type": "icon",
+          "icon": "neural_net",
+          "at": {
+            "word": "2012"
+          },
+          "until": {
+            "word": "2016"
+          },
+          "pos": [
+            600,
+            470
+          ],
+          "size": 430,
+          "label": "jaringan saraf tiruan"
+        },
+        {
+          "type": "counter",
+          "at": {
+            "word": "2012",
+            "offset": -0.3
+          },
+          "until": {
+            "word": "2016"
+          },
+          "pos": [
+            1040,
+            400
+          ],
+          "from": 1990,
+          "to": 2012,
+          "format": "year",
+          "size": 128,
+          "label": "Deep learning",
+          "dur": 1.4
+        },
+        {
+          "type": "text",
+          "text": "Dilatih dengan kartu grafis (GPU) untuk mengenali gambar.",
+          "at": {
+            "word": "kartu"
+          },
+          "until": {
+            "word": "2016"
+          },
+          "pos": [
+            1040,
+            540
+          ],
+          "max_width": 600
+        },
+        {
+          "type": "icon",
+          "icon": "go_board",
+          "at": {
+            "word": "2016"
+          },
+          "until": {
+            "word": "Setahun"
+          },
+          "pos": [
+            600,
+            470
+          ],
+          "size": 380,
+          "label": "go"
+        },
+        {
+          "type": "counter",
+          "at": {
+            "word": "2016",
+            "offset": -0.3
+          },
+          "until": {
+            "word": "Setahun"
+          },
+          "pos": [
+            1040,
+            400
+          ],
+          "from": 2012,
+          "to": 2016,
+          "format": "year",
+          "size": 128,
+          "label": "AlphaGo vs Lee Sedol",
+          "dur": 1.4
+        },
+        {
+          "type": "icon",
+          "icon": "neural_net",
+          "at": {
+            "word": "Setahun"
+          },
+          "until": {
+            "word": "Namun"
+          },
+          "pos": [
+            600,
+            470
+          ],
+          "size": 430,
+          "label": "transformer"
+        },
+        {
+          "type": "counter",
+          "at": {
+            "word": "Setahun"
+          },
+          "until": {
+            "word": "Namun"
+          },
+          "pos": [
+            1040,
+            400
+          ],
+          "from": 2016,
+          "to": 2017,
+          "format": "year",
+          "size": 128,
+          "label": "Transformer",
+          "dur": 1.4
+        },
+        {
+          "type": "headline",
+          "text": "Model bahasa besar",
+          "at": {
+            "word": "model"
+          },
+          "until": {
+            "word": "Namun"
+          },
+          "pos": [
+            1040,
+            540
+          ],
+          "size": 50
+        },
+        {
+          "type": "text",
+          "text": "Menulis · bercakap-cakap",
+          "at": {
+            "word": "menulis",
+            "n": 2
+          },
+          "until": {
+            "word": "Namun"
+          },
+          "pos": [
+            1040,
+            610
+          ]
+        },
+        {
+          "type": "card",
+          "at": {
+            "word": "Namun"
+          },
+          "until": null,
+          "pos": [
+            560,
+            330
+          ],
+          "size": [
+            800,
+            280
+          ],
+          "title": "Tetap buatan manusia",
+          "body": "AI bisa keliru. Cara kita menggunakannya tetap menjadi tanggung jawab kita.",
+          "body_size": 32
+        }
       ]
     },
     {
@@ -865,15 +3286,15 @@
       "era": "MASA DEPAN",
       "accent": "amber",
       "ambience": "none",
-      "estimated_duration": 38,
+      "estimated_duration": 42,
       "narration": [
-        "Dari manik-manik abakus hingga jaringan saraf tiruan, setiap lompatan selalu berdiri di atas lompatan sebelumnya.",
+        "Dari abakus hingga jaringan saraf tiruan, setiap lompatan berdiri di atas lompatan sebelumnya.",
         {
           "text": "Roda gigi Pascal. Kartu berlubang Babbage. Catatan Ada. Tabung vakum ENIAC. Transistor. Chip.",
           "rate": "-8%"
         },
         "Semuanya lahir dari hasrat yang sama: memahami dunia sedikit lebih cepat, dan sedikit lebih baik.",
-        "Lalu, apa babak berikutnya? Mungkin komputer kuantum. Mungkin sesuatu yang belum bisa kita bayangkan.",
+        "Apa babak berikutnya? Mungkin komputer kuantum. Mungkin sesuatu yang belum terbayangkan.",
         {
           "text": "Yang pasti, kisah ini belum selesai. Dan kita semua ikut menulisnya.",
           "rate": "-9%",
@@ -881,7 +3302,7 @@
         }
       ],
       "timing": {
-        "tail": 4.5
+        "tail": 3.6
       },
       "visual_description": "Deretan ikon evolusi muncul satu per satu sesuai yang disebut narasi. Bola Bloch (qubit) untuk komputer kuantum. Judul penutup dan fade ke hitam.",
       "animation_style": "Rangkuman visual yang tenang, judul penutup, fade to black.",
@@ -912,6 +3333,166 @@
         {
           "title": "Computer History Museum — Timeline of Computer History",
           "url": "https://www.computerhistory.org/timeline/"
+        }
+      ],
+      "elements": [
+        {
+          "type": "kicker",
+          "text": "Rangkuman",
+          "at": 0.0,
+          "until": {
+            "word": "Apa"
+          },
+          "pos": [
+            960,
+            250
+          ]
+        },
+        {
+          "type": "strip",
+          "at": 0.0,
+          "until": {
+            "word": "Apa"
+          },
+          "y": 430,
+          "x0": 150,
+          "x1": 1770,
+          "size": 128,
+          "items": [
+            {
+              "icon": "abacus",
+              "at": {
+                "word": "abakus"
+              },
+              "label": "abakus"
+            },
+            {
+              "icon": "pascaline",
+              "at": {
+                "word": "Pascal"
+              },
+              "label": "pascal"
+            },
+            {
+              "icon": "punched_card",
+              "at": {
+                "word": "Kartu"
+              },
+              "label": "babbage"
+            },
+            {
+              "icon": "notes",
+              "at": {
+                "word": "Catatan"
+              },
+              "label": "ada"
+            },
+            {
+              "icon": "vacuum_tube",
+              "at": {
+                "word": "Tabung"
+              },
+              "label": "eniac"
+            },
+            {
+              "icon": "transistor",
+              "at": {
+                "word": "Transistor"
+              },
+              "label": "transistor"
+            },
+            {
+              "icon": "chip",
+              "at": {
+                "word": "Chip"
+              },
+              "label": "chip"
+            },
+            {
+              "icon": "neural_net",
+              "at": {
+                "word": "Chip",
+                "offset": 0.8
+              },
+              "label": "AI"
+            }
+          ]
+        },
+        {
+          "type": "headline",
+          "text": "Hasrat yang sama",
+          "at": {
+            "word": "hasrat"
+          },
+          "until": {
+            "word": "Apa"
+          },
+          "pos": [
+            960,
+            720
+          ],
+          "size": 56,
+          "align": "center"
+        },
+        {
+          "type": "icon",
+          "icon": "qubit",
+          "at": {
+            "word": "Apa"
+          },
+          "until": {
+            "word": "pasti"
+          },
+          "pos": [
+            960,
+            400
+          ],
+          "size": 380
+        },
+        {
+          "type": "headline",
+          "text": "Apa babak berikutnya?",
+          "at": {
+            "word": "Apa"
+          },
+          "until": {
+            "word": "pasti"
+          },
+          "pos": [
+            960,
+            740
+          ],
+          "size": 58,
+          "align": "center"
+        },
+        {
+          "type": "text",
+          "text": "komputer kuantum?",
+          "at": {
+            "word": "kuantum"
+          },
+          "until": {
+            "word": "pasti"
+          },
+          "pos": [
+            960,
+            810
+          ],
+          "align": "center"
+        },
+        {
+          "type": "title",
+          "at": {
+            "word": "menulisnya",
+            "offset": 0.2
+          },
+          "pos": [
+            960,
+            500
+          ],
+          "text": "SEJARAH KOMPUTER",
+          "sub": "Kisah ini belum selesai.",
+          "size": 96
         }
       ]
     }
